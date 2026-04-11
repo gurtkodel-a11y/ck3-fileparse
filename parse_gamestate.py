@@ -70,125 +70,122 @@ def _coerce(s: str) -> Any:
 
 
 # ---------------------------------------------------------------------------
-# Recursive-descent parser
+# Iterative parser (explicit stack — no recursion limit issues)
 # ---------------------------------------------------------------------------
 
-def _parse_block(tokens: list, pos: int) -> Tuple[Any, int]:
-    """
-    Parse the contents of a { ... } block.
-
-    Returns (value, next_pos) where value is either:
-      - a dict  (when the block contains key=value pairs)
-      - a list  (when the block contains bare values)
-    """
-    pos += 1  # consume '{'
-
-    # Peek ahead to decide block kind.
-    # If the first non-brace content token is followed by '=', it's a named block.
-    # We treat mixed blocks (rare edge cases) as named, collecting bare values
-    # under a synthetic '' key as a list.
-    result_dict: dict = {}
-    result_list: list = []
-    is_named = False
-
-    while pos < len(tokens) and tokens[pos][0] != TOK_CLOSE:
-        tok_type, tok_val = tokens[pos]
-
-        # Named assignment: ATOM/STR = value
-        if (tok_type in (TOK_ATOM, TOK_STR)
-                and pos + 1 < len(tokens)
-                and tokens[pos + 1][0] == TOK_EQ):
-            is_named = True
-            key = tok_val
-            pos += 2  # consume key and '='
-
-            if pos < len(tokens) and tokens[pos][0] == TOK_OPEN:
-                value, pos = _parse_block(tokens, pos)
-            elif pos < len(tokens) and tokens[pos][0] != TOK_CLOSE:
-                raw = tokens[pos][1]
-                value = raw if tokens[pos][0] == TOK_STR else _coerce(raw)
-                pos += 1
-            else:
-                value = None
-
-            # Merge duplicate keys → list
-            if key in result_dict:
-                existing = result_dict[key]
-                if isinstance(existing, list) and not isinstance(existing, _TaggedList):
-                    existing.append(value)
-                else:
-                    result_dict[key] = [existing, value]
-            else:
-                result_dict[key] = value
-
-        # Bare value (anonymous list element)
-        elif tok_type == TOK_OPEN:
-            child, pos = _parse_block(tokens, pos)
-            result_list.append(child)
-        elif tok_type in (TOK_ATOM, TOK_STR):
-            raw = tok_val
-            result_list.append(raw if tok_type == TOK_STR else _coerce(raw))
-            pos += 1
-        else:
-            pos += 1  # skip unexpected token
-
-    if pos < len(tokens):
-        pos += 1  # consume '}'
-
-    if is_named:
-        # If there were also bare values in a named block, stash them
-        if result_list:
-            result_dict[''] = result_list
-        return result_dict, pos
-    else:
-        return result_list, pos
-
-
-class _TaggedList(list):
-    """Marker so we don't accidentally re-wrap a list of dupe values."""
-    pass
-
+# Each stack frame is a tuple:
+#   (result_dict, result_list, is_named, pending_key)
+# pending_key is set when we've consumed "key =" and are about to parse the value.
 
 def parse(text: str) -> dict:
     """
     Parse a full CK3 gamestate text and return the top-level dict.
+    Uses an explicit stack so deeply-nested saves don't hit Python's
+    recursion limit.
     """
     # Strip comments
     text = re.sub(r'#[^\n]*', '', text)
 
     tokens = tokenize(text)
-    result: dict = {}
-    pos = 0
     n = len(tokens)
+    pos = 0
+
+    # Stack of open frames: (result_dict, result_list, is_named, pending_key)
+    # The bottom frame is the top-level document.
+    stack = [({}, [], False, None)]
 
     while pos < n:
         tok_type, tok_val = tokens[pos]
 
-        if tok_type in (TOK_ATOM, TOK_STR) and pos + 1 < n and tokens[pos + 1][0] == TOK_EQ:
+        result_dict, result_list, is_named, pending_key = stack[-1]
+
+        # ------------------------------------------------------------------ #
+        # Opening brace — push a new frame
+        # ------------------------------------------------------------------ #
+        if tok_type == TOK_OPEN:
+            pos += 1
+            stack.append(({}, [], False, None))
+            continue
+
+        # ------------------------------------------------------------------ #
+        # Closing brace — pop the frame and attach to parent
+        # ------------------------------------------------------------------ #
+        if tok_type == TOK_CLOSE:
+            pos += 1
+            if len(stack) <= 1:
+                continue  # stray '}' at top level — skip it
+            stack.pop()
+
+            # Build the completed value
+            if is_named:
+                if result_list:
+                    result_dict[''] = result_list
+                value = result_dict
+            else:
+                value = result_list
+
+            # Attach to parent
+            parent_dict, parent_list, parent_named, parent_key = stack[-1]
+            if parent_key is not None:
+                # We were filling a named value
+                _dict_insert(parent_dict, parent_key, value)
+                stack[-1] = (parent_dict, parent_list, True, None)
+            else:
+                # Bare block inside a list
+                parent_list.append(value)
+                stack[-1] = (parent_dict, parent_list, parent_named, None)
+            continue
+
+        # ------------------------------------------------------------------ #
+        # Key = ... assignment
+        # ------------------------------------------------------------------ #
+        if (tok_type in (TOK_ATOM, TOK_STR)
+                and pos + 1 < n
+                and tokens[pos + 1][0] == TOK_EQ):
             key = tok_val
-            pos += 2  # key + '='
+            pos += 2  # consume key + '='
 
-            if pos < n and tokens[pos][0] == TOK_OPEN:
-                value, pos = _parse_block(tokens, pos)
-            elif pos < n:
-                raw = tokens[pos][1]
-                value = raw if tokens[pos][0] == TOK_STR else _coerce(raw)
-                pos += 1
-            else:
-                value = None
+            # Mark frame as named and record pending key
+            stack[-1] = (result_dict, result_list, True, key)
 
-            if key in result:
-                existing = result[key]
-                if isinstance(existing, list) and not isinstance(existing, dict):
-                    existing.append(value)
+            # If the value is a block, the next iteration's TOK_OPEN handles it.
+            # If it's a primitive, consume it now.
+            if pos < n and tokens[pos][0] != TOK_OPEN:
+                if tokens[pos][0] == TOK_CLOSE:
+                    # key = } — treat as key = None, don't consume '}'
+                    _dict_insert(result_dict, key, None)
+                    stack[-1] = (result_dict, result_list, True, None)
                 else:
-                    result[key] = [existing, value]
-            else:
-                result[key] = value
-        else:
-            pos += 1  # skip stray tokens
+                    raw = tokens[pos][1]
+                    value = raw if tokens[pos][0] == TOK_STR else _coerce(raw)
+                    pos += 1
+                    _dict_insert(result_dict, key, value)
+                    stack[-1] = (result_dict, result_list, True, None)
+            continue
 
-    return result
+        # ------------------------------------------------------------------ #
+        # Bare value (anonymous list element)
+        # ------------------------------------------------------------------ #
+        raw = tok_val
+        value = raw if tok_type == TOK_STR else _coerce(raw)
+        result_list.append(value)
+        pos += 1
+
+    # The bottom frame is the top-level document (always a named dict)
+    result_dict, result_list, _, _ = stack[0]
+    return result_dict
+
+
+def _dict_insert(d: dict, key: str, value: Any) -> None:
+    """Insert key→value into d, merging duplicates into a list."""
+    if key in d:
+        existing = d[key]
+        if isinstance(existing, list):
+            existing.append(value)
+        else:
+            d[key] = [existing, value]
+    else:
+        d[key] = value
 
 
 # ---------------------------------------------------------------------------

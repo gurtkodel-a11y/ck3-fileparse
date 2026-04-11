@@ -2,25 +2,29 @@
 """
 watch_autosaves.py  —  run this on your gaming PC while playing CK3.
 
-What it does:
-  - Watches your CK3 save games folder for any autosave.ck3 that changes
-  - Copies each new version into sample-saves/ in this repo, named by timestamp
+Watches your CK3 save games folder for new manual saves and copies them
+into sample-saves/ in this repo.  Autosaves and Ironman saves are ignored.
+
+A save is considered:
+  - Manual:  any .ck3 file whose name doesn't start with "autosave"
+  - Non-Ironman:  the file is a valid ZIP (Ironman saves are binary)
 
 Usage (from the repo root on the PC, in a terminal):
     python watch_autosaves.py
 
-Leave it running in the background while you play.  Ctrl-C to stop.
+Save your game at interesting moments, note your situation, and the file
+will appear in sample-saves/ ready to analyse.  Ctrl-C to stop.
 
 Requirements: Python 3.6+
 
-Configuration: edit the constants below if needed.
+Configuration: edit CK3_SAVE_DIR below if needed.
 """
 
 import os
 import sys
 import time
 import shutil
-import hashlib
+import zipfile
 from pathlib import Path
 from datetime import datetime
 
@@ -29,20 +33,14 @@ from datetime import datetime
 # Configuration
 # ---------------------------------------------------------------------------
 
-# Where CK3 stores saves on Windows (expand %USERPROFILE% automatically)
 CK3_SAVE_DIR = Path(os.environ.get("USERPROFILE", "C:/Users/User")) / (
     "Documents/Paradox Interactive/Crusader Kings III/save games"
 )
 
-# Where copies land inside this repo
-REPO_ROOT    = Path(__file__).parent
-DEST_DIR     = REPO_ROOT / "sample-saves"
+REPO_ROOT     = Path(__file__).parent
+DEST_DIR      = REPO_ROOT / "sample-saves"
 
-# How often to check for changes (seconds)
-POLL_INTERVAL = 60
-
-# Only watch files matching this name (CK3 autosave filename)
-AUTOSAVE_NAME = "autosave.ck3"
+POLL_INTERVAL = 15   # seconds between scans
 
 
 # ---------------------------------------------------------------------------
@@ -58,62 +56,64 @@ def main():
     DEST_DIR.mkdir(exist_ok=True)
     print(f"Watching:  {CK3_SAVE_DIR}")
     print(f"Saving to: {DEST_DIR}")
-    print(f"Polling every {POLL_INTERVAL}s.  Ctrl-C to stop.\n")
+    print(f"Polling every {POLL_INTERVAL}s — Ctrl-C to stop.\n")
+    print("Waiting for manual saves (autosaves and Ironman saves are ignored)...\n")
 
-    # Track path → last_hash so we only act on genuine changes
-    seen: dict[Path, str] = {}
+    # Files seen on startup — don't copy pre-existing saves
+    known: set[Path] = set(_find_manual_saves())
+    if known:
+        print(f"Ignoring {len(known)} pre-existing save(s).")
 
     while True:
         try:
-            _scan(seen)
+            _scan(known)
         except Exception as exc:
-            print(f"[{_now()}] Warning: scan error: {exc}")
+            print(f"[{_now()}] Warning: {exc}")
         time.sleep(POLL_INTERVAL)
 
 
-def _scan(seen: dict):
-    """Walk the save directory looking for changed autosave.ck3 files."""
-    for path in CK3_SAVE_DIR.rglob(AUTOSAVE_NAME):
-        try:
-            current_hash = _file_hash(path)
-        except OSError:
-            continue  # file locked or deleted mid-read
-
-        first_seen = path not in seen
-        seen[path] = current_hash
-
-        if first_seen:
-            # First encounter at startup — record hash but don't copy,
-            # so we don't collect a stale save from a previous session.
-            print(f"[{_now()}] Tracking: {path.parent.name}/{path.name}")
+def _scan(known: set):
+    for path in _find_manual_saves():
+        if path in known:
             continue
-
-        if seen[path] != current_hash:
-            seen[path] = current_hash
-            _copy_snapshot(path)
+        known.add(path)
+        _copy_save(path)
 
 
-def _copy_snapshot(source: Path):
-    """Copy a changed autosave into sample-saves/ with a timestamp name."""
-    campaign = source.parent.name  # subfolder CK3 creates per campaign
-    ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    dest_name = f"{ts}_{campaign}.ck3"
-    dest = DEST_DIR / dest_name
+def _find_manual_saves() -> list[Path]:
+    """Return all .ck3 files that are manual (non-autosave) and non-Ironman (valid ZIP)."""
+    results = []
+    for path in CK3_SAVE_DIR.rglob("*.ck3"):
+        if path.name.lower().startswith("autosave"):
+            continue
+        if _is_zip(path):
+            results.append(path)
+    return results
+
+
+def _is_zip(path: Path) -> bool:
+    """Return True if the file is a ZIP archive (i.e. not a binary Ironman save)."""
+    try:
+        with open(path, "rb") as f:
+            return f.read(2) == b"PK"
+    except OSError:
+        return False
+
+
+def _copy_save(source: Path):
+    """Copy a new manual save into DEST_DIR, preserving the original filename."""
+    dest = DEST_DIR / source.name
+    # If a file with this name already exists (e.g. player re-saved over the same slot),
+    # add a timestamp suffix to avoid overwriting.
+    if dest.exists():
+        ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        dest = DEST_DIR / f"{source.stem}_{ts}.ck3"
 
     try:
         shutil.copy2(source, dest)
-        print(f"[{_now()}] Copied → sample-saves/{dest_name}")
+        print(f"[{_now()}] Copied: {source.name} → {dest.name}")
     except OSError as e:
-        print(f"[{_now()}] ERROR copying: {e}")
-
-
-def _file_hash(path: Path) -> str:
-    """MD5 of a file — fast enough for ~10 MB saves."""
-    h = hashlib.md5()
-    with open(path, "rb") as f:
-        for chunk in iter(lambda: f.read(65536), b""):
-            h.update(chunk)
-    return h.hexdigest()
+        print(f"[{_now()}] ERROR copying {source.name}: {e}")
 
 
 def _now() -> str:
