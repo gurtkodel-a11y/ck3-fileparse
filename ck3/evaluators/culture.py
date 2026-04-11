@@ -1,14 +1,16 @@
 """
-ck3.evaluators.religion
-~~~~~~~~~~~~~~~~~~~~~~~~
-Level-1 religion evaluator: surfaces the religious landscape visible to a
-character — their own faith, the faiths of all title-holders in the game,
-holy wars in progress, and a breakdown of how many titles are held by each
-faith relative to the character's own.
+ck3.evaluators.culture
+~~~~~~~~~~~~~~~~~~~~~~~
+Level-1 culture evaluator: surfaces the cultural landscape visible to a
+character — their own culture, nearby cultures, language groups, faiths, and
+holy wars in progress.
+
+Religion is one important axis of culture; this module surfaces faith data
+alongside cultural identity so both can be considered together.
 
 Usage:
-    from ck3.evaluators.religion import ReligionEvaluator
-    ev = ReligionEvaluator(gs, char_id=18269)
+    from ck3.evaluators.culture import CultureEvaluator
+    ev = CultureEvaluator(gs, char_id=18269)
     report = ev.report()
     print(report.summary())
 """
@@ -31,12 +33,15 @@ class FaithProfile:
     """Everything knowable about a single faith from the save file."""
     faith_id: str
     tag: str                      # e.g. "catholic", "sunni"
+    religion_id: str              # integer ID (as str) of the parent religion
+    religion_tag: str             # e.g. "christianity", "islam"
+    religion_family: str          # e.g. "rf_christian", "rf_islam", "rf_pagan"
     fervor: float
     religious_head_id: int | None # character ID, or None if no head
     religious_head_name: str | None
     doctrines: list[str]
     tenets: list[str]
-    relation_to_player: str       # "own" | "same_religion" | "other"
+    relation_to_player: str       # "same_faith" | "same_religion" | "same_family" | "other"
     titles_held: int              # how many titles (all tiers) are held by chars of this faith
     rulers_of_faith: list[dict]   # [{id, name, highest_title_key, highest_tier}]
     zone: int                     # proximity to player: 0=local, 1=nearby, 2=continental, 3=global
@@ -58,15 +63,18 @@ class HolyWar:
 
 
 @dataclass
-class ReligionReport:
-    """Full level-1 religion report for one character."""
+class CultureReport:
+    """Full level-1 culture report for one character."""
     char_id: int
     char_name: str
     game_date: str
+    # ── Faith / Religion ──────────────────────────────────────────────────── #
     own_faith_id: str
     own_faith_tag: str
     own_faith_fervor: float
-    own_religion: str             # parent religion name/tag (from faith template)
+    own_religion_id: str          # integer ID (as str) of the player's parent religion
+    own_religion_tag: str         # e.g. "christianity", "islam"
+    own_religion_family: str      # e.g. "rf_christian", "rf_islam", "rf_pagan"
     player_region: str            # geographic region of the player's capital kingdom
     faiths: list[FaithProfile]    # all faiths with at least one title-holding ruler
     holy_wars: list[HolyWar]
@@ -76,13 +84,19 @@ class ReligionReport:
 
     def summary(self) -> str:
         lines = [
-            f"Religion Report — {self.char_name} (id {self.char_id})  [{self.game_date}]",
+            f"Culture Report — {self.char_name} (id {self.char_id})  [{self.game_date}]",
             "=" * 70,
-            f"\nYour faith:    {self.own_faith_tag}  (fervor {self.own_faith_fervor:.1f})",
-            f"Your religion: {self.own_religion}",
         ]
 
-        own = next((f for f in self.faiths if f.faith_id == self.own_faith_id), None)
+        # ── Religion section ─────────────────────────────────────────────── #
+        lines += [
+            "\n--- Religion ---",
+            f"Your faith:    {self.own_faith_tag}  (fervor {self.own_faith_fervor:.1f})",
+            f"Your religion: {self.own_religion_tag}",
+            f"Your family:   {self.own_religion_family}",
+        ]
+
+        own = next((f for f in self.faiths if f.relation_to_player == "same_faith"), None)
         if own:
             lines += [
                 f"Titles held by your faith: {own.titles_held}",
@@ -94,16 +108,18 @@ class ReligionReport:
 
         # ── Zone 0+1: Local & Nearby — full detail ────────────────────────── #
         local_nearby = [f for f in self.faiths if f.zone <= 1]
-        local_nearby.sort(key=lambda f: (f.faith_id != self.own_faith_id, -f.titles_held))
+        local_nearby.sort(key=lambda f: (f.relation_to_player != "same_faith", f.relation_to_player, -f.titles_held))
 
         lines.append(f"\n--- Faiths in Your Region & Neighbours ({len(local_nearby)}) ---")
+        lines.append(f"  {'faith':<28}  {'fervor':>6}  {'titles':>6}  {'zone':<6}  {'relation':<13}")
         for f in local_nearby:
-            marker = " ◄ YOUR FAITH" if f.faith_id == self.own_faith_id else ""
-            zone_label = "local" if f.zone == 0 else "nearby"
+            marker = " ◄ YOUR FAITH" if f.relation_to_player == "same_faith" else ""
+            zone_label = "local " if f.zone == 0 else "nearby"
             lines.append(
-                f"  {f.tag:<28}  fervor {f.fervor:>5.1f}"
-                f"  titles {f.titles_held:>4}  [{zone_label}]{marker}"
+                f"  {f.tag:<28}  {f.fervor:>6.1f}  {f.titles_held:>6}  {zone_label}  {f.relation_to_player:<13}{marker}"
             )
+            if f.religion_tag != f.tag:
+                lines.append(f"    Religion: {f.religion_tag}  ({f.religion_family})")
             if f.tenets:
                 lines.append(f"    Tenets: {', '.join(f.tenets)}")
             if f.religious_head_name:
@@ -120,12 +136,11 @@ class ReligionReport:
         continental.sort(key=lambda f: -f.titles_held)
 
         lines.append(f"\n--- Continental Faiths (broader Europe / Med / Near East) ({len(continental)}) ---")
+        lines.append(f"  {'faith':<28}  {'fervor':>6}  {'titles':>6}  {'relation':<13}")
         for f in continental:
-            rel = f.relation_to_player
             head = f"  head: {f.religious_head_name}" if f.religious_head_name else ""
             lines.append(
-                f"  {f.tag:<28}  fervor {f.fervor:>5.1f}"
-                f"  titles {f.titles_held:>4}  [{rel}]{head}"
+                f"  {f.tag:<28}  {f.fervor:>6.1f}  {f.titles_held:>6}  {f.relation_to_player:<13}{head}"
             )
 
         # ── Zone 3: Global — only major faiths (>50 titles) ──────────────── #
@@ -134,9 +149,10 @@ class ReligionReport:
         global_major.sort(key=lambda f: -f.titles_held)
 
         lines.append(f"\n--- Major Faiths Beyond the Horizon ({len(global_major)} shown, {global_minor_count} minor omitted) ---")
+        lines.append(f"  {'faith':<28}  {'fervor':>6}  {'titles':>6}")
         for f in global_major:
             lines.append(
-                f"  {f.tag:<28}  fervor {f.fervor:>5.1f}  titles {f.titles_held:>4}"
+                f"  {f.tag:<28}  {f.fervor:>6.1f}  {f.titles_held:>6}"
             )
 
         # ── Holy Wars ────────────────────────────────────────────────────── #
@@ -172,13 +188,13 @@ _HOLY_WAR_CBS = {
 _TIER_ORDER = {"e": 0, "k": 1, "d": 2, "c": 3, "b": 4}
 
 
-class ReligionEvaluator:
+class CultureEvaluator:
     def __init__(self, gs: GameState, char_id: int):
         self.gs = gs
         self.char_id = char_id
         gs.build_indices()
 
-    def report(self) -> ReligionReport:
+    def report(self) -> CultureReport:
         gs = self.gs
         char = gs.character(self.char_id)
         if char is None:
@@ -189,25 +205,30 @@ class ReligionEvaluator:
         own_faith = gs.faith(own_faith_id) or {}
         own_faith_tag = own_faith.get("tag", own_faith_id)
         own_faith_fervor = own_faith.get("fervor", 0.0)
-        # 'graphical_faith' (e.g. "catholic_gfx", "muslim_gfx") is the closest
-        # proxy to religion family available in the save file; static game data
-        # files would be needed for the true religion name.
-        own_religion = own_faith.get("graphical_faith", own_faith.get("tag", ""))
+
+        own_religion_id = str(own_faith.get("religion", ""))
+        own_religion = gs.religion(own_religion_id) or {}
+        own_religion_tag = own_religion.get("tag", own_religion_id)
+        own_religion_family = own_religion.get("family", "")
 
         # Determine player's geographic region from their capital kingdom
         player_region = self._player_region(char)
 
-        faith_profiles = self._build_faith_profiles(own_faith_id, own_religion, player_region)
+        faith_profiles = self._build_faith_profiles(
+            own_faith_id, own_religion_id, own_religion_family, player_region
+        )
         holy_wars = self._find_holy_wars()
 
-        return ReligionReport(
+        return CultureReport(
             char_id=self.char_id,
             char_name=char_name,
             game_date=gs.date,
             own_faith_id=own_faith_id,
             own_faith_tag=own_faith_tag,
             own_faith_fervor=own_faith_fervor,
-            own_religion=own_religion,
+            own_religion_id=own_religion_id,
+            own_religion_tag=own_religion_tag,
+            own_religion_family=own_religion_family,
             player_region=player_region,
             faiths=faith_profiles,
             holy_wars=holy_wars,
@@ -252,7 +273,11 @@ class ReligionEvaluator:
         return best_region
 
     def _build_faith_profiles(
-        self, own_faith_id: str, own_religion: str, player_region: str
+        self,
+        own_faith_id: str,
+        own_religion_id: str,
+        own_religion_family: str,
+        player_region: str,
     ) -> list[FaithProfile]:
         gs = self.gs
 
@@ -302,8 +327,11 @@ class ReligionEvaluator:
             faith_data = gs.faith(faith_id) or {}
             tag = faith_data.get("tag", faith_id)
             fervor = faith_data.get("fervor", 0.0)
-            # Use graphical_faith as religion-family proxy (same approach as own_religion)
-            template = faith_data.get("graphical_faith", faith_data.get("template", ""))
+
+            religion_id = str(faith_data.get("religion", ""))
+            religion_data = gs.religion(religion_id) or {}
+            religion_tag = religion_data.get("tag", religion_id)
+            religion_family = religion_data.get("family", "")
 
             doctrines = _ensure_list(faith_data.get("doctrine", []))
             tenets = [d for d in doctrines if d.startswith("tenet_")]
@@ -315,11 +343,13 @@ class ReligionEvaluator:
                 head_id = None
             head_name = self._char_name(head_id) if head_id else None
 
-            # Classify relationship to player's faith
+            # Classify relationship to player's faith (four levels of closeness)
             if faith_id == own_faith_id:
-                relation = "own"
-            elif template == own_religion:
+                relation = "same_faith"
+            elif religion_id == own_religion_id:
                 relation = "same_religion"
+            elif religion_family == own_religion_family:
+                relation = "same_family"
             else:
                 relation = "other"
 
@@ -334,6 +364,9 @@ class ReligionEvaluator:
             profiles.append(FaithProfile(
                 faith_id=faith_id,
                 tag=tag,
+                religion_id=religion_id,
+                religion_tag=religion_tag,
+                religion_family=religion_family,
                 fervor=fervor,
                 religious_head_id=head_id,
                 religious_head_name=head_name,

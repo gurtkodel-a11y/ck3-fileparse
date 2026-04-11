@@ -18,7 +18,7 @@ The project proceeds in layers:
 2. **Model** — wrap the parsed data in a structured `GameState` object with
    lookup indices
 3. **Evaluate** — domain-specific modules that extract and organise
-   meaningful facts from `GameState` (military, religion, diplomacy, etc.)
+   meaningful facts from `GameState` (military, culture, diplomacy, etc.)
 4. **Report** — human-readable summaries of evaluator output.
 
 Only layers 1–3 are complete.  Layer 4 exists as plain-text summaries
@@ -68,7 +68,7 @@ ck3/
   evaluators/
     __init__.py
     military.py             MilitaryEvaluator  → MilitaryReport
-    religion.py             ReligionEvaluator  → ReligionReport
+    culture.py              CultureEvaluator   → CultureReport
     relationships.py        RelationshipsEvaluator → RelationshipsReport
 
 sample-saves/
@@ -163,8 +163,11 @@ sample-saves/
 - No breakdown of current levy vs. current MaA (save doesn't store them separately)
 - Neutral armies are omitted from the field army report (intentional — too noisy)
 
-### Religion (`ck3/evaluators/religion.py`)
+### Culture (`ck3/evaluators/culture.py`)
 **Validated against murchad.txt (1087.3.24)**
+
+Religion is one axis of culture; future work will add ethnicity/language groups
+and cultural innovations.  Current content:
 
 - Faith profiles include fervor, tenets, doctrines, religious head, title count,
   and top rulers
@@ -181,6 +184,8 @@ sample-saves/
 **Known gaps:**
 - `hostile` relation type removed; currently only "own", "same_religion", "other"
   — religious hostility would need game data files to compute
+- Cultural group / language family not yet surfaced (save stores `culture` key
+  per character and `culture_template` in cultures db — not yet parsed)
 
 ### Relationships (`ck3/evaluators/relationships.py`)
 **Validated against murchad.txt (1087.3.24)**
@@ -225,10 +230,10 @@ python3 run_report.py sample-saves/extracted/<save>.txt
 python3 run_report.py sample-saves/extracted/<save>.txt 18269
 # specific modules only:
 python3 run_report.py sample-saves/extracted/<save>.txt --modules military
-python3 run_report.py sample-saves/extracted/<save>.txt 18269 --modules religion relationships
+python3 run_report.py sample-saves/extracted/<save>.txt 18269 --modules culture relationships
 ```
 
-Available modules: `military`, `religion`, `relationships` (default: all three).
+Available modules: `military`, `culture`, `relationships` (default: all three).
 Parse/load progress goes to stderr; report content to stdout.
 
 ---

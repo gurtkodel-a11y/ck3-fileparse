@@ -5,13 +5,13 @@ run_report.py — Generate human-readable reports for a CK3 save file.
 Usage:
     python3 run_report.py <gamestate.txt> [char_id] [--modules MODULE ...]
 
-Modules: military, religion, relationships  (default: all)
+Modules: military, culture, relationships  (default: all)
 
 Examples:
     python3 run_report.py save.txt                        # all modules
     python3 run_report.py save.txt 18269                  # explicit char
     python3 run_report.py save.txt --modules military
-    python3 run_report.py save.txt 18269 --modules religion relationships
+    python3 run_report.py save.txt 18269 --modules culture relationships
 """
 
 import sys
@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from parse_gamestate import parse
 from ck3.gamestate import GameState
 
-ALL_MODULES = ["military", "religion", "relationships"]
+ALL_MODULES = ["military", "culture", "relationships"]
 
 
 def _char_display(gs: GameState, char_id: int) -> str:
@@ -93,10 +93,10 @@ def main():
         print(divider)
         print(MilitaryEvaluator(gs, char_id).report().summary())
 
-    if "religion" in modules:
-        from ck3.evaluators.religion import ReligionEvaluator
+    if "culture" in modules:
+        from ck3.evaluators.culture import CultureEvaluator
         print(divider)
-        print(ReligionEvaluator(gs, char_id).report().summary())
+        print(CultureEvaluator(gs, char_id).report().summary())
 
     if "relationships" in modules:
         from ck3.evaluators.relationships import RelationshipsEvaluator

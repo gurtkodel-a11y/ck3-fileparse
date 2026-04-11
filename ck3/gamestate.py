@@ -50,6 +50,7 @@ class GameState:
 
         _rel_root                = raw.get("religion", {})
         self.faiths: dict        = _rel_root.get("faiths", {})
+        self.religions: dict     = _rel_root.get("religions", {})
 
         _cult_root               = raw.get("culture_manager", {})
         self.cultures: dict      = _cult_root.get("cultures", {})
@@ -126,6 +127,9 @@ class GameState:
 
     def faith(self, faith_id: int | str) -> dict | None:
         return self.faiths.get(str(faith_id))
+
+    def religion(self, religion_id: int | str) -> dict | None:
+        return self.religions.get(str(religion_id))
 
     def culture(self, culture_id: int | str) -> dict | None:
         return self.cultures.get(str(culture_id))
