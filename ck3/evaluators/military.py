@@ -410,11 +410,27 @@ class MilitaryEvaluator:
         gs = self.gs
         ld = char.get("landed_data", {})
 
-        levy_cap    = ld.get("levy", 0) or 0
-        current_str = ld.get("current_strength", 0) or 0
-        max_str     = ld.get("strength", 0) or 0
-        maa_cap     = max(0, max_str - levy_cap)
-        power       = ld.get("power", 0) or 0
+        levy_cap = ld.get("levy", 0) or 0
+        max_str  = ld.get("strength", 0) or 0
+        maa_cap  = max(0, max_str - levy_cap)
+        power    = ld.get("power", 0) or 0
+
+        # Sum current troops from active army units owned by the player.
+        # landed_data.current_strength reflects max available capacity, not
+        # raised troops — it only decreases when armies take casualties.
+        current_str = 0
+        for army_id, army in gs.armies.items():
+            if not isinstance(army, dict):
+                continue
+            unit_id = army.get("unit")
+            if unit_id is None:
+                continue
+            unit = gs.units.get(str(unit_id))
+            if not isinstance(unit, dict):
+                continue
+            if unit.get("owner") != self.char_id:
+                continue
+            current_str += gs.army_strength(army_id)["current"]
 
         # Domain garrisons
         garrisons = []
