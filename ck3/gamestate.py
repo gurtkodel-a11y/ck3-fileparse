@@ -59,7 +59,10 @@ class GameState:
         self.factions: dict      = raw.get("faction_manager", {}).get("factions", {})
 
         self.date: str           = raw.get("date", "")
-        self.played_character_id: int = raw.get("played_character", {}).get("character")
+        _played = raw.get("played_character", {})
+        if isinstance(_played, list):
+            _played = _played[0]   # duplicate key merge; all entries are identical
+        self.played_character_id: int = _played.get("character")
 
         # ------------------------------------------------------------------ #
         # Indices (built once, reused by all evaluators)

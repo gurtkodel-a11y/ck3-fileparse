@@ -19,6 +19,7 @@ from collections import defaultdict
 
 from ck3.gamestate import GameState, _ensure_list
 from ck3.geography import KINGDOM_TO_REGION, zone_between, kingdom_to_region
+from ck3.names import decode_name, char_label
 
 
 # --------------------------------------------------------------------------- #
@@ -183,7 +184,7 @@ class ReligionEvaluator:
         if char is None:
             raise ValueError(f"Character {self.char_id} not found in living")
 
-        char_name = char.get("first_name", str(self.char_id))
+        char_name = decode_name(char.get("first_name", str(self.char_id)))
         own_faith_id = str(char.get("faith", ""))
         own_faith = gs.faith(own_faith_id) or {}
         own_faith_tag = own_faith.get("tag", own_faith_id)
@@ -218,7 +219,7 @@ class ReligionEvaluator:
 
     def _char_name(self, char_id: int) -> str:
         c = self.gs.character(char_id)
-        return c.get("first_name", str(char_id)) if c else str(char_id)
+        return decode_name(c.get("first_name", str(char_id))) if c else str(char_id)
 
     def _player_region(self, char: dict) -> str:
         """
@@ -285,7 +286,7 @@ class ReligionEvaluator:
             if existing is None:
                 faith_rulers[faith_id].append({
                     "id": holder_id,
-                    "name": char.get("first_name", str(holder_id)),
+                    "name": decode_name(char.get("first_name", str(holder_id))),
                     "highest_title_key": title_key,
                     "highest_tier": tier_prefix,
                     "_tier_order": tier_order,

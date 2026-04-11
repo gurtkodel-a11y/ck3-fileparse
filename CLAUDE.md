@@ -46,12 +46,15 @@ not yet been started.
 
 **Save formats encountered:**
 - Old format (pre-1.13): ZIP containing a plaintext `gamestate` entry
-- New format (1.13+): binary token format; requires `ck3-melt` from
+- Mid format (1.13–?): binary token format; requires `ck3-melt` from
   https://github.com/rakaly/ck3-save/releases to convert to plaintext
+- New format (1.18+): `SAV0` plaintext header (~32 KB) followed by an embedded
+  ZIP archive containing a plaintext `gamestate` entry — **no ck3-melt needed**;
+  `extract_snapshots.py` detects this automatically and extracts directly
 
 The two `.txt` files in `sample-saves/` (`dunkeld.txt`, `murchad.txt`) were
-added directly from ZIP saves.  All `.ck3` files in `sample-saves/` are new
-binary format and still need extraction.
+added directly from ZIP saves.  All `.ck3` files in `sample-saves/` are the
+1.18+ header+ZIP format and have been extracted to `sample-saves/extracted/`.
 
 ---
 
@@ -72,12 +75,23 @@ ck3/
     hierarchy.py            HierarchyEvaluator → HierarchyReport
 
 sample-saves/
-  *.ck3                     Binary saves (need ck3-melt to extract)
+  *.ck3                     1.18+ format saves (SAV0 header + embedded ZIP)
   dunkeld.txt               Extracted plaintext — Malcolm III of Scotland, 1066
                             (actually binary U1 format — NOT yet parseable)
   murchad.txt               Extracted plaintext — High King Murchad of Ireland,
                             1087.3.24 — the primary test save
-  extracted/                (empty — binary saves not yet extracted)
+  extracted/                All 11 .ck3 saves extracted to plaintext here:
+    Petty_King_Murchad_of_Munster_1069_11_28.txt   (81 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1071_01_07.txt   (86 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1076_04_09.txt   (96 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1077_04_14.txt   (98 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1080_01_07.txt  (105 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1080_10_08.txt  (105 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1081_07_01.txt  (106 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1083_08_13.txt  (109 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1085_03_09.txt  (112 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1085_10_05.txt  (113 MB)   char 31762
+    Petty_King_Brian_II_of_Munster_1093_01_03.txt (161 MB)   char 36303  [multiplayer — specify ID explicitly]
 ```
 
 ---
@@ -214,8 +228,8 @@ Parse/load progress goes to stderr.
 
 Suggested priorities (not binding):
 
-- **More saves**: extract the binary `.ck3` saves (requires `ck3-melt`) to get
-  a range of dates and situations to validate against
+- **Validate new saves**: 11 saves now extracted covering 1069–1093 with Murchad,
+  plus Brian II at 1093 — run reports and spot-check against the game
 - **Character encoding**: fix garbled special characters in Irish/Norse names
 - **Economy evaluator**: gold income, development, buildings — the third major
   pillar of CK3 gameplay alongside military and diplomacy

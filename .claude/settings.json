@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 -)"
+      "Bash(python3 -)",
+      "Bash(python3 run_report.py sample-saves/extracted/Petty_King_Murchad_of_Munster_1069_11_28.txt)",
+      "Bash(python3 run_report.py sample-saves/murchad.txt 18269)",
+      "Bash(python3 run_report.py sample-saves/murchad.txt)"
     ]
   }
 }

@@ -17,6 +17,7 @@ from dataclasses import dataclass, field, asdict
 from typing import Any
 
 from ck3.gamestate import GameState, _ensure_list
+from ck3.names import decode_name, char_label
 
 
 # --------------------------------------------------------------------------- #
@@ -160,7 +161,7 @@ class MilitaryEvaluator:
         if char is None:
             raise ValueError(f"Character {self.char_id} not found in living")
 
-        char_name = char.get("first_name", str(self.char_id))
+        char_name = char_label(char, gs, self.char_id)
 
         # Determine war sides first — needed to classify armies
         wars = self._active_wars()
@@ -197,7 +198,7 @@ class MilitaryEvaluator:
 
     def _char_name(self, char_id: int) -> str:
         c = self.gs.character(char_id)
-        return c.get("first_name", str(char_id)) if c else str(char_id)
+        return decode_name(c.get("first_name", str(char_id))) if c else str(char_id)
 
     def _realm_strength(self, char: dict) -> RealmStrength:
         gs = self.gs
@@ -239,7 +240,7 @@ class MilitaryEvaluator:
             prowess = skills[5] if len(skills) > 5 else 0
             knights.append({
                 "id":     k_id,
-                "name":   kc.get("first_name", str(k_id)),
+                "name":   decode_name(kc.get("first_name", str(k_id))),
                 "prowess": prowess,
                 "power":  prowess * 100,   # CK3 approximation: each prowess ≈ 100 power
             })

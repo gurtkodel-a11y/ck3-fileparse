@@ -29,6 +29,7 @@ from dataclasses import dataclass, field, asdict
 from typing import Any
 
 from ck3.gamestate import GameState, _ensure_list
+from ck3.names import decode_name, char_label, house_prefix_name, title_ruler_label
 
 
 # --------------------------------------------------------------------------- #
@@ -207,9 +208,9 @@ class RelationshipsReport:
             for v in sorted(vassals, key=lambda x: (_tier_order(x.highest_title_tier), x.char_name)):
                 faction_flag = "  ⚠ IN FACTION" if v.in_faction_against_liege else ""
                 faction_detail = f" ({', '.join(v.faction_types)})" if v.faction_types else ""
-                title_str = v.titles[0] if v.titles else "(no title)"
+                title_str = _humanize_title_key(v.titles[0]) if v.titles else "(no title)"
                 lines.append(
-                    f"    {v.char_name:<22}  {title_str:<28}"
+                    f"    {v.char_name:<28}  {title_str:<26}"
                     f"  levy {v.levy_capacity:>5,}  total {v.total_strength:>5,}"
                     f"{faction_flag}{faction_detail}"
                 )
@@ -228,7 +229,7 @@ class RelationshipsReport:
         # ── 4. Alliances ─────────────────────────────────────────────────── #
         lines.append(f"\n--- Alliances ({len(self.alliances)}) ---")
         for a in sorted(self.alliances, key=lambda x: x.ally_name):
-            title_str = a.ally_titles[0] if a.ally_titles else "(unlanded)"
+            title_str = _humanize_title_key(a.ally_titles[0]) if a.ally_titles else "(unlanded)"
             bonds_str = f"  [{a.bond_count} bonds]" if a.bond_count > 1 else ""
             if a.is_negotiated:
                 via = "negotiated"
@@ -238,7 +239,7 @@ class RelationshipsReport:
                 via = f"via {a.mediator_ally_name}"
             else:
                 via = "marriage"
-            lines.append(f"  {a.ally_name:<22}  [{title_str}]{bonds_str}  — {via}")
+            lines.append(f"  {a.ally_name:<28}  [{title_str}]{bonds_str}  — {via}")
 
         # ── 5. Hooks ─────────────────────────────────────────────────────── #
         if self.hooks_held:
@@ -417,7 +418,7 @@ class RelationshipsEvaluator:
         if char is None:
             raise ValueError(f"Character {self.char_id} not found in living")
 
-        char_name = char.get("first_name", str(self.char_id))
+        char_name = char_label(char, gs, self.char_id)
 
         # Hierarchical sections
         liege_chain = self._liege_chain()
@@ -470,7 +471,7 @@ class RelationshipsEvaluator:
         if char_id is None:
             return "unknown"
         c = self.gs.character(char_id)
-        return c.get("first_name", str(char_id)) if c else str(char_id)
+        return decode_name(c.get("first_name", str(char_id))) if c else str(char_id)
 
     def _highest_title(self, char_id: int) -> tuple[str, str]:
         titles = self.gs.titles_held_by(char_id)
@@ -533,7 +534,7 @@ class RelationshipsEvaluator:
             if vassal_id is None:
                 continue
             vc = gs.character(vassal_id)
-            vname = vc.get("first_name", str(vassal_id)) if vc else str(vassal_id)
+            vname = char_label(vc, gs, vassal_id, include_title=False) if vc else str(vassal_id)
             title_keys = self._all_title_keys(vassal_id)
             highest_tier = title_keys[0][0] if title_keys else "b"
             levy_cap, total_str = 0, 0
@@ -564,7 +565,11 @@ class RelationshipsEvaluator:
             if f.get("target") != self.char_id:
                 continue
             members = _ensure_list(f.get("members", []))
-            member_names = [self._char_name(m) for m in members[:8]]
+            member_names = [
+                char_label(gs.character(m), gs, m, include_title=False)
+                if gs.character(m) else self._char_name(m)
+                for m in members[:8]
+            ]
             results.append(FactionRecord(
                 faction_id=str(fid),
                 faction_type=f.get("type", "unknown"),
@@ -722,7 +727,7 @@ class RelationshipsEvaluator:
             location = "deceased" if is_dead else self._char_location(char_id)
             members.append(FamilyMemberRecord(
                 char_id=char_id,
-                char_name=c.get("first_name", str(char_id)),
+                char_name=decode_name(c.get("first_name", str(char_id))),
                 relation=relation,
                 titles=[] if is_dead else self._all_title_keys(char_id),
                 dynasty_house_id=c.get("dynasty_house"),
@@ -756,7 +761,11 @@ class RelationshipsEvaluator:
         # Dynasty house summary
         house_id = char.get("dynasty_house")
         dh = gs.dynasty_house(house_id) if house_id else None
-        house_name    = dh.get("key", "unknown").replace("house_", "").replace("_", " ").title() if dh else ""
+        if dh:
+            pfx, hname = house_prefix_name(dh)
+            house_name = f"{pfx} {hname}".strip() if pfx else hname
+        else:
+            house_name = ""
         house_founded = dh.get("found_date", "") if dh else ""
         house_head_id = int(dh["head_of_house"]) if dh and dh.get("head_of_house") else None
 
@@ -790,7 +799,7 @@ class RelationshipsEvaluator:
                 continue
 
             char_id = int(cid_str)
-            name = c.get("first_name", cid_str)
+            name = decode_name(c.get("first_name", cid_str))
             titles = self._all_title_keys(char_id)
 
             # Determine role — priority: council > knight > court_position > courtier
@@ -928,6 +937,17 @@ _TIER_MAP = {"e": 0, "k": 1, "d": 2, "c": 3, "b": 4}
 
 def _tier_order(tier: str) -> int:
     return _TIER_MAP.get(tier, 9)
+
+
+def _humanize_title_key(key: str) -> str:
+    """Convert a raw title key like 'c_desmond' to 'Count of Desmond'."""
+    if not key:
+        return "(no title)"
+    _RULER_LABEL = {"e": "Emperor", "k": "King", "d": "Duke", "c": "Count", "b": "Baron"}
+    tier = key[0] if key else "b"
+    label = _RULER_LABEL.get(tier, "Lord")
+    place = key[2:].replace("_", " ").title() if len(key) > 2 else key
+    return f"{label} of {place}"
 
 
 def _contract_label(contract_group: str) -> str:
