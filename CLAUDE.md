@@ -10,7 +10,7 @@ the actual game as experienced through CKIII to check accuracy.  The longer-term
 vision is an AI tool that can allow people to engage with the game in a more natural 
 language form, and perhaps from a more first-person perspective (unlike the usual 
 game interface, which presents more content from the third-person point of view 
-in many cases.
+in many cases).
 
 The project proceeds in layers:
 
@@ -19,12 +19,10 @@ The project proceeds in layers:
    lookup indices
 3. **Evaluate** — domain-specific modules that extract and organise
    meaningful facts from `GameState` (military, religion, diplomacy, etc.)
-4. **Report** — human-readable summaries of evaluator output, eventually
-   feeding into an LLM advisor
+4. **Report** — human-readable summaries of evaluator output.
 
 Only layers 1–3 are complete.  Layer 4 exists as plain-text summaries
-produced by each evaluator's `summary()` method.  The LLM advisor layer has
-not yet been started.
+produced by each evaluator's `summary()` method.
 
 ---
 
@@ -46,8 +44,6 @@ not yet been started.
 
 **Save formats encountered:**
 - Old format (pre-1.13): ZIP containing a plaintext `gamestate` entry
-- Mid format (1.13–?): binary token format; requires `ck3-melt` from
-  https://github.com/rakaly/ck3-save/releases to convert to plaintext
 - New format (1.18+): `SAV0` plaintext header (~32 KB) followed by an embedded
   ZIP archive containing a plaintext `gamestate` entry — **no ck3-melt needed**;
   `extract_snapshots.py` detects this automatically and extracts directly
