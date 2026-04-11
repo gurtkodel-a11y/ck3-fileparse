@@ -39,7 +39,7 @@ REPO_ROOT    = Path(__file__).parent
 DEST_DIR     = REPO_ROOT / "sample-saves"
 
 # How often to check for changes (seconds)
-POLL_INTERVAL = 20
+POLL_INTERVAL = 60
 
 # Only watch files matching this name (CK3 autosave filename)
 AUTOSAVE_NAME = "autosave.ck3"
