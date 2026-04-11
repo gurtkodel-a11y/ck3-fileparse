@@ -19,7 +19,7 @@ from parse_gamestate import parse
 from ck3.gamestate import GameState
 from ck3.evaluators.military import MilitaryEvaluator
 from ck3.evaluators.religion import ReligionEvaluator
-from ck3.evaluators.hierarchy import HierarchyEvaluator
+from ck3.evaluators.relationships import RelationshipsEvaluator
 
 
 def _char_display(gs: GameState, char_id: int) -> str:
@@ -85,11 +85,11 @@ def main():
     print(divider)
     print(rel_report.summary())
 
-    # ── Hierarchy ─────────────────────────────────────────────────────────── #
-    hier = HierarchyEvaluator(gs, char_id)
-    hier_report = hier.report()
+    # ── Relationships ─────────────────────────────────────────────────────── #
+    rel_ev = RelationshipsEvaluator(gs, char_id)
+    rel_report = rel_ev.report()
     print(divider)
-    print(hier_report.summary())
+    print(rel_report.summary())
 
     print(divider)
 

@@ -1,0 +1,299 @@
+THE SITUATION OF HIGH KING MURCHAD OF IRELAND
+As of 24 March, 1087
+================================================================================
+
+[Note on names: the save file's character encoding garbles many Irish and Norse
+names. Where the garbling is obvious (e.g. "RuaidrI_" → Ruaidhrí, "O_lafr" →
+Ólafr, "A_ine" → Áine, "LO_chE_ne" → Lóchéne, "CennE_tig" → Cennétig,
+"MA_el-Petair" → Máel-Petair), corrected spellings are used below. "Murchaid"
+(id 20361) appears to be a distinct person from the king himself.]
+
+
+I. MILITARY
+--------------------------------------------------------------------------------
+
+Murchad commands a small but fully mobilized force. His maximum strength is
+1,806 troops — split between a levy ceiling of 1,389 and a men-at-arms cap of
+417. On this date, 1,757 of those troops are actually in the field, meaning
+roughly 97% of his military capacity is currently raised. This is notable
+because there are no active wars and no enemy armies on the map. Whatever
+prompted the mobilization is unclear from the save data alone, but the army is
+decidedly up.
+
+His combat power of 41,520 is the game's internal metric (incorporating
+equipment, formation bonuses, and similar factors) and is not directly visible
+to the player — but it gives a directional sense of Murchad's hitting power
+relative to other realms.
+
+  Knights (his personal household warriors, most capable first):
+    - Robin          prowess 13  — by far his most dangerous fighter
+    - Muirchertach   prowess 10
+    - Tadg           prowess 10
+    - Conchobar      prowess 7
+    - Ólafr          prowess 4   (also his vassal — see Relationships)
+    - Cennétig       prowess 4
+    - Ruaidhrí       prowess 3   (also his vassal — see Relationships)
+
+Two of his knights — Ruaidhrí and Ólafr — are simultaneously his feudal vassals.
+This is common in CK3's Irish politics and means Murchad's military household
+overlaps with his political hierarchy in a way that creates personal loyalty
+bonds but also gives vassals intimate access to the court.
+
+Robin is worth particular attention. He is Murchad's best warrior by a
+significant margin, but (as the Relationships section will show) he is not a
+happy man at the moment.
+
+In short: Murchad is at full military readiness with no war on — either he is
+preparing for something, has recently concluded something, or simply keeps his
+forces permanently raised as a posture.
+
+
+II. RELIGION
+--------------------------------------------------------------------------------
+
+Murchad practices the Insular Celtic faith (sometimes called the Celtic Church
+or Irish Church), which in this game world is a distinct branch of Christianity
+with its own tenets and doctrines. He holds this faith with maximum fervor (100
+out of 100) — indicating a population and clergy that are completely committed
+to their traditional practices.
+
+His three faith tenets are:
+  - Monasticism        (emphasis on monastic institutions and learning)
+  - Vows of Poverty    (clergy renounce worldly wealth)
+  - Rite               (distinctive liturgical practices)
+
+These mark the Celtic Church as genuinely different from Rome — not heretical
+in a dramatic sense, but observably separate in practice.
+
+The religious landscape around Murchad:
+
+  LOCAL (same region):
+  - Insular Celtic   44 titles, fervor 100   ← Murchad's own faith
+  - Catholic       1,768 titles, fervor 84    ← dominant neighbor
+
+  NEARBY (adjacent regions):
+  - Orthodox         658 titles, fervor 78
+  - Finnish Pagan    179 titles, fervor 100
+
+The numbers tell the story plainly. Murchad's faith controls 44 titles
+worldwide; Catholicism controls 1,768. The Celtic Church is a minority
+tradition clinging to its heartland in Ireland, surrounded by the Catholic
+world that has already absorbed nearly all of Britain and the Continent.
+The top Catholic rulers named in the data are the Pope (Adhémar, ruling the
+Papal State), Emperor Heinrich of the HRE, and King William of England —
+three of the most powerful rulers in the game world.
+
+Murchad is allied with William (see Relationships), which creates an
+interesting tension: his closest political ally is the foremost representative
+of the faith that, historically, absorbed and ultimately replaced the very
+tradition Murchad embodies.
+
+There are no active holy wars anywhere in the game world on this date — no
+crusades, no jihads. The religious situation is tense in the numbers but
+quiet in practice. Murchad is not under immediate religious pressure, but
+his faith is clearly fragile at a civilizational scale. If Catholic rulers
+in the British Isles ever acquire the right to press claims into Ireland, the
+Celtic Church's slender title count would make it difficult to resist.
+
+One diplomatic note: the Pope (Adhémar of the Papal State) holds a −20 opinion
+of Murchad specifically due to a "requested_money_opinion" modifier. Murchad
+apparently went to the pontiff with his hand out at some point, and Adhémar
+has not forgotten it. This is a minor friction but worth tracking — Catholic
+rulers weighing intervention into Ireland might find a sympathetic ear in Rome
+if Murchad continues to annoy the papacy.
+
+
+III. RELATIONSHIPS
+--------------------------------------------------------------------------------
+
+A. Hierarchical Position and Vassals
+
+Murchad is an independent ruler — he acknowledges no liege. He is High King
+of Ireland in practice if not necessarily in formal title.
+
+His direct vassals are three feudal lords:
+
+  Ruaidhrí    Duke of Connacht (d_connacht)   levy 740,  total strength 1,054
+  Muiredach   Count of Desmond (c_desmond)    levy 220,  total strength   932
+  Ólafr       Count of Ormond  (c_ormond)     levy 349,  total strength   653
+
+All three are feudal vassals with no factions against Murchad — the realm
+is internally stable. The combined vassal military potential (roughly 2,600
+max strength across all three) substantially exceeds Murchad's own realm
+strength, which is typical of CK3's feudal model: his power depends on their
+continued loyalty.
+
+Two of these vassals — Ruaidhrí and Ólafr — also serve as knights in Murchad's
+household (see Military above). This creates a dual bond of feudal obligation
+and personal service, which in CK3 tends to generate warmth. The opinions data
+confirms this: Ruaidhrí holds a +15 opinion of Murchad (friendliness_opinion +5,
+became_vassal +10), and Muirchertach (a knight, though not a vassal) holds +15
+as well. Ólafr's opinions were not in the notable threshold.
+
+Muiredach of Desmond is the outlier. He holds a net −19 opinion of Murchad:
+  - married_lowborn_opinion    −29   (Murchad's new wife Eadgyth is of low birth)
+  - became_vassal              +10   (standard loyalty bonus)
+
+Muiredach disapproves of Murchad's recent remarriage and is letting his
+liege know it. With a total strength of 932, Muiredach is not a military
+threat on his own — but a dissatisfied vassal in a three-vassal realm is worth
+watching. If Muiredach ever connects with a claimant or finds common cause with
+Ruaidhrí or Ólafr, the arithmetic shifts quickly.
+
+B. Alliances
+
+Murchad has two alliances:
+
+  1. King William of England (k_england) — 2 marriage bonds
+     Mediated via Prince William (William's son) ↔ Áine (Murchad's daughter).
+     Áine is currently living in William's court, having married into the
+     English royal family. This is Murchad's most significant external
+     relationship. England in 1087 is one of the dominant military powers in
+     the British Isles, and having William as an ally provides Murchad a
+     substantial deterrent against anyone contemplating an easy conquest of
+     Ireland. Two marriage bonds represent a doubly-reinforced alliance,
+     though the exact mechanism (presumably one bond per ceremony or treaty)
+     is not fully clear from the save data.
+
+     Important caveat: historically, William the Conqueror died in September
+     1087 — roughly six months from this save date. The game date is March;
+     if the game tracks William's death, this alliance may dissolve or change
+     character in the near future.
+
+  2. Murchad mac Diarmait (c_dublin) — negotiated (no marriage intermediary)
+     A personal, direct alliance with a neighboring count who holds Dublin.
+     This is a politically important relationship: Dublin in the 11th century
+     is one of the wealthiest and most strategically significant settlements
+     in Ireland, with deep Norse connections. A negotiated alliance (rather
+     than a marriage alliance) suggests a direct personal agreement. Murchad
+     holds a +21 opinion of this Murchad mac Diarmait (scheme_sway_opinion),
+     implying he has recently run a sway scheme on him — probably to secure or
+     solidify the alliance itself.
+
+C. Hooks and Leverage
+
+Murchad holds house-head hooks on nine of his own family members and
+courtiers (Donnchad, Áine, Murchad [mac Diarmait?], Uargus, Máel-Petair,
+Emer, Rhiwallon, Barrdub, Ualan) — this is the automatic result of being
+head of House Briain. House-head hooks are permanent soft leverage: they
+cannot expire but are also not as potent as blackmail.
+
+He also holds a favor hook on Donnchad (expires 1094) — a concrete,
+exploitable debt.
+
+The only hook held on Murchad himself is a favor hook by Robin, expiring
+1091.2.16. This is significant. Robin is simultaneously:
+  - Murchad's best knight (prowess 13)
+  - Apparently recently removed from the council (generating fired_from_council_opinion −20)
+  - Holding leverage on the king that runs for another four years
+
+Robin's position in the court is thus pointed: he is indispensable in battle,
+aggrieved at his political demotion, and has the king in his debt. Murchad
+also holds a +15 opinion of Robin specifically because Robin mentored his
+heir — a bond of gratitude running in the opposite direction from Robin's
+resentment. This is one of the most narratively charged relationships in the
+court. Robin is not a threat exactly, but he is a complication.
+
+D. Family
+
+Murchad has had a difficult personal year.
+
+His first wife, Irmgard, died on 24 May 1086 — less than a year before this
+save date. He remarried with unusual speed: Eadgyth joined his court on
+4 August 1086, just ten weeks after Irmgard's death. Eadgyth is described by
+the game's opinion data as being of low birth (married_lowborn_opinion is the
+active modifier on multiple characters' opinions of Murchad), which is why
+Muiredach of Desmond disapproves so strongly.
+
+In addition to losing Irmgard, Murchad lost a child — Lóchéne — to consumption
+on 4 September 1086. A wife and a child, both gone within the same summer and
+autumn.
+
+His surviving children:
+  - Áine           in William of England's court (married to Prince William)
+  - Máel-Petair    in Murchad's court (unlanded)
+  - Donnchad       in Murchad's court (unlanded)
+  - Emer           in Murchad's court (unlanded)
+  - Ualan          in Murchad's court (unlanded)
+
+Eadgyth, the new wife, is not only in the court but serves on the council —
+an unusual arrangement that suggests either exceptional capability or that
+Murchad is deliberately integrating her into the power structure quickly,
+perhaps to legitimize the remarriage in the eyes of the court.
+
+E. Court and Personal Relations
+
+The court of 15 members breaks down as:
+  - Council:          Conchobar, Donnchad, Eadgyth (wife)
+  - Knights:          Cennétig, Muirchertach, Robin, Tadg
+  - Court Position:   Ciar — court physician
+  - Courtiers:        Donnchad (son), Emer (daughter), Máel-Petair (son),
+                      Murchad, Rhiwallon, Tristana, Ualan (son)
+
+Having four of his children as courtiers means Murchad's court is very much
+a family household. The court physician (Ciar) is present, which given
+Lóchéne's recent death from consumption may be a direct response to the
+loss — an attempt to safeguard the remaining children.
+
+The only named scripted personal relation in the data is that Murchad holds
+an "oaf" label on a character named Murchaid (id 20361, distinct from the king).
+In CK3, "oaf" is a trait-derived social label rather than an actively chosen
+relationship — it means Murchad simply regards this person as dim or clumsy.
+The character appears to be unlanded and outside Murchad's court.
+
+F. The Gwladus Question
+
+The most intriguing data point in the opinions section involves a character
+named Gwladus, who appears in both directions simultaneously:
+
+  Gwladus's opinion of Murchad:  +23  (grateful_opinion +8, guardian_of_relative +15)
+  Murchad's opinion of Gwladus:  −70  (attempted_murder_close_family_crime −70)
+
+The crime modifier on Murchad's side indicates that Gwladus committed an
+attempted murder against a member of Murchad's close family — a serious act
+that has generated a deep and lasting negative opinion (the modifier runs to
+1100). The "used_punishments" flags in the raw data (imprisonment, banishment,
+execution reasons all marked "yes") suggest Murchad has already exhausted the
+available formal punishments, probably against the perpetrator or an accomplice.
+
+What makes this strange is that Gwladus nonetheless holds a warmly positive
+view of Murchad — grateful (+8) and positive on account of Murchad acting as
+guardian to one of Gwladus's relatives (+15). It is possible that Gwladus
+is a Welsh noblewoman whose kin were integrated into Murchad's household in
+some protective capacity, and that the attempted murder was carried out by
+Gwladus against a member of Murchad's family without Gwladus necessarily
+viewing the act as an attack on Murchad himself. The asymmetry — deep
+grudge on one side, genuine gratitude on the other — is the kind of tangled
+personal history that drives CK3's narrative engine. This relationship deserves
+further investigation against the full character data.
+
+
+IV. OVERALL PICTURE
+--------------------------------------------------------------------------------
+
+On 24 March 1087, Murchad sits in a position that is outwardly stable but
+quietly complicated.
+
+The realm is at peace, his vassals are in line, and he commands a fully
+raised army with no enemy in the field — a show of strength or readiness
+for something not yet visible in the data. His alliance with William of
+England gives him powerful outside cover, though that relationship is
+mediated entirely through Áine's marriage and may be vulnerable to the
+vagaries of English succession (William himself is historically near the
+end of his life).
+
+The real texture of Murchad's situation is personal. He has recently lost
+his wife and a young child in quick succession, remarried a woman his own
+vassal considers beneath the dignity of the High Kingship, and is navigating
+a court that includes a grievance-holding master knight with leverage over
+him, an attempted murder somewhere in his recent family history, and four
+unlanded children still dependent on his court. He is head of one of the oldest
+houses in Ireland (House Briain, founded 978), a faith of fierce fervor and
+shrinking relevance, and a kingdom that is one bad succession or one capable
+claimant away from the fragmentation that is always latent in Irish politics.
+
+He is not in crisis. But the seeds of several crises are visible.
+
+================================================================================
+Generated by ck3-fileparse evaluators (military.py, religion.py, relationships.py)
+Save: sample-saves/murchad.txt  |  Game date: 1087.3.24
