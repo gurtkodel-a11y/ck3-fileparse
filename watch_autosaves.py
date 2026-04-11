@@ -40,7 +40,7 @@ CK3_SAVE_DIR = Path(os.environ.get("USERPROFILE", "C:/Users/User")) / (
 REPO_ROOT     = Path(__file__).parent
 DEST_DIR      = REPO_ROOT / "sample-saves"
 
-POLL_INTERVAL = 15   # seconds between scans
+POLL_INTERVAL = 120   # seconds between scans
 
 
 # ---------------------------------------------------------------------------
