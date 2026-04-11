@@ -3,10 +3,14 @@
 ## Goal
 
 Build a Python toolkit that reads Crusader Kings III save files and produces
-accurate, human-readable analyses of the game state.  The immediate use case
-is the player comparing the tool's output against their own in-game knowledge
-to validate accuracy — but the longer-term vision is an AI advisor layer that
-can reason about the game state and offer strategic commentary.
+accurate, human-readable analyses of the game state.  The immediate use case 
+is as a validation tool to ensure that the underlying parser code is representing
+the gamestate correctly---the player compares the tool's output against their 
+the actual game as experienced through CKIII to check accuracy.  The longer-term 
+vision is an AI tool that can allow people to engage with the game in a more natural 
+language form, and perhaps from a more first-person perspective (unlike the usual 
+game interface, which presents more content from the third-person point of view 
+in many cases.
 
 The project proceeds in layers:
 
