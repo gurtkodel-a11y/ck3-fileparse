@@ -18,6 +18,7 @@ from dataclasses import dataclass, field, asdict
 from collections import defaultdict
 
 from ck3.gamestate import GameState, _ensure_list
+from ck3.geography import KINGDOM_TO_REGION, zone_between, kingdom_to_region
 
 
 # --------------------------------------------------------------------------- #
@@ -34,9 +35,10 @@ class FaithProfile:
     religious_head_name: str | None
     doctrines: list[str]
     tenets: list[str]
-    relation_to_player: str       # "own" | "same_religion" | "hostile" | "other"
+    relation_to_player: str       # "own" | "same_religion" | "other"
     titles_held: int              # how many titles (all tiers) are held by chars of this faith
     rulers_of_faith: list[dict]   # [{id, name, highest_title_key, highest_tier}]
+    zone: int                     # proximity to player: 0=local, 1=nearby, 2=continental, 3=global
 
 
 @dataclass
@@ -64,6 +66,7 @@ class ReligionReport:
     own_faith_tag: str
     own_faith_fervor: float
     own_religion: str             # parent religion name/tag (from faith template)
+    player_region: str            # geographic region of the player's capital kingdom
     faiths: list[FaithProfile]    # all faiths with at least one title-holding ruler
     holy_wars: list[HolyWar]
 
@@ -88,19 +91,54 @@ class ReligionReport:
             if own.religious_head_name:
                 lines.append(f"Religious head: {own.religious_head_name} (id {own.religious_head_id})")
 
-        lines.append(f"\n--- All Active Faiths ({len(self.faiths)}) ---")
-        # Sort: own first, then by titles_held desc
-        sorted_faiths = sorted(
-            self.faiths,
-            key=lambda f: (f.faith_id != self.own_faith_id, -f.titles_held)
-        )
-        for f in sorted_faiths:
-            marker = " ◄ YOU" if f.faith_id == self.own_faith_id else ""
+        # ── Zone 0+1: Local & Nearby — full detail ────────────────────────── #
+        local_nearby = [f for f in self.faiths if f.zone <= 1]
+        local_nearby.sort(key=lambda f: (f.faith_id != self.own_faith_id, -f.titles_held))
+
+        lines.append(f"\n--- Faiths in Your Region & Neighbours ({len(local_nearby)}) ---")
+        for f in local_nearby:
+            marker = " ◄ YOUR FAITH" if f.faith_id == self.own_faith_id else ""
+            zone_label = "local" if f.zone == 0 else "nearby"
             lines.append(
-                f"  {f.tag:<30}  fervor {f.fervor:>5.1f}"
-                f"  titles {f.titles_held:>4}  [{f.relation_to_player}]{marker}"
+                f"  {f.tag:<28}  fervor {f.fervor:>5.1f}"
+                f"  titles {f.titles_held:>4}  [{zone_label}]{marker}"
+            )
+            if f.tenets:
+                lines.append(f"    Tenets: {', '.join(f.tenets)}")
+            if f.religious_head_name:
+                lines.append(f"    Head: {f.religious_head_name}")
+            top_rulers = f.rulers_of_faith[:5]
+            if top_rulers:
+                ruler_strs = [
+                    f"{r['name']} ({r['highest_title_key']})" for r in top_rulers
+                ]
+                lines.append(f"    Rulers: {', '.join(ruler_strs)}")
+
+        # ── Zone 2: Continental — summary rows ────────────────────────────── #
+        continental = [f for f in self.faiths if f.zone == 2]
+        continental.sort(key=lambda f: -f.titles_held)
+
+        lines.append(f"\n--- Continental Faiths (broader Europe / Med / Near East) ({len(continental)}) ---")
+        for f in continental:
+            rel = f.relation_to_player
+            head = f"  head: {f.religious_head_name}" if f.religious_head_name else ""
+            lines.append(
+                f"  {f.tag:<28}  fervor {f.fervor:>5.1f}"
+                f"  titles {f.titles_held:>4}  [{rel}]{head}"
             )
 
+        # ── Zone 3: Global — only major faiths (>50 titles) ──────────────── #
+        global_major = [f for f in self.faiths if f.zone == 3 and f.titles_held >= 50]
+        global_minor_count = sum(1 for f in self.faiths if f.zone == 3 and f.titles_held < 50)
+        global_major.sort(key=lambda f: -f.titles_held)
+
+        lines.append(f"\n--- Major Faiths Beyond the Horizon ({len(global_major)} shown, {global_minor_count} minor omitted) ---")
+        for f in global_major:
+            lines.append(
+                f"  {f.tag:<28}  fervor {f.fervor:>5.1f}  titles {f.titles_held:>4}"
+            )
+
+        # ── Holy Wars ────────────────────────────────────────────────────── #
         lines.append(f"\n--- Holy Wars ({len(self.holy_wars)}) ---")
         for w in self.holy_wars:
             you = "  *** INVOLVES YOU ***" if w.involves_player else ""
@@ -155,7 +193,10 @@ class ReligionEvaluator:
         # files would be needed for the true religion name.
         own_religion = own_faith.get("graphical_faith", own_faith.get("tag", ""))
 
-        faith_profiles = self._build_faith_profiles(own_faith_id, own_religion)
+        # Determine player's geographic region from their capital kingdom
+        player_region = self._player_region(char)
+
+        faith_profiles = self._build_faith_profiles(own_faith_id, own_religion, player_region)
         holy_wars = self._find_holy_wars()
 
         return ReligionReport(
@@ -166,6 +207,7 @@ class ReligionEvaluator:
             own_faith_tag=own_faith_tag,
             own_faith_fervor=own_faith_fervor,
             own_religion=own_religion,
+            player_region=player_region,
             faiths=faith_profiles,
             holy_wars=holy_wars,
         )
@@ -178,8 +220,38 @@ class ReligionEvaluator:
         c = self.gs.character(char_id)
         return c.get("first_name", str(char_id)) if c else str(char_id)
 
+    def _player_region(self, char: dict) -> str:
+        """
+        Determine the player's geographic region from their highest-tier title.
+        Falls back to 'global' if nothing can be resolved.
+        """
+        gs = self.gs
+        ld = char.get("landed_data", {})
+        domain_ids = _ensure_list(ld.get("domain", []))
+
+        best_tier = 99
+        best_region = "global"
+        tier_order = {"e": 0, "k": 1, "d": 2, "c": 3, "b": 4}
+
+        for title_id in domain_ids:
+            t = gs.title(title_id)
+            if not isinstance(t, dict):
+                continue
+            key = t.get("key", "")
+            if not key:
+                continue
+            tier = tier_order.get(key[0], 9)
+            if tier < best_tier:
+                kingdom_key = gs.title_key_to_kingdom(key)
+                region = kingdom_to_region(kingdom_key)
+                if region != "global":
+                    best_tier = tier
+                    best_region = region
+
+        return best_region
+
     def _build_faith_profiles(
-        self, own_faith_id: str, own_religion: str
+        self, own_faith_id: str, own_religion: str, player_region: str
     ) -> list[FaithProfile]:
         gs = self.gs
 
@@ -255,6 +327,9 @@ class ReligionEvaluator:
             for r in rulers:
                 r.pop("_tier_order", None)
 
+            # Compute geographic zone from the faith's rulers' highest titles
+            zone = self._faith_zone(rulers, player_region)
+
             profiles.append(FaithProfile(
                 faith_id=faith_id,
                 tag=tag,
@@ -266,9 +341,31 @@ class ReligionEvaluator:
                 relation_to_player=relation,
                 titles_held=count,
                 rulers_of_faith=rulers,
+                zone=zone,
             ))
 
         return profiles
+
+    def _faith_zone(self, rulers: list[dict], player_region: str) -> int:
+        """
+        Return the proximity zone (0–3) for a faith based on where its
+        highest-tier rulers hold titles.  Takes the minimum zone across all
+        rulers (i.e. the closest any ruler is to the player).
+        """
+        gs = self.gs
+        best = 3
+        for ruler in rulers:
+            title_key = ruler.get("highest_title_key", "")
+            if not title_key:
+                continue
+            kingdom_key = gs.title_key_to_kingdom(title_key)
+            faith_region = kingdom_to_region(kingdom_key)
+            z = zone_between(player_region, faith_region)
+            if z < best:
+                best = z
+            if best == 0:
+                break
+        return best
 
     def _find_holy_wars(self) -> list[HolyWar]:
         gs = self.gs
