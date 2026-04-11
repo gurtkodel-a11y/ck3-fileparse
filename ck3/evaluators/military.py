@@ -18,6 +18,7 @@ from typing import Any
 
 from ck3.gamestate import GameState, _ensure_list
 from ck3.names import decode_name, char_label
+from ck3.geography import kingdom_to_region, zone_between
 
 
 # --------------------------------------------------------------------------- #
@@ -69,6 +70,23 @@ class RealmStrength:
 
 
 @dataclass
+class NearbyRuler:
+    """Military profile of a politically or geographically relevant ruler."""
+    char_id: int
+    char_name: str
+    highest_title_key: str
+    highest_title_tier: str
+    political_relation: str   # "liege"|"vassal"|"ally"|"at_war"|"geo_neighbor"
+    geo_zone: int             # 0=local, 1=nearby, 2=continental, 3=global
+    levy_capacity: int
+    maa_capacity: int
+    total_max: int
+    current_troops: int
+    combat_power: int
+    faith_tag: str
+
+
+@dataclass
 class MilitaryReport:
     """Full level-1 military report for one character."""
     char_id: int
@@ -79,6 +97,7 @@ class MilitaryReport:
     allied_armies: list[FieldArmy]
     enemy_armies: list[FieldArmy]
     active_wars: list[ActiveWar]
+    nearby_rulers: list[NearbyRuler]
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -142,6 +161,43 @@ class MilitaryReport:
                 f"    Defenders: {dfn}"
             )
 
+        # ── Nearby Rulers ─────────────────────────────────────────────────── #
+        _REL_ORDER = {"liege": 0, "vassal": 1, "ally": 2, "at_war": 3, "geo_neighbor": 4}
+        _ZONE_LABEL = {0: "local", 1: "nearby", 2: "continental", 3: "global"}
+
+        groups: dict[str, list[NearbyRuler]] = {}
+        for nr in self.nearby_rulers:
+            groups.setdefault(nr.political_relation, []).append(nr)
+
+        _GROUP_HEADER = {
+            "liege":        "Liege",
+            "vassal":       "Direct Vassals",
+            "ally":         "Allies",
+            "at_war":       "Active War Enemies",
+            "geo_neighbor": "Geographic Neighbors (local/nearby)",
+        }
+
+        lines.append(f"\n--- Nearby Rulers — Political & Geographic Context ({len(self.nearby_rulers)}) ---")
+        _GEO_NEIGHBOR_DISPLAY_LIMIT = 30
+
+        for rel in ("liege", "vassal", "ally", "at_war", "geo_neighbor"):
+            rulers = groups.get(rel, [])
+            if not rulers:
+                continue
+            rulers.sort(key=lambda r: (-r.total_max, r.char_name))
+            display = rulers[:_GEO_NEIGHBOR_DISPLAY_LIMIT] if rel == "geo_neighbor" else rulers
+            omitted = len(rulers) - len(display)
+            lines.append(f"  [{_GROUP_HEADER[rel]}]")
+            for r in display:
+                zone_str = _ZONE_LABEL.get(r.geo_zone, "?")
+                lines.append(
+                    f"    {r.char_name:<32}  {_title_display(r.highest_title_key):<28}"
+                    f"  levy {r.levy_capacity:>5,}  total {r.total_max:>5,}"
+                    f"  power {int(r.combat_power):>6,}  [{zone_str}]  {r.faith_tag}"
+                )
+            if omitted:
+                lines.append(f"    … and {omitted} more (county+ tier, zone 0–1)")
+
         return "\n".join(lines)
 
 
@@ -181,6 +237,11 @@ class MilitaryEvaluator:
             enemy_ids, allied_ids
         )
 
+        player_region = self._player_region(char)
+        ally_ids_rel = self._ally_ids_from_relations()
+        all_ally_ids = allied_ids | ally_ids_rel
+        nearby_rulers = self._nearby_rulers(player_region, enemy_ids, all_ally_ids)
+
         return MilitaryReport(
             char_id=self.char_id,
             char_name=char_name,
@@ -190,11 +251,156 @@ class MilitaryEvaluator:
             allied_armies=allied_armies,
             enemy_armies=enemy_armies,
             active_wars=wars,
+            nearby_rulers=nearby_rulers,
         )
 
     # ---------------------------------------------------------------------- #
     # Private helpers
     # ---------------------------------------------------------------------- #
+
+    def _player_region(self, char: dict) -> str:
+        """Determine the player's geographic region from their highest-tier title."""
+        gs = self.gs
+        ld = char.get("landed_data", {})
+        domain_ids = _ensure_list(ld.get("domain", []))
+        tier_order = {"e": 0, "k": 1, "d": 2, "c": 3, "b": 4}
+        best_tier = 99
+        best_region = "global"
+        for title_id in domain_ids:
+            t = gs.title(title_id)
+            if not isinstance(t, dict):
+                continue
+            key = t.get("key", "")
+            if not key:
+                continue
+            tier = tier_order.get(key[0], 9)
+            if tier < best_tier:
+                kingdom_key = gs.title_key_to_kingdom(key)
+                region = kingdom_to_region(kingdom_key)
+                if region != "global":
+                    best_tier = tier
+                    best_region = region
+        return best_region
+
+    def _ally_ids_from_relations(self) -> set[int]:
+        """Collect ally char IDs from active_relations alliance bonds."""
+        gs = self.gs
+        allies: set[int] = set()
+        for rel in gs.active_relations:
+            if not isinstance(rel, dict):
+                continue
+            first = rel.get("first")
+            second = rel.get("second")
+            if first != self.char_id and second != self.char_id:
+                continue
+            if not _ensure_list(rel.get("alliances", [])):
+                continue
+            other_id = second if first == self.char_id else first
+            # Only count rulers — unlanded "allies" are just marriage mediators
+            if gs.titles_held_by(other_id):
+                allies.add(other_id)
+        return allies
+
+    def _nearby_rulers(
+        self,
+        player_region: str,
+        enemy_ids: set[int],
+        ally_ids: set[int],
+    ) -> list[NearbyRuler]:
+        """
+        Build a list of politically or geographically relevant rulers with
+        their full military strength profile.
+
+        Includes:
+          - Direct liege (if any)
+          - Direct vassals
+          - Formal allies (from active_relations)
+          - Active war enemies
+          - Any landed ruler whose highest title falls in zone 0 or 1
+        """
+        gs = self.gs
+        tier_order = {"e": 0, "k": 1, "d": 2, "c": 3, "b": 4}
+
+        # Determine liege and vassal IDs
+        liege_contract = gs.contract_for_vassal(self.char_id)
+        liege_id: int | None = liege_contract.get("liege") if liege_contract else None
+
+        vassal_ids: set[int] = set()
+        for contract in gs.contracts_for_liege(self.char_id):
+            if isinstance(contract, dict) and contract.get("vassal") is not None:
+                vassal_ids.add(contract["vassal"])
+
+        # Gather each landed character's highest title (skip the player)
+        char_best_title: dict[int, tuple[str, str]] = {}   # char_id → (key, tier)
+        for tid, title in gs.titles.items():
+            if not isinstance(title, dict):
+                continue
+            holder_id = title.get("holder")
+            if holder_id is None or holder_id == self.char_id:
+                continue
+            key = title.get("key", "")
+            if not key:
+                continue
+            tier = key[0]
+            order = tier_order.get(tier, 4)
+            prev = char_best_title.get(holder_id)
+            if prev is None or order < tier_order.get(prev[1], 4):
+                char_best_title[holder_id] = (key, tier)
+
+        results: list[NearbyRuler] = []
+        for char_id, (title_key, title_tier) in char_best_title.items():
+            kingdom_key = gs.title_key_to_kingdom(title_key)
+            char_region = kingdom_to_region(kingdom_key)
+            geo_zone = zone_between(player_region, char_region)
+
+            # Classify political relation
+            if char_id == liege_id:
+                relation = "liege"
+            elif char_id in vassal_ids:
+                relation = "vassal"
+            elif char_id in ally_ids:
+                relation = "ally"
+            elif char_id in enemy_ids:
+                relation = "at_war"
+            elif geo_zone <= 1:
+                # Only county-tier and above — barons are too numerous to be useful
+                if tier_order.get(title_tier, 4) > 3:
+                    continue
+                relation = "geo_neighbor"
+            else:
+                continue  # not relevant
+
+            char = gs.character(char_id)
+            if not char:
+                continue
+
+            ld = char.get("landed_data", {})
+            levy_cap   = int(ld.get("levy", 0) or 0)
+            total_max  = int(ld.get("strength", 0) or 0)
+            current    = int(ld.get("current_strength", 0) or 0)
+            power      = int(ld.get("power", 0) or 0)
+            maa_cap    = max(0, total_max - levy_cap)
+
+            faith_id  = str(char.get("faith", ""))
+            faith_data = gs.faith(faith_id) or {}
+            faith_tag  = faith_data.get("tag", faith_id)
+
+            results.append(NearbyRuler(
+                char_id=char_id,
+                char_name=char_label(char, gs, char_id),
+                highest_title_key=title_key,
+                highest_title_tier=title_tier,
+                political_relation=relation,
+                geo_zone=geo_zone,
+                levy_capacity=levy_cap,
+                maa_capacity=maa_cap,
+                total_max=total_max,
+                current_troops=current,
+                combat_power=power,
+                faith_tag=faith_tag,
+            ))
+
+        return results
 
     def _char_name(self, char_id: int) -> str:
         c = self.gs.character(char_id)
@@ -348,6 +554,17 @@ class MilitaryEvaluator:
 # --------------------------------------------------------------------------- #
 # Module-level helpers
 # --------------------------------------------------------------------------- #
+
+def _title_display(key: str) -> str:
+    """Short human-readable label for a title key, e.g. 'k_ireland' → 'King of Ireland'."""
+    _LABELS = {"e": "Emperor", "k": "King", "d": "Duke", "c": "Count", "b": "Baron"}
+    if not key:
+        return "(no title)"
+    tier = key[0]
+    label = _LABELS.get(tier, "Lord")
+    place = key[2:].replace("_", " ").title() if len(key) > 2 else key
+    return f"{label} of {place}"
+
 
 def _participants(war: dict, side: str) -> list[int]:
     side_data = war.get(side, {})

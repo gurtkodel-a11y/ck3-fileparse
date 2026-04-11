@@ -52,9 +52,9 @@ not yet been started.
   ZIP archive containing a plaintext `gamestate` entry — **no ck3-melt needed**;
   `extract_snapshots.py` detects this automatically and extracts directly
 
-The two `.txt` files in `sample-saves/` (`dunkeld.txt`, `murchad.txt`) were
-added directly from ZIP saves.  All `.ck3` files in `sample-saves/` are the
-1.18+ header+ZIP format and have been extracted to `sample-saves/extracted/`.
+All `.ck3` files in `sample-saves/` are the 1.18+ header+ZIP format and have
+been extracted to `sample-saves/extracted/`.  The extracted `.txt` files are
+gitignored (too large to push); they live only on the local Mac.
 
 ---
 
@@ -62,25 +62,22 @@ added directly from ZIP saves.  All `.ck3` files in `sample-saves/` are the
 
 ```
 parse_gamestate.py          Clausewitz tokeniser + iterative parser
-run_report.py               CLI: parse a save, run all evaluators, print report
+run_report.py               CLI: parse a save, run selected evaluators, print report
 
 ck3/
   __init__.py
   gamestate.py              GameState wrapper + all lookup indices
   geography.py              Region definitions + interaction-proximity zones
+  names.py                  Name decoding, house labels, ordinals, char_label()
   evaluators/
     __init__.py
     military.py             MilitaryEvaluator  → MilitaryReport
     religion.py             ReligionEvaluator  → ReligionReport
-    hierarchy.py            HierarchyEvaluator → HierarchyReport
+    relationships.py        RelationshipsEvaluator → RelationshipsReport
 
 sample-saves/
   *.ck3                     1.18+ format saves (SAV0 header + embedded ZIP)
-  dunkeld.txt               Extracted plaintext — Malcolm III of Scotland, 1066
-                            (actually binary U1 format — NOT yet parseable)
-  murchad.txt               Extracted plaintext — High King Murchad of Ireland,
-                            1087.3.24 — the primary test save
-  extracted/                All 11 .ck3 saves extracted to plaintext here:
+  extracted/                All 11 .ck3 saves extracted to plaintext (gitignored):
     Petty_King_Murchad_of_Munster_1069_11_28.txt   (81 MB)   char 31762
     Petty_King_Murchad_of_Munster_1071_01_07.txt   (86 MB)   char 31762
     Petty_King_Murchad_of_Munster_1076_04_09.txt   (96 MB)   char 31762
@@ -110,6 +107,19 @@ sample-saves/
 - The `vassal_contracts` data lives at `raw["vassal_contracts"]["database"]`
   (one level deeper than the top-level key)
 - Active relations live as a flat list at `raw["relations"]["active_relations"]`
+- Multiplayer saves: `played_character` key appears twice → parser merges to list;
+  handled with `isinstance(_played, list)` guard
+
+### Names (`ck3/names.py`)
+- CK3 encoding: `X_` (uppercase + underscore) = accented lowercase; `_XXXX` = CJK
+  hex codepoint; remaining `_` = word separator
+- `decode_name(raw)` — decodes a raw save-file name string
+- `house_prefix_name(house)` — returns `(prefix, name)` from house record
+- `name_ordinal(char, gs, char_id)` — 1-based ordinal within dynasty house by
+  birth-date sort (limitation: fully pruned dead ancestors absent from save)
+- `char_label(char, gs, char_id)` — full formatted name including ordinal, house,
+  and highest title (gender-aware); `include_title=False` for narrow columns
+- `title_ruler_label(title, female)` — "Count of X", "Duchess of X", etc.
 
 ### Geography (`ck3/geography.py`)
 - Regions are coarse groupings of kingdom-tier title keys
@@ -143,12 +153,19 @@ sample-saves/
 - Combat power (41,520) is the game's internal metric combining troop power
   with various bonuses; not directly visible to the player but directionally correct
 - Knights are listed with prowess and approximate power (prowess × 100)
-- Character names with special characters (Ólafr, Ruaidhrí, etc.) show garbled
-  due to encoding in the save; known issue, not yet fixed
+
+**Nearby Rulers section** (new):
+- Added `NearbyRuler` dataclass and `nearby_rulers` field to `MilitaryReport`
+- Covers five relationship categories: liege, direct vassals, allies, active war
+  enemies, and geographic neighbors (zone 0–1, county+ tier only)
+- Allies sourced from both active wars and `active_relations` alliance bonds
+- Geographic neighbors capped at 30 in the summary (sorted by total strength
+  descending); full list available in the dataclass
+- Power values stored and displayed as integers (save file sometimes has floats)
 
 **Known gaps:**
 - No breakdown of current levy vs. current MaA (save doesn't store them separately)
-- Neutral armies are omitted from the report (intentional — too noisy)
+- Neutral armies are omitted from the field army report (intentional — too noisy)
 
 ### Religion (`ck3/evaluators/religion.py`)
 **Validated against murchad.txt (1087.3.24)**
@@ -166,40 +183,33 @@ sample-saves/
   (e.g. `catholic_gfx`); true religion names require static game data files
 
 **Known gaps:**
-- Orthodox landing as "nearby" (via Byzantium → Balkans → Western Europe → 2
-  hops from British Isles) is arguably correct for 1087 but worth watching
-- `hostile` relation type was removed; currently only "own", "same_religion",
-  "other" — religious hostility would need game data files to compute
+- `hostile` relation type removed; currently only "own", "same_religion", "other"
+  — religious hostility would need game data files to compute
 
-### Hierarchy (`ck3/evaluators/hierarchy.py`)
+### Relationships (`ck3/evaluators/relationships.py`)
 **Validated against murchad.txt (1087.3.24)**
 
-Covers four sections:
-1. **Position** — liege chain from player to the top independent ruler
-2. **Vassals** — direct vassal contracts with contract type, titles, military
-   contribution, and faction threat flag
-3. **Alliances** — lateral alliances with bond count and mediator info
-4. **Hooks** — favor hooks and house-head hooks held/held-on-player
+Supersedes `hierarchy.py`.  Covers nine sections:
+1. **Position** — liege chain upward
+2. **Vassals** — direct vassal contracts with levy/strength, faction flags
+3. **Factions** — active factions targeting the player
+4. **Alliances** — lateral alliances with bond count and mediator info
+5. **Hooks** — favor hooks and house-head hooks held/held-on-player
+6. **Family** — spouse(s), children, parents, dynasty prestige
+7. **Court** — courtiers grouped by role (council, knight, court position)
+8. **Personal Relations** — scripted bonds (friend, rival, lover, …)
+9. **Notable Opinions** — significant temporary opinion modifiers
 
 **Key data source quirks discovered:**
-- `vassal_contracts` is nested: `raw["vassal_contracts"]["database"]`
-- Alliance data in `active_relations` creates **derivative entries** for the
-  mediating spouses/children in addition to the main ruler-to-ruler entry.
-  Filter: only count an alliance if the other party holds at least a county-
-  level title.  Unlanded "allies" are mediators, not allied rulers.
-- A single marriage can produce **multiple bond entries** in the same alliance
-  list (seen as 2 identical entries for the Murchad–William alliance).  This
-  appears to be intentional CK3 bookkeeping; we track and display the bond
-  count rather than collapsing it.
-- Negotiated (non-marriage) alliances are detected when both `allied_through`
-  characters are the principals themselves.
-- `active_hook_0` is held by `first`, `active_hook_1` by `second` in a
-  relation entry.
-- House-head hooks (permanent, expiry 9999.1.1) are separate from favor hooks
+- Alliance `active_relations` creates derivative entries for mediating
+  spouses/children — filter: only count if other party holds a county+ title
+- A single marriage can produce multiple bond entries (intentional CK3 bookkeeping)
+- Negotiated alliances detected when both `allied_through` chars are the principals
+- `active_hook_0` held by `first`, `active_hook_1` by `second`
 
 **Validated results (murchad.txt):**
 - Independent ruler ✓
-- 3 feudal vassals: Ruaidhrí (d_connacht), Muiredach (c_desmond), Ólafr (c_ormond) ✓
+- 3 feudal vassals: Ruaidrí (d_connacht), Muiredach (c_desmond), Ólafr (c_ormond) ✓
 - 2 alliances: William of England [2 bonds, via Prince William ↔ Princess Áine],
   Murchad mac Diarmait [c_dublin, negotiated] ✓
 - Robin's favor hook on player (expires 1091.2.16) ✓
@@ -214,13 +224,16 @@ Covers four sections:
 ## Running the Report
 
 ```bash
-python3 run_report.py sample-saves/murchad.txt
-# or with an explicit character ID:
-python3 run_report.py sample-saves/murchad.txt 18269
+python3 run_report.py sample-saves/extracted/<save>.txt
+# explicit character ID:
+python3 run_report.py sample-saves/extracted/<save>.txt 18269
+# specific modules only:
+python3 run_report.py sample-saves/extracted/<save>.txt --modules military
+python3 run_report.py sample-saves/extracted/<save>.txt 18269 --modules religion relationships
 ```
 
-Output: Military → Religion → Hierarchy reports printed to stdout.
-Parse/load progress goes to stderr.
+Available modules: `military`, `religion`, `relationships` (default: all three).
+Parse/load progress goes to stderr; report content to stdout.
 
 ---
 
@@ -228,14 +241,16 @@ Parse/load progress goes to stderr.
 
 Suggested priorities (not binding):
 
-- **Validate new saves**: 11 saves now extracted covering 1069–1093 with Murchad,
+- **Validate new saves**: 11 saves extracted covering 1069–1093 with Murchad,
   plus Brian II at 1093 — run reports and spot-check against the game
-- **Character encoding**: fix garbled special characters in Irish/Norse names
 - **Economy evaluator**: gold income, development, buildings — the third major
   pillar of CK3 gameplay alongside military and diplomacy
 - **Opinion scores**: parse `raw["opinions"]` to surface which vassals like/
   dislike the player and why — important for predicting faction risk
-- **Sub-vassals**: the current hierarchy only shows direct vassals; a "realm
-  tree" view would be more complete
+- **Sub-vassals**: the current relationships report only shows direct vassals;
+  a "realm tree" view would be more complete
+- **Nearby ruler name encoding**: some names in the nearby-rulers section still
+  show raw encoding (e.g. `HA_mA_lA_inen`) — their first_name goes through
+  `char_label` but the title-key display is unaffected; review character coverage
 - **LLM advisor layer**: feed evaluator output into Claude to generate
   strategic commentary — this is the long-term goal of the whole project
