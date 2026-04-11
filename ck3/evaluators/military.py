@@ -58,11 +58,11 @@ class ActiveWar:
 class RealmStrength:
     """The character's own realm-wide military resources."""
     char_id: int
-    current_troops: int      # troops currently fielded in domain armies
-    max_troops: int          # max troops capacity
-    max_levy: int            # total levy capacity
-    current_levy: int        # levy currently raised
-    combat_power: int        # sum of power across active units
+    total_troops: int        # levy + MaA currently raised (current_strength)
+    total_max: int           # levy cap + MaA cap combined (strength)
+    levy_capacity: int       # maximum possible levy (levy field in landed_data)
+    maa_capacity: int        # maximum men-at-arms = total_max - levy_capacity
+    combat_power: int        # game's internal power metric (bonuses included)
     domain_garrisons: list[dict]   # per-province garrison info
     knights: list[dict]      # each knight: id, name, prowess, power
 
@@ -92,9 +92,12 @@ class MilitaryReport:
         rs = self.realm_strength
         lines += [
             "\n--- Realm Strength ---",
-            f"  Levy:          {rs.current_levy:,} / {rs.max_levy:,}  raised",
-            f"  Field troops:  {rs.current_troops:,} / max {rs.max_troops:,}",
-            f"  Combat power:  {rs.combat_power:,}",
+            f"  Levy capacity:     {rs.levy_capacity:>6,}",
+            f"  Men-at-arms cap:   {rs.maa_capacity:>6,}",
+            f"  ─────────────────────────",
+            f"  Total max:         {rs.total_max:>6,}",
+            f"  Currently raised:  {rs.total_troops:>6,}  (levy + MaA combined)",
+            f"  Combat power:      {rs.combat_power:>6,}  (game internal metric)",
             f"  Knights ({len(rs.knights)}):",
         ]
         for k in rs.knights:
@@ -200,9 +203,10 @@ class MilitaryEvaluator:
         gs = self.gs
         ld = char.get("landed_data", {})
 
-        max_levy    = ld.get("levy", 0) or 0
+        levy_cap    = ld.get("levy", 0) or 0
         current_str = ld.get("current_strength", 0) or 0
         max_str     = ld.get("strength", 0) or 0
+        maa_cap     = max(0, max_str - levy_cap)
         power       = ld.get("power", 0) or 0
 
         # Domain garrisons
@@ -242,10 +246,10 @@ class MilitaryEvaluator:
 
         return RealmStrength(
             char_id=self.char_id,
-            current_troops=current_str,
-            max_troops=max_str,
-            max_levy=max_levy,
-            current_levy=current_str,   # best proxy available in save data
+            total_troops=current_str,
+            total_max=max_str,
+            levy_capacity=levy_cap,
+            maa_capacity=maa_cap,
             combat_power=power,
             domain_garrisons=garrisons,
             knights=knights,

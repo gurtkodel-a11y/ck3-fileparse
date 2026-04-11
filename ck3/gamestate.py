@@ -54,15 +54,22 @@ class GameState:
         _cult_root               = raw.get("culture_manager", {})
         self.cultures: dict      = _cult_root.get("cultures", {})
 
+        self.vassal_contracts: dict = raw.get("vassal_contracts", {}).get("database", {})
+        self.active_relations: list = _ensure_list(raw.get("relations", {}).get("active_relations", []))
+        self.factions: dict      = raw.get("faction_manager", {}).get("factions", {})
+
         self.date: str           = raw.get("date", "")
         self.played_character_id: int = raw.get("played_character", {}).get("character")
 
         # ------------------------------------------------------------------ #
         # Indices (built once, reused by all evaluators)
         # ------------------------------------------------------------------ #
-        self._titles_by_holder:  dict[int, list[str]] = {}   # char_id → [title_key, ...]
-        self._units_by_owner:    dict[int, list[str]] = {}   # char_id → [unit_id, ...]
-        self._wars_by_char:      dict[int, list[str]] = {}   # char_id → [war_id, ...]
+        self._titles_by_holder:    dict[int, list[str]] = {}   # char_id → [title_id, ...]
+        self._units_by_owner:      dict[int, list[str]] = {}   # char_id → [unit_id, ...]
+        self._wars_by_char:        dict[int, list[str]] = {}   # char_id → [war_id, ...]
+        self._title_key_to_kingdom: dict[str, str] = {}        # title_key → kingdom_key
+        self._contracts_by_liege:  dict[int, list[str]] = {}   # liege_id → [contract_id, ...]
+        self._contract_by_vassal:  dict[int, str] = {}         # vassal_id → contract_id
         self._built = False
 
     # ---------------------------------------------------------------------- #
@@ -76,7 +83,18 @@ class GameState:
         self._build_title_index()
         self._build_unit_index()
         self._build_war_index()
+        self._build_title_key_to_kingdom_index()
+        self._build_contract_indices()
         self._built = True
+
+    def title_key_to_kingdom(self, title_key: str) -> str:
+        """
+        Return the kingdom-tier (k_*) or empire-tier (e_*) title key that
+        is the de-jure liege of *title_key*.  Returns *title_key* itself if
+        it is already kingdom/empire tier, or if the hierarchy is unknown.
+        """
+        self.build_indices()
+        return self._title_key_to_kingdom.get(title_key, title_key)
 
     def character(self, char_id: int | str) -> dict | None:
         """Return the living character record for *char_id*, or None."""
@@ -196,6 +214,70 @@ class GameState:
                     char_id = p.get("character") if isinstance(p, dict) else None
                     if char_id is not None:
                         self._wars_by_char.setdefault(int(char_id), []).append(wid)
+
+    def _build_contract_indices(self):
+        for cid, c in self.vassal_contracts.items():
+            if not isinstance(c, dict):
+                continue
+            vassal = c.get("vassal")
+            liege  = c.get("liege")
+            if vassal is not None and liege is not None:
+                self._contracts_by_liege.setdefault(int(liege), []).append(cid)
+                self._contract_by_vassal[int(vassal)] = cid
+
+    def contracts_for_liege(self, liege_id: int) -> list[dict]:
+        """All vassal contracts where *liege_id* is the liege."""
+        self.build_indices()
+        return [self.vassal_contracts[cid]
+                for cid in self._contracts_by_liege.get(liege_id, [])
+                if cid in self.vassal_contracts]
+
+    def contract_for_vassal(self, vassal_id: int) -> dict | None:
+        """The single vassal contract for *vassal_id* (each vassal has at most one liege)."""
+        self.build_indices()
+        cid = self._contract_by_vassal.get(vassal_id)
+        return self.vassal_contracts.get(cid) if cid else None
+
+    def _build_title_key_to_kingdom_index(self):
+        """
+        Build a mapping from every title key to its de-jure kingdom (k_* / e_*)
+        ancestor by traversing the de_jure_liege chain.
+        """
+        # Pass 1: collect per-title {key, de_jure_liege_key}
+        # Use title ID strings as the canonical identifier.
+        id_to_key: dict[str, str] = {}
+        id_to_liege_id: dict[str, str] = {}
+        key_to_id: dict[str, str] = {}
+
+        for tid_str, t in self.titles.items():
+            if not isinstance(t, dict):
+                continue
+            key = t.get("key", "")
+            if key:
+                id_to_key[tid_str] = key
+                key_to_id[key] = tid_str
+            liege = t.get("de_jure_liege")
+            if liege is not None:
+                id_to_liege_id[tid_str] = str(liege)
+
+        # Pass 2: for each title, walk up until we hit k_* / e_* (max 6 steps)
+        def _find_kingdom(tid_str: str, depth: int = 0) -> str:
+            key = id_to_key.get(tid_str, "")
+            if not key:
+                return ""
+            if key.startswith("k_") or key.startswith("e_"):
+                return key
+            if depth >= 6:
+                return key
+            liege_id = id_to_liege_id.get(tid_str)
+            if liege_id is None:
+                return key
+            return _find_kingdom(liege_id, depth + 1)
+
+        for tid_str, key in id_to_key.items():
+            kingdom_key = _find_kingdom(tid_str)
+            if kingdom_key:
+                self._title_key_to_kingdom[key] = kingdom_key
 
 
 # --------------------------------------------------------------------------- #
