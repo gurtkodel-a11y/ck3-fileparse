@@ -1,0 +1,501 @@
+"""
+ck3.evaluators.terrain
+~~~~~~~~~~~~~~~~~~~~~~
+Level-1 terrain evaluator: characterises the geographic and economic
+composition of a character's realm and their neighbours' territories.
+
+Because terrain type is stored in static game data files (not the save),
+terrain character is inferred from building types.  CK3's building system
+is terrain-gated: only forested provinces can build logging camps, only
+coastal ones can build tradeports, etc.  These serve as reliable proxies.
+
+Usage:
+    from ck3.evaluators.terrain import TerrainEvaluator
+    ev = TerrainEvaluator(gs, char_id=32674)
+    report = ev.report()
+    print(report.summary())
+"""
+
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Any
+
+from ck3.gamestate import GameState, _ensure_list
+from ck3.names import decode_name, char_label
+from ck3.geography import kingdom_to_region
+
+
+# --------------------------------------------------------------------------- #
+# Building classification tables
+# --------------------------------------------------------------------------- #
+
+# Maps building-type prefix → terrain tag.
+# A holding acquires a tag if it has at least one building with that prefix.
+_BUILDING_TERRAIN: dict[str, str] = {
+    "logging_camps":    "forest",
+    "hunting_grounds":  "forest",
+    "common_tradeport": "coastal",
+    "murex_farm":       "coastal",
+    "kora_kora_yards":  "coastal",
+    "hill_farms":       "highland",
+    "hill_forts":       "highland",
+    "quarries":         "highland",
+    "camel_farms":      "arid",
+    "caravanserai":     "arid",
+    "peat_quarries":    "wetland",
+    "paddy_fields":     "wetland",
+    "spice_plantation": "tropical",
+    "plantations":      "tropical",
+    "elephant_pens":    "tropical",
+    "water_temples":    "tropical",
+    "wantilan":         "tropical",
+    "stilted_granaries":"tropical",
+    "idjang_forts":     "island",
+    "horse_pastures":   "steppe",
+    "war_camps":        "steppe",     # often co-located with steppe terrain
+}
+
+# Maps building-type prefix → economic/military category.
+_BUILDING_CATEGORY: dict[str, str] = {
+    "castle":             "fortification",
+    "palisades":          "fortification",
+    "ramparts":           "fortification",
+    "curtain_walls":      "fortification",
+    "watchtowers":        "fortification",
+    "outposts":           "fortification",
+    "hill_forts":         "fortification",
+    "idjang_forts":       "fortification",
+    "barracks":           "military",
+    "war_camps":          "military",
+    "military_camps":     "military",
+    "regimental_grounds": "military",
+    "warrior_lodges":     "military",
+    "stables":            "military",
+    "cereal_fields":      "agriculture",
+    "farm_estates":       "agriculture",
+    "pastures":           "agriculture",
+    "hill_farms":         "agriculture",
+    "orchards":           "agriculture",
+    "paddy_fields":       "agriculture",
+    "camel_farms":        "agriculture",
+    "horse_pastures":     "agriculture",
+    "market_villages":    "commerce",
+    "guild_halls":        "commerce",
+    "common_tradeport":   "commerce",
+    "caravanserai":       "commerce",
+    "workshops":          "commerce",
+    "breweries":          "commerce",
+    "smiths":             "commerce",
+    "windmills":          "commerce",
+    "watermills":         "commerce",
+    "logging_camps":      "resource",
+    "hunting_grounds":    "resource",
+    "quarries":           "resource",
+    "peat_quarries":      "resource",
+    "spice_plantation":   "resource",
+    "plantations":        "resource",
+    "murex_farm":         "resource",
+    "wind_furnace":       "resource",
+    "temple":             "religious",
+    "temple_citadel":     "religious",
+    "hospices":           "religious",
+    "monastic_schools":   "religious",
+    "city":               "urban",
+    "tribe":              "tribal",
+    "longhouses":         "tribal",
+}
+
+_HOLDING_TYPE_SHORT = {
+    "castle_holding":    "castle",
+    "city_holding":      "city",
+    "church_holding":    "church",
+    "tribal_holding":    "tribal",
+}
+
+_CONTROL_WARN = 75   # county control below this is flagged
+
+
+# --------------------------------------------------------------------------- #
+# Data classes
+# --------------------------------------------------------------------------- #
+
+@dataclass
+class HoldingProfile:
+    """Detailed profile of one barony/holding."""
+    barony_key: str
+    county_key: str
+    holding_type: str          # short form: castle / city / church / tribal / unknown
+    fort_level: int
+    development: int
+    development_progress: float
+    county_control: float
+    buildings: list[str]       # raw building type strings present
+    terrain_tags: list[str]    # inferred: forest / coastal / highland / arid / wetland / tropical / steppe
+    building_cats: dict[str, int]   # category → count of buildings
+    special_features: list[str]     # points_of_interest strings
+
+
+@dataclass
+class DomainSummary:
+    """Aggregate statistics across all of the player's directly-held holdings."""
+    total_holdings: int
+    type_counts: dict[str, int]        # holding_type → count
+    total_development: int
+    avg_development: float
+    low_control: list[str]             # county keys with control < _CONTROL_WARN
+    terrain_mix: dict[str, int]        # terrain_tag → count of holdings bearing that tag
+    category_totals: dict[str, int]    # building category → total building count
+
+
+@dataclass
+class VassalProfile:
+    """Terrain/holding summary for one direct vassal."""
+    char_id: int
+    char_name: str
+    highest_title_key: str
+    holding_count: int
+    type_counts: dict[str, int]
+    total_development: int
+    avg_development: float
+    low_control_count: int
+    terrain_mix: dict[str, int]
+
+
+@dataclass
+class TerrainReport:
+    """Full level-1 terrain report for one character."""
+    char_id: int
+    char_name: str
+    game_date: str
+    domain_holdings: list[HoldingProfile]
+    domain_summary: DomainSummary
+    vassal_profiles: list[VassalProfile]
+
+    def summary(self) -> str:
+        lines = [
+            f"Terrain Report — {self.char_name} (id {self.char_id})  [{self.game_date}]",
+            "=" * 70,
+        ]
+
+        # ── Domain Summary ─────────────────────────────────────────────── #
+        ds = self.domain_summary
+        type_str = "  ".join(
+            f"{cnt} {t}" for t, cnt in sorted(ds.type_counts.items(), key=lambda x: -x[1])
+        )
+        terrain_str = "  ".join(
+            f"{tag}({cnt})" for tag, cnt in sorted(ds.terrain_mix.items(), key=lambda x: -x[1])
+        ) or "—"
+        lines += [
+            "\n--- Domain Overview ---",
+            f"  Holdings:        {ds.total_holdings}  ({type_str})",
+            f"  Development:     {ds.total_development} total  ({ds.avg_development:.1f} avg per holding)",
+            f"  Terrain mix:     {terrain_str}",
+        ]
+        if ds.low_control:
+            lines.append(f"  Low control (<{_CONTROL_WARN}):  " + ", ".join(ds.low_control))
+
+        cat_parts = []
+        for cat in ("fortification", "military", "agriculture", "commerce", "resource", "religious", "urban", "tribal"):
+            n = ds.category_totals.get(cat, 0)
+            if n:
+                cat_parts.append(f"{cat} {n}")
+        if cat_parts:
+            lines.append(f"  Buildings:       " + "  ".join(cat_parts))
+
+        # ── Per-holding detail ─────────────────────────────────────────── #
+        lines.append(f"\n--- Domain Holdings ({len(self.domain_holdings)}) ---")
+        lines.append(
+            f"  {'Barony':<28}  {'County':<20}  {'Type':<7}  "
+            f"{'Dev':>3}  {'Ctrl':>4}  {'Fort':>4}  Terrain / Notable"
+        )
+        lines.append("  " + "-" * 90)
+        for h in sorted(self.domain_holdings, key=lambda x: (-x.development, x.county_key)):
+            terrain = " ".join(h.terrain_tags) if h.terrain_tags else "—"
+            specials = " ".join(h.special_features) if h.special_features else ""
+            notable = (terrain + ("  [" + specials + "]" if specials else "")).strip()
+            ctrl_str = f"{h.county_control:.0f}%" if h.county_control else " —"
+            barony_display = _key_label(h.barony_key)
+            county_display = _key_label(h.county_key)
+            lines.append(
+                f"  {barony_display:<28}  {county_display:<20}  {h.holding_type:<7}  "
+                f"{h.development:>3}  {ctrl_str:>5}  {h.fort_level:>4}  {notable}"
+            )
+
+        # ── Vassal Profiles ────────────────────────────────────────────── #
+        if self.vassal_profiles:
+            lines.append(f"\n--- Vassal Territories ({len(self.vassal_profiles)}) ---")
+            lines.append(
+                f"  {'Name':<28}  {'Title':<22}  {'Hold':>4}  "
+                f"{'Dev':>3}  {'AvgDev':>6}  {'LowCtrl':>7}  Terrain"
+            )
+            lines.append("  " + "-" * 90)
+            for v in sorted(self.vassal_profiles, key=lambda x: -x.total_development):
+                terrain = " ".join(
+                    f"{tag}({cnt})" for tag, cnt in sorted(v.terrain_mix.items(), key=lambda x: -x[1])
+                ) or "—"
+                type_str = "/".join(
+                    f"{cnt}{t[0]}" for t, cnt in sorted(v.type_counts.items(), key=lambda x: -x[1])
+                )
+                lines.append(
+                    f"  {v.char_name:<28}  {_key_label(v.highest_title_key):<22}  "
+                    f"{v.holding_count:>4}  {v.total_development:>3}  "
+                    f"{v.avg_development:>6.1f}  {v.low_control_count:>7}  {terrain}"
+                )
+
+        return "\n".join(lines)
+
+
+# --------------------------------------------------------------------------- #
+# Evaluator
+# --------------------------------------------------------------------------- #
+
+class TerrainEvaluator:
+    def __init__(self, gs: GameState, char_id: int):
+        self.gs = gs
+        self.char_id = char_id
+        gs.build_indices()
+
+        # Cache county_manager data: county_key → {development, county_control, ...}
+        cm = gs._raw.get("county_manager", {})
+        self._county_data: dict[str, dict] = cm.get("counties", {})
+
+    def report(self) -> TerrainReport:
+        gs = self.gs
+        char = gs.character(self.char_id)
+        if char is None:
+            raise ValueError(f"Character {self.char_id} not found in living")
+
+        char_name = char_label(char, gs, self.char_id)
+        domain_holdings = self._profile_domain(char)
+        domain_summary = self._summarise(domain_holdings)
+        vassal_profiles = self._vassal_profiles()
+
+        return TerrainReport(
+            char_id=self.char_id,
+            char_name=char_name,
+            game_date=gs.date,
+            domain_holdings=domain_holdings,
+            domain_summary=domain_summary,
+            vassal_profiles=vassal_profiles,
+        )
+
+    # ---------------------------------------------------------------------- #
+    # Private helpers
+    # ---------------------------------------------------------------------- #
+
+    def _county_key_for(self, title: dict) -> str:
+        """Walk de_jure_liege upward until we find a c_* key."""
+        gs = self.gs
+        key = title.get("key", "")
+        if key.startswith("c_"):
+            return key
+        liege_id = title.get("de_jure_liege")
+        if liege_id is None:
+            return ""
+        liege = gs.title(liege_id)
+        if not liege:
+            return ""
+        liege_key = liege.get("key", "")
+        return liege_key if liege_key.startswith("c_") else ""
+
+    def _buildings_from_province(self, prov: dict) -> list[str]:
+        """Extract all building type strings from a province's holding."""
+        holding = prov.get("holding", {})
+        if not isinstance(holding, dict):
+            return []
+        result = []
+        for slot in _ensure_list(holding.get("buildings", [])):
+            if isinstance(slot, dict):
+                btype = slot.get("type")
+                if btype:
+                    result.append(btype)
+            elif isinstance(slot, list):
+                for item in slot:
+                    if isinstance(item, dict):
+                        btype = item.get("type")
+                        if btype:
+                            result.append(btype)
+        return result
+
+    def _classify_buildings(self, buildings: list[str]) -> tuple[list[str], dict[str, int]]:
+        """Return (terrain_tags, category_counts) for a list of building types."""
+        terrain_tags: set[str] = set()
+        cats: dict[str, int] = {}
+        for btype in buildings:
+            prefix = _btype_prefix(btype)
+            tag = _BUILDING_TERRAIN.get(prefix)
+            if tag:
+                terrain_tags.add(tag)
+            cat = _BUILDING_CATEGORY.get(prefix)
+            if cat:
+                cats[cat] = cats.get(cat, 0) + 1
+        return sorted(terrain_tags), cats
+
+    def _profile_one(self, title_id: int | str) -> HoldingProfile | None:
+        """Build a HoldingProfile for one county/barony title from the player's domain."""
+        gs = self.gs
+        title = gs.title(title_id)
+        if not isinstance(title, dict):
+            return None
+
+        # Skip duchy/kingdom/empire titles — they appear in landed_data.domain
+        # as the seat entry and share a province_id with their capital county,
+        # which would create a duplicate holding row.
+        key_check = title.get("key", "")
+        if key_check and key_check[0] in ("d", "k", "e"):
+            return None
+
+        barony_key = key_check or str(title_id)
+        province_id = title.get("capital")
+        county_key = self._county_key_for(title)
+
+        # Province data
+        prov: dict = {}
+        if province_id is not None:
+            prov = gs.provinces.get(str(province_id), {}) or {}
+        holding = prov.get("holding", {}) if isinstance(prov, dict) else {}
+        raw_type = holding.get("type", "") if isinstance(holding, dict) else ""
+        holding_type = _HOLDING_TYPE_SHORT.get(raw_type, raw_type or "unknown")
+        fort_level = int(prov.get("fort_level", 0)) if isinstance(prov, dict) else 0
+        special_features = _ensure_list(prov.get("points_of_interest", [])) if isinstance(prov, dict) else []
+
+        buildings = self._buildings_from_province(prov)
+        terrain_tags, building_cats = self._classify_buildings(buildings)
+
+        # County data
+        county = self._county_data.get(county_key, {})
+        development = int(county.get("development", 0))
+        dev_progress = float(county.get("development_progress", 0))
+        control = float(county.get("county_control", 100))
+
+        return HoldingProfile(
+            barony_key=barony_key,
+            county_key=county_key,
+            holding_type=holding_type,
+            fort_level=fort_level,
+            development=development,
+            development_progress=dev_progress,
+            county_control=control,
+            buildings=buildings,
+            terrain_tags=terrain_tags,
+            building_cats=building_cats,
+            special_features=special_features,
+        )
+
+    def _profile_domain(self, char: dict) -> list[HoldingProfile]:
+        ld = char.get("landed_data", {})
+        domain_ids = _ensure_list(ld.get("domain", []))
+        profiles = []
+        seen_provinces: set[int] = set()
+        for tid in domain_ids:
+            hp = self._profile_one(tid)
+            if not hp:
+                continue
+            # Deduplicate: duchy titles and their capital county share the same
+            # province_id, so after duchy-tier skipping this shouldn't trigger,
+            # but guard anyway.
+            title = self.gs.title(tid)
+            prov_id = title.get("capital") if isinstance(title, dict) else None
+            if prov_id is not None:
+                if prov_id in seen_provinces:
+                    continue
+                seen_provinces.add(prov_id)
+            profiles.append(hp)
+        return profiles
+
+    def _summarise(self, holdings: list[HoldingProfile]) -> DomainSummary:
+        type_counts: dict[str, int] = {}
+        terrain_mix: dict[str, int] = {}
+        cat_totals: dict[str, int] = {}
+        low_control: list[str] = []
+        total_dev = 0
+
+        for h in holdings:
+            type_counts[h.holding_type] = type_counts.get(h.holding_type, 0) + 1
+            total_dev += h.development
+            if h.county_control < _CONTROL_WARN:
+                if h.county_key and h.county_key not in low_control:
+                    low_control.append(h.county_key)
+            for tag in h.terrain_tags:
+                terrain_mix[tag] = terrain_mix.get(tag, 0) + 1
+            for cat, cnt in h.building_cats.items():
+                cat_totals[cat] = cat_totals.get(cat, 0) + cnt
+
+        n = len(holdings)
+        return DomainSummary(
+            total_holdings=n,
+            type_counts=type_counts,
+            total_development=total_dev,
+            avg_development=total_dev / n if n else 0.0,
+            low_control=sorted(low_control),
+            terrain_mix=terrain_mix,
+            category_totals=cat_totals,
+        )
+
+    def _vassal_profiles(self) -> list[VassalProfile]:
+        gs = self.gs
+        profiles = []
+        tier_order = {"e": 0, "k": 1, "d": 2, "c": 3, "b": 4}
+
+        for contract in gs.contracts_for_liege(self.char_id):
+            if not isinstance(contract, dict):
+                continue
+            vassal_id = contract.get("vassal")
+            if vassal_id is None:
+                continue
+            vassal_char = gs.character(vassal_id)
+            if not vassal_char:
+                continue
+
+            # Highest title
+            best_key = ""
+            best_order = 99
+            for t in gs.titles_held_by(vassal_id):
+                if not isinstance(t, dict):
+                    continue
+                k = t.get("key", "")
+                o = tier_order.get(k[0], 9) if k else 9
+                if o < best_order:
+                    best_order = o
+                    best_key = k
+
+            # Holdings profile
+            holdings = self._profile_domain(vassal_char)
+            if not holdings:
+                continue
+            summary = self._summarise(holdings)
+
+            profiles.append(VassalProfile(
+                char_id=vassal_id,
+                char_name=char_label(vassal_char, gs, vassal_id),
+                highest_title_key=best_key,
+                holding_count=summary.total_holdings,
+                type_counts=summary.type_counts,
+                total_development=summary.total_development,
+                avg_development=summary.avg_development,
+                low_control_count=len(summary.low_control),
+                terrain_mix=summary.terrain_mix,
+            ))
+
+        return profiles
+
+
+# --------------------------------------------------------------------------- #
+# Module-level helpers
+# --------------------------------------------------------------------------- #
+
+def _btype_prefix(btype: str) -> str:
+    """Strip trailing _01/_02/… level suffix to get the building family prefix."""
+    parts = btype.rsplit("_", 1)
+    if len(parts) == 2 and parts[1].isdigit():
+        return parts[0]
+    return btype
+
+
+def _key_label(key: str) -> str:
+    """Human-readable place name from a title key, e.g. 'c_prague' → 'Prague'."""
+    if not key:
+        return "(unknown)"
+    # Strip tier prefix (c_, d_, b_, k_, e_)
+    name = key[2:] if len(key) > 2 and key[1] == "_" else key
+    return name.replace("_", " ").title()

@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from parse_gamestate import parse
 from ck3.gamestate import GameState
 
-ALL_MODULES = ["military", "culture", "relationships"]
+ALL_MODULES = ["military", "culture", "relationships", "terrain"]
 
 
 def _char_display(gs: GameState, char_id: int) -> str:
@@ -102,6 +102,11 @@ def main():
         from ck3.evaluators.relationships import RelationshipsEvaluator
         print(divider)
         print(RelationshipsEvaluator(gs, char_id).report().summary())
+
+    if "terrain" in modules:
+        from ck3.evaluators.terrain import TerrainEvaluator
+        print(divider)
+        print(TerrainEvaluator(gs, char_id).report().summary())
 
     print(divider)
 
