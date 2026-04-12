@@ -1,0 +1,145 @@
+Strategic Assessment — Vratislav II, Duke of Bohemia (1072.9.13)
+Generated from save: Duke_Vratislav_II_of_Bohemia_1072_09_13.txt
+Compared against: Vratislav_II_1066-09-20_assessment.txt
+================================================================
+
+
+WHAT HAS CHANGED: 1066 → 1072
+------------------------------
+
+The realm has expanded dramatically westward. Vratislav's vassal count grew
+from 13 to 17, and the new additions are not Bohemians — they are German
+counts: Ludwig Ludowinger (Schmalkalden), Otto von Weimar (Meissen), Benno
+von Löningen (Wolkenstein), and Eberhard (Naumburg). These are Thuringian/
+Saxon territories well outside Bohemia's traditional sphere. Vratislav has
+apparently prosecuted a successful campaign or series of diplomatic acquisitions
+into the HRE's German heartland. This is an impressive expansion but one that
+carries new complications.
+
+The Jaromír problem was resolved. The rival bishop of Opava who ranked as the
+most urgent internal threat in 1066 is now unlanded and living in a foreign
+court — no longer Vratislav's vassal at all. In his place, Jan (previously
+Vratislav's personal friend, unlanded in his court) now holds Opava as Count.
+This is a clean resolution: a hostile theocracy vassal replaced by a trusted
+ally. The rival relationship with Jaromír persists but is now merely a
+reputational irritant rather than a live governance problem.
+
+Military strength grew substantially. Levy capacity jumped from 2,461 to 3,524
+(+43%), total max from 3,486 to 4,650. Combat power rose to 102,180. The knight
+roster improved sharply — Záviš now has prowess 15 (exceptional), Jan 11,
+Ludwig 10.
+
+The Pope is angry (-30 impious opinion). Catholic fervor also dropped from 50.0
+to 41.7. In 1072 the Investiture Controversy is building to its crisis. Vratislav's
+impiety penalty strongly suggests he is aligned with Heinrich against the papacy,
+which is historically accurate. This is a structural condition rather than a
+temporary problem.
+
+Česlav Vrsovid has been heavily cultivated. His opinion sits at +125, entirely
+from five rounds of sway scheming. In 1066 the Vrsovid count was flagged as a
+long-term concern. That concern appears to have been actively addressed.
+
+
+I. THE REALM: HOLDINGS, VASSALS, AND INTERNAL BALANCE
+------------------------------------------------------
+
+Vratislav's personal domain is unchanged — the same seven city and church
+holdings (Praha dev 12, the rest at 8-9). Development has not advanced in six
+years, a mild concern for a ruler in peacetime.
+
+The core Bohemian-Moravian vassals remain structurally similar. Konrád Přemyslid
+(Brno) grew slightly to 1,640 troops and remains the dominant internal power.
+Ota Přemyslid (Olomouc) holds steady at 864. Česlav Vrsovid (Žatec) is now
+essentially a loyal client. Jan (Opava, former friend) holds the northeast with
+630 troops and is personally aligned with Vratislav.
+
+The new German vassals introduce a different risk profile. Ludwig Ludowinger
+(Schmalkalden, 1,379 troops, 3 holdings) and Otto von Weimar (Meissen, 951
+troops) are the most significant. Both have low-control counties. More critically,
+Otto von Weimar is already in a claimant faction against Vratislav — a vassal
+gained less than six years ago is already politically restive. Benno von Löningen
+(Wolkenstein, 818 troops) has two low-control counties, the worst control profile
+in the realm. These German counties represent a management burden. The claimant
+faction around Otto is the most pressing internal concern in 1072.
+
+The peasant faction (0 members currently) exists but is empty — a sign that
+underlying tensions exist somewhere in the realm.
+
+
+II. THE EXTERNAL SITUATION
+--------------------------
+
+The HRE is where the action is. Heinrich III Salian (5,143 levy, 162,100 power)
+remains the formal overlord, now slightly stronger. The institutional relationship
+is about to be tested: Investiture will pit the Emperor against the Pope, and
+Bohemia — based on the Pope's opinion score — is squarely in Heinrich's camp.
+Alignment has upside (reward with titles; historically Vratislav eventually
+received a royal crown in 1085) but downside risk if Heinrich loses ground.
+
+Ordulf Billung (Duke of Angria) is striking: power grew from 65,700 to 105,505,
+making him one of the largest military forces in the local zone. Angria/Saxony
+is historically the epicenter of Saxon resistance to Heinrich IV. A powerful
+Billung duke adjacent to Bohemia's new German territories creates potential
+friction — Meissen and Schmalkalden sit between Bohemia proper and the Saxon
+sphere.
+
+Kukovaitis II of Samogitia (Baltic pagan, 5,301 troops — up dramatically) is
+now an outsized power to the north. Baltic pagan fervor has risen from 50 to
+64.8. No longer a peripheral concern.
+
+Poland (Bolesław III Piast, 3,535 troops) holds steady. Hungary (Salamon Árpád,
+1,836 troops) has weakened considerably from 3,023 in 1066 — it may have lost
+wars or fragmented internally. This changes the southeastern calculus.
+
+William of Normandie — now William of England — no longer appears as a nearby
+force. His departure from central European politics is neutral for Bohemia.
+
+
+III. THREATS AND ALLIES
+-----------------------
+
+Immediate concerns:
+  1. Otto von Weimar (claimant faction) — the most urgent. A new vassal with a
+     grievance and already organized. At 951 troops he can't threaten alone, but
+     faction dynamics can attract others. Benno von Löningen (818 troops, two
+     low-control counties) is a natural co-conspirator if discontent spreads.
+     The German acquisitions need immediate diplomatic investment.
+
+  2. Pope Anselmo's displeasure (-30) — not militarily threatening today, but
+     the Investiture crisis will escalate. An excommunicated ruler suffers opinion
+     penalties from all Catholic vassals. Managing church relationships through
+     piety or a pilgrimage is worth considering as a hedge.
+
+  3. Benno's low-control counties (2) — worst control situation in the realm.
+     Reduces levy contribution and represents instability in newly acquired
+     territory.
+
+Medium-term concerns:
+  4. Konrád of Brno (1,640 troops) — remains the overmighty internal vassal.
+     No faction activity yet, but the structural concern is unchanged.
+
+  5. The Billung-Saxon sphere — Ordulf Billung's power growth bears watching
+     from the perspective of the new German counties. If the Saxon-Imperial
+     conflict resumes, Meissen and Schmalkalden could become contested ground.
+
+Allies and potential allies:
+  - No formal alliances persist — the same gap identified in 1066. The most
+    glaring diplomatic weakness remains unaddressed.
+  - Heinrich Salian — the overlord relationship is the de facto alliance.
+    Loyalty in the coming Investiture years could yield significant rewards.
+  - Česlav Vrsovid (+125 opinion) — effectively turned into a client.
+  - Hungary (weakened but Catholic) — still a natural southern partner. Its
+    diminished state makes it more approachable.
+  - Dedo II Wettin (Lausitz, 2,773 troops) — nearby Catholic HRE vassal who
+    shares Bohemia's geopolitical frame. A formal alliance would stabilize
+    the eastern flank and the new German acquisitions.
+
+Bottom line:
+  Vratislav has materially strengthened Bohemia — more troops, more territory,
+  a resolved internal rival, a cultivated Vrsovid, and a trusted friend in
+  Opava. The new risks are the product of success: German vassals who haven't
+  been fully integrated, a deteriorated papal relationship, and no formal
+  alliances to match the expanded realm. The Investiture Controversy is the
+  defining external pressure — the right bet is probably to stay loyal to
+  Heinrich while investing in piety as a hedge, and to focus internal energy
+  on settling Otto von Weimar before the claimant faction finds more members.

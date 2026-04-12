@@ -1,0 +1,162 @@
+Strategic Assessment — Vratislav II, Duke of Bohemia (1066.9.20)
+Generated from save: Duke_Vratislav_II_of_Bohemia_1066_09_20.txt
+================================================================
+
+
+I. THE REALM: HOLDINGS, VASSALS, AND INTERNAL BALANCE OF POWER
+---------------------------------------------------------------
+
+Bohemia is a compact, well-developed duchy operating in peacetime with full
+control across all counties. Vratislav's personal domain of seven holdings —
+centered on Praha (development 12, the highest in the realm), with Boleslav,
+Čáslav, Doudleby, Hradec, Litomeřice, and Plzeň all at development 8 — gives
+him a solid economic base. The terrain is defensible: Praha and much of the
+interior sits on hills, the northeastern flank (Hradec) rises to mountains,
+and the Litomeřice valley is fertile farmland. The western border counties
+(Děčín, Domažlice, Bílina) controlled by his barons are mountainous, providing
+natural barriers.
+
+Notably, Vratislav's direct domain consists entirely of city and church
+holdings — his barons (republic-type vassals) and the bishop of Opava hold the
+castles. This is an unusual position: he is commercially and religiously wealthy
+but personally castle-light. His military strength (3,486 max, combat power
+92,860) comes substantially from his men-at-arms cap (1,025) and personal
+levies — a respectable force for a duke.
+
+The vassal picture is more complicated. There are effectively three tiers:
+
+Tier 1 — The Přemyslid cousins (Moravia):
+  Konrád Přemyslid (Count of Brno, Moravia) is the dominant vassal by a wide
+  margin: 1,509 troops, 36,640 combat power, holding three counties spanning
+  forest, hills, and farmland. He commands nearly half as much force as
+  Vratislav himself. Ota Přemyslid (Count of Olomouc) adds another 739 troops
+  across two holdings. Together the Moravian Přemyslids control a contiguous
+  territory to the southeast broadly comparable in raw military weight to
+  Bohemia's western counties. They are family (Přemyslid house), which gives
+  Vratislav house-head leverage, but also means they have dynastic standing to
+  push back.
+
+Tier 2 — The problematic vassals:
+  Jaromír Přemyslid (Count of Opava, bishop — theocracy vassal) is Vratislav's
+  declared mutual rival and holds the northeastern salient toward Silesia with
+  627 troops. As a theocracy vassal he cannot be easily dispossessed, and as a
+  rival he is an active source of negative opinion. He sits on a forested border
+  county — strategically exposed but also relatively isolated.
+
+  Česlav Vrsovid (Count of Žatec) is the sole non-Přemyslid feudal count,
+  holding Žatec in the fertile northwest on farmlands. The Vrsovids historically
+  have been rivals of the Přemyslids; his 573-troop force is modest but his
+  political independence is a long-term concern.
+
+Tier 3 — The minor barons:
+  Seven city-baron vassals (republic type) contribute minimal levy (~70 each)
+  but represent the urban commercial base of Bohemia. They are politically
+  negligible individually.
+
+The net assessment is that Bohemia is internally stable but carrying a
+structural tension: Konrád in Moravia is powerful enough that any future
+dispute would be serious, and the Jaromír rivalry is a live irritant.
+Vratislav's house-head hooks on his three sons (Boleslav, Bořivoj, Vladislav)
+are useful succession insurance but do nothing for the vassal problem today.
+
+
+II. THE EXTERNAL SITUATION: BOHEMIA'S PLACE IN EUROPE
+------------------------------------------------------
+
+The frame above:
+  Vratislav is a feudal vassal of Emperor Heinrich Salian of the HRE. Heinrich
+  fields 5,837 troops and 155,960 combat power — larger than Vratislav's but not
+  crushingly dominant. Bohemia with 92,860 combat power is one of the HRE's more
+  militarily capable duchies, giving Vratislav leverage while also making him a
+  desirable campaign target for Heinrich. The year 1066 is precisely the
+  beginning of the era in which Heinrich will face the great Saxon revolts and
+  the Investiture Controversy — the HRE's internal politics are about to become
+  turbulent.
+
+Local neighbors (eastern Europe, immediate zone):
+  Bolesław Piast, King of Poland (2,958 troops, 71,140 power) is the most
+  significant local external power — a Catholic king to the northeast with a
+  real army. Poland has historically contested influence in Silesia and
+  Pomerania. Currently no direct threat, but no alliance either.
+
+  Siemomysl of Pomerania (2,772 troops, slavic pagan), Kasper Lutici of Luticia
+  (2,083, slavic pagan), and Krutoj Wizlawid of Veletia (1,839, slavic pagan)
+  form a pagan Slavic belt to the north and northwest. Religiously hostile to
+  Catholic Bohemia and Poland alike. They represent a zone of instability — a
+  potential target for holy war, but also a threat if they consolidated
+  (combined they exceed Bohemia's total strength).
+
+  Géza Árpád (Duke of Nyitra, 2,080 troops) and King Salamon Árpád of Hungary
+  (3,023 troops) sit on the southeastern border. Hungary is a fellow Catholic
+  kingdom, currently at peace — a natural potential partner.
+
+  Dedo Wettin (Duke of Lausitz, 2,057 troops) and Otto von Weimar (Duke of
+  Meissen, 1,762 troops) are HRE vassals in neighboring duchies to the west
+  and northwest. Shared overlord; potential alliance partners.
+
+The broader strategic picture:
+  William de Normandie (7,034 troops, 193,100 power) is at this date five days
+  from the Battle of Hastings; his conquest of England will make him dramatically
+  more powerful and draw attention westward — neutral or slightly beneficial for
+  Bohemia. Matilda of Tuscany (2,539 troops) holds large Italian territory and
+  is historically sympathetic to the papacy, relevant to Investiture dynamics.
+
+  The religious landscape is predominantly Catholic across western and central
+  Europe (1,849 titles), but the immediate east and northeast is a pagan
+  frontier: Baltic pagans, slavic pagans, and Finnish pagans form a large
+  unconverted bloc. Bohemia sits on this frontier, relevant for holy war
+  mechanics.
+
+
+III. THREATS AND ALLIES
+-----------------------
+
+Immediate threats (internal):
+  1. Jaromír Přemyslid (rival, Count of Opava) — the most urgent destabilizing
+     relationship inside the realm. A sitting rival with 627 troops in a border
+     county is an opinion drain and a potential factional anchor. Worth
+     neutralizing diplomatically or through succession if possible.
+
+  2. Konrád of Brno (overmighty vassal) — not currently hostile, but his
+     levy-to-ruler ratio (~43% of Vratislav's own) is in the range where faction
+     leadership becomes plausible as the game progresses. Watch for faction
+     formation.
+
+Medium-term external threats:
+  3. Poland (Bolesław Piast) — the only local secular ruler with a substantial
+     army outside the HRE. If Poland expands toward Silesia or pressures the
+     Přemyslid sphere, Bohemia would feel it.
+
+  4. HRE demands — Heinrich's coming crises may pull Bohemia into imperial wars
+     or create opportunities/instabilities depending on which side Vratislav
+     supports.
+
+  5. Pagan northern neighbors — low near-term threat individually, but
+     Pomerania + Luticia + Veletia together exceed Bohemia's total strength.
+     Northern border remains exposed.
+
+Potential allies:
+  1. Hungary — closest Catholic neighbor to the south, shared faith, no current
+     conflict. A marriage alliance with the Árpáds would be the most natural
+     diplomatic move.
+
+  2. HRE co-vassals (Wettin, Weimar) — share Heinrich as overlord and face
+     similar pressures from pagan neighbors. Lateral alliances within the
+     imperial structure cost relatively little and provide mutual defense.
+
+  3. The papacy — Catholic faith with armed pilgrimages and crusade tenets means
+     the Pope is an indirect tool. Strong Church relations help with Jaromír's
+     bishop problem and position Bohemia favorably during Investiture debates.
+
+  4. Internal Přemyslid consolidation — Konrád and Ota are Přemyslids. Treating
+     them well, arranging cross-marriages, and maintaining dynasty unity could
+     convert the overmighty-vassal risk into a strength, especially if Poland or
+     a pagan neighbor threatened Moravia.
+
+Bottom line:
+  Vratislav is in a position of quiet strength — no wars, full control,
+  competitive combat power, protected by HRE membership. The vulnerabilities are
+  diplomatic (zero alliances, one internal rival) rather than immediate military.
+  Priority moves: neutralize or accommodate Jaromír, secure a marriage alliance
+  southward toward Hungary or laterally toward a fellow HRE duke, and watch
+  Konrád of Brno carefully as the dominant vassal.

@@ -65,26 +65,43 @@ ck3/
   gamestate.py              GameState wrapper + all lookup indices
   geography.py              Region definitions + interaction-proximity zones
   names.py                  Name decoding, house labels, ordinals, char_label()
+  province_data.py          Static game data loader: terrain + barony→province bridge
   evaluators/
     __init__.py
     military.py             MilitaryEvaluator  → MilitaryReport
     culture.py              CultureEvaluator   → CultureReport
     relationships.py        RelationshipsEvaluator → RelationshipsReport
+    terrain.py              TerrainEvaluator   → TerrainReport
+
+assessments/                Written strategic assessments (context for LLM advisor)
+  Vratislav_II_1066-09-20_assessment.txt
+  Vratislav_II_1072-09-13_assessment.txt
+
+game/
+  common/
+    province_terrain/
+      00_province_terrain.txt   map_province_id → terrain string (static CK3 data)
+    landed_titles/
+      00_landed_titles.txt      barony→province bridge + county capital lookup
 
 sample-saves/
-  *.ck3                     1.18+ format saves (SAV0 header + embedded ZIP)
-  extracted/                All 11 .ck3 saves extracted to plaintext (gitignored):
-    Petty_King_Murchad_of_Munster_1069_11_28.txt   (81 MB)   char 31762
-    Petty_King_Murchad_of_Munster_1071_01_07.txt   (86 MB)   char 31762
-    Petty_King_Murchad_of_Munster_1076_04_09.txt   (96 MB)   char 31762
-    Petty_King_Murchad_of_Munster_1077_04_14.txt   (98 MB)   char 31762
-    Petty_King_Murchad_of_Munster_1080_01_07.txt  (105 MB)   char 31762
-    Petty_King_Murchad_of_Munster_1080_10_08.txt  (105 MB)   char 31762
-    Petty_King_Murchad_of_Munster_1081_07_01.txt  (106 MB)   char 31762
-    Petty_King_Murchad_of_Munster_1083_08_13.txt  (109 MB)   char 31762
-    Petty_King_Murchad_of_Munster_1085_03_09.txt  (112 MB)   char 31762
-    Petty_King_Murchad_of_Munster_1085_10_05.txt  (113 MB)   char 31762
-    Petty_King_Brian_II_of_Munster_1093_01_03.txt (161 MB)   char 36303  [multiplayer — specify ID explicitly]
+  extracted/                16 saves extracted to plaintext (gitignored):
+    Duke_Vratislav_II_of_Bohemia_1066_09_15.txt   (62 MB)   char (use default)
+    Duke_Vratislav_II_of_Bohemia_1066_09_20.txt   (62 MB)   char (use default)
+    Duke_Vratislav_II_of_Bohemia_1067_01_13.txt   (68 MB)   char (use default)
+    Duke_Vratislav_II_of_Bohemia_1072_09_13.txt   (89 MB)   char (use default)
+    Petty_King_Murchad_of_Munster_1066_09_15.txt  (62 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1069_11_28.txt  (81 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1071_01_07.txt  (86 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1076_04_09.txt  (96 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1077_04_14.txt  (98 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1080_01_07.txt (104 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1080_10_08.txt (105 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1081_07_01.txt (105 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1083_08_13.txt (109 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1085_03_09.txt (112 MB)   char 31762
+    Petty_King_Murchad_of_Munster_1085_10_05.txt (113 MB)   char 31762
+    Petty_King_Brian_II_of_Munster_1093_01_03.txt (161 MB)  char 36303  [multiplayer — specify ID explicitly]
 ```
 
 ---
@@ -138,20 +155,23 @@ sample-saves/
 ## Evaluator Status & Validation Notes
 
 ### Military (`ck3/evaluators/military.py`)
-**Validated against murchad.txt (1087.3.24)**
+**Validated against murchad.txt (1087.3.24) and Vratislav II 1066–1072**
 
 - `RealmStrength` correctly separates:
   - `levy_capacity` — max levy from `landed_data.levy`
   - `maa_capacity` — computed as `strength - levy` (men-at-arms)
-  - `total_troops` — current raised troops (levy + MaA combined, from `current_strength`)
+  - `total_troops` — current raised troops, summed from active army unit objects
   - `total_max` — combined maximum (from `strength`)
-- Troop count validated: 1,757 raised of 1,806 max ✓
-- Combat power (41,520) is the game's internal metric combining troop power
-  with various bonuses; not directly visible to the player but directionally correct
+- `total_troops` is computed by iterating `gs.armies` and summing
+  `gs.army_strength(army_id)["current"]` for armies owned by the character.
+  **Not** from `landed_data.current_strength`, which equals `strength` (max) when
+  no armies are deployed.
+- Combat power is the game's internal metric; not directly visible to the player
+  but directionally correct
 - Knights are listed with prowess and approximate power (prowess × 100)
 
-**Nearby Rulers section** (new):
-- Added `NearbyRuler` dataclass and `nearby_rulers` field to `MilitaryReport`
+**Nearby Rulers section:**
+- `NearbyRuler` dataclass and `nearby_rulers` field on `MilitaryReport`
 - Covers five relationship categories: liege, direct vassals, allies, active war
   enemies, and geographic neighbors (zone 0–1, county+ tier only)
 - Allies sourced from both active wars and `active_relations` alliance bonds
@@ -188,7 +208,7 @@ and cultural innovations.  Current content:
   per character and `culture_template` in cultures db — not yet parsed)
 
 ### Relationships (`ck3/evaluators/relationships.py`)
-**Validated against murchad.txt (1087.3.24)**
+**Validated against murchad.txt (1087.3.24) and Vratislav II 1066–1072**
 
 Supersedes `hierarchy.py`.  Covers nine sections:
 1. **Position** — liege chain upward
@@ -215,10 +235,65 @@ Supersedes `hierarchy.py`.  Covers nine sections:
   Murchad mac Diarmait [c_dublin, negotiated] ✓
 - Robin's favor hook on player (expires 1091.2.16) ✓
 
+**Additional validated results (Vratislav II 1066–1072):**
+- Theocracy vassal (bishop) identified correctly ✓
+- Rival relationship surfaced ✓
+- Faction members format change between saves handled: was flat `[int]`, became
+  `[{'character': X, 'faction': Y}]` — normalised on read
+
 **Known gaps:**
 - Factions not yet validated (Murchad had none at this date)
 - Sub-vassal counts and indirect vassal totals not yet surfaced
 - Opinion scores not yet parsed (live in `raw["opinions"]` but structure not explored)
+
+### Province Data (`ck3/province_data.py`)
+Static game data loader used by `TerrainEvaluator`.  All caches are module-level
+(populated lazily on first call).
+
+- `load_province_terrain()` → `dict[int, str]` — map_province_id → terrain string
+  - Source: `game/common/province_terrain/00_province_terrain.txt`
+- `load_barony_provinces()` → `dict[str, int]` — barony_key → map_province_id
+- `load_county_capitals()` → `dict[str, str]` — county_key → capital barony_key
+  - Both sourced from `game/common/landed_titles/00_landed_titles.txt` in a
+    single pass (capital = first `b_*` child within each `c_*` block)
+- `WATER_TERRAIN = frozenset({"sea", "coastal_sea"})` — excluded from holding profiles
+- Default terrain when a province is absent: `"plains"`
+
+**ID systems:** CK3 uses two distinct province numbering systems.
+  - Save-file title database IDs: sequential, save-specific
+  - Map province IDs: static, from game data files
+  The lookup chain is: `title_db_id → title.key (b_*) → barony_to_map_province → terrain_map`
+  For county-seat titles (c_*), resolve through `county_capitals` first.
+
+### Terrain (`ck3/evaluators/terrain.py`)
+**Validated against Vratislav II 1066–1072**
+
+Reports holding geography using authoritative CK3 static data (not inferred).
+
+Key dataclasses: `HoldingProfile`, `DomainSummary`, `VassalProfile`, `TerrainReport`
+
+- `HoldingProfile` fields: barony_key, county_key, holding_type, terrain,
+  fort_level, development, development_progress, county_control, buildings,
+  building_cats, special_features
+- `DomainSummary` aggregates: type_counts, total/avg development, low_control
+  holdings, terrain_counts, category_totals
+- Vassal profiles include terrain and building summary for each direct vassal's domain
+- Building categories mapped via `_BUILDING_CATEGORY` prefix dict:
+  fortification, military, agriculture, commerce, resource, religious, urban, tribal
+
+**Key implementation notes:**
+- Domain list may contain duchy-tier (d_*) entries as seat titles — skipped in
+  `_profile_one()`; deduplication guard on province_id prevents double-counting
+  when duchy capital shares province with county capital
+- County-seat titles (c_*) resolved through `county_capitals` map before barony
+  province lookup
+- Vassal profiles built by calling `contracts_for_liege()` and profiling each
+  vassal's domain the same way as the player's
+
+**Known gaps:**
+- Building benefit values not yet extracted (only names/categories surfaced)
+- Special features (wonders, holy sites) detection is heuristic — based on
+  building key patterns, not game data
 
 ---
 
@@ -233,7 +308,7 @@ python3 run_report.py sample-saves/extracted/<save>.txt --modules military
 python3 run_report.py sample-saves/extracted/<save>.txt 18269 --modules culture relationships
 ```
 
-Available modules: `military`, `culture`, `relationships` (default: all three).
+Available modules: `military`, `culture`, `relationships`, `terrain` (default: all four).
 Parse/load progress goes to stderr; report content to stdout.
 
 ---
@@ -242,8 +317,8 @@ Parse/load progress goes to stderr; report content to stdout.
 
 Suggested priorities (not binding):
 
-- **Validate new saves**: 11 saves extracted covering 1069–1093 with Murchad,
-  plus Brian II at 1093 — run reports and spot-check against the game
+- **Validate new saves**: Murchad saves 1069–1085, Brian II 1093 — run reports
+  and spot-check against the game; Vratislav 1067 extracted but not yet reported on
 - **Economy evaluator**: gold income, development, buildings — the third major
   pillar of CK3 gameplay alongside military and diplomacy
 - **Opinion scores**: parse `raw["opinions"]` to surface which vassals like/
@@ -255,3 +330,6 @@ Suggested priorities (not binding):
   `char_label` but the title-key display is unaffected; review character coverage
 - **LLM advisor layer**: feed evaluator output into Claude to generate
   strategic commentary — this is the long-term goal of the whole project
+- **Assessments workflow**: `assessments/` directory holds written strategic
+  analyses keyed to specific save snapshots; these are intended as context for
+  the future LLM advisor layer

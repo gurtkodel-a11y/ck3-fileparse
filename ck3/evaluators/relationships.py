@@ -564,7 +564,12 @@ class RelationshipsEvaluator:
                 continue
             if f.get("target") != self.char_id:
                 continue
-            members = _ensure_list(f.get("members", []))
+            raw_members = _ensure_list(f.get("members", []))
+            # Members are either plain ints or {'character': X, 'faction': Y} dicts
+            members = [
+                m["character"] if isinstance(m, dict) else m
+                for m in raw_members
+            ]
             member_names = [
                 char_label(gs.character(m), gs, m, include_title=False)
                 if gs.character(m) else self._char_name(m)
