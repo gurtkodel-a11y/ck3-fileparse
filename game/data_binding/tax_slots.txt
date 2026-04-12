@@ -1,0 +1,11 @@
+﻿macro = {
+	description = "Is the tax obligation the current active one in the tax obligation window"
+	definition = "IsCurrentTaxObligation(Obligation)"
+	replace_with = "ObjectsEqual( TaxSlot.GetObligation, Obligation )"
+}
+
+macro = {
+	description = "Is the tax obligation the selected one in the tax obligation window"
+	definition = "IsSelectedTaxObligation(Obligation)"
+	replace_with = "ObjectsEqual( TaxSlotObligationsWindow.GetSelectedObligation, Obligation )"
+}
