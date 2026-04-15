@@ -100,8 +100,8 @@ class CultureReport:
         if own:
             lines += [
                 f"Titles held by your faith: {own.titles_held}",
-                f"Tenets:    {', '.join(own.tenets) or 'none'}",
-                f"Doctrines: {', '.join(own.doctrines[:6])}{'...' if len(own.doctrines) > 6 else ''}",
+                f"Tenets:    {', '.join(_tenet_label(t) for t in own.tenets) or 'none'}",
+                f"Doctrines: {', '.join(_doc_label(d) for d in own.doctrines[:6])}{'...' if len(own.doctrines) > 6 else ''}",
             ]
             if own.religious_head_name:
                 lines.append(f"Religious head: {own.religious_head_name} (id {own.religious_head_id})")
@@ -121,13 +121,13 @@ class CultureReport:
             if f.religion_tag != f.tag:
                 lines.append(f"    Religion: {f.religion_tag}  ({f.religion_family})")
             if f.tenets:
-                lines.append(f"    Tenets: {', '.join(f.tenets)}")
+                lines.append(f"    Tenets: {', '.join(_tenet_label(t) for t in f.tenets)}")
             if f.religious_head_name:
                 lines.append(f"    Head: {f.religious_head_name}")
             top_rulers = f.rulers_of_faith[:5]
             if top_rulers:
                 ruler_strs = [
-                    f"{r['name']} ({r['highest_title_key']})" for r in top_rulers
+                    f"{r['name']} ({_key_to_label(r['highest_title_key'])})" for r in top_rulers
                 ]
                 lines.append(f"    Rulers: {', '.join(ruler_strs)}")
 
@@ -186,6 +186,23 @@ _HOLY_WAR_CBS = {
 
 # Tier ordering for "highest title" selection
 _TIER_ORDER = {"e": 0, "k": 1, "d": 2, "c": 3, "b": 4}
+
+
+def _key_to_label(key: str) -> str:
+    """Humanize a title key: k_england → 'England', d_munster → 'Munster'."""
+    if len(key) > 2 and key[1] == "_":
+        return key[2:].replace("_", " ").title()
+    return key.replace("_", " ").title()
+
+
+def _tenet_label(tenet: str) -> str:
+    """Humanize a tenet key: tenet_ecumenism → 'Ecumenism'."""
+    return tenet.removeprefix("tenet_").replace("_", " ").title()
+
+
+def _doc_label(doc: str) -> str:
+    """Humanize a doctrine key: doctrine_pluralism_fundamentalist → 'Pluralism Fundamentalist'."""
+    return doc.removeprefix("doctrine_").replace("_", " ").title()
 
 
 class CultureEvaluator:

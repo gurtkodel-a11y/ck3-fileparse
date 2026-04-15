@@ -93,7 +93,7 @@ def house_prefix_name(house: dict) -> tuple[str, str]:
     key        = house.get("key", "")
 
     if raw_name:
-        name = raw_name.removeprefix("dynn_")
+        name = decode_name(raw_name.removeprefix("dynn_"))
     elif key:
         # "house_british_isles_briain" → strip "house_" → split → last part → capitalize
         without_house = key.removeprefix("house_")
@@ -102,7 +102,7 @@ def house_prefix_name(house: dict) -> tuple[str, str]:
     else:
         name = ""
 
-    prefix = raw_prefix.removeprefix("dynnp_") if raw_prefix else ""
+    prefix = decode_name(raw_prefix.removeprefix("dynnp_")) if raw_prefix else ""
 
     return prefix, name
 
@@ -188,8 +188,10 @@ def title_ruler_label(title: dict, female: bool = False) -> str:
     label = labels.get(tier, "Lady" if female else "Lord")
 
     name_data = title.get("title_name_data", {})
-    place = name_data.get("name", "") if isinstance(name_data, dict) else ""
-    if not place:
+    raw_place = name_data.get("name", "") if isinstance(name_data, dict) else ""
+    if raw_place:
+        place = decode_name(raw_place)
+    else:
         # Derive from key: c_desmond → "Desmond"
         place = key[2:].replace("_", " ").title() if len(key) > 2 else key
 

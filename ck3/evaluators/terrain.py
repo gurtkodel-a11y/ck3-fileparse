@@ -21,7 +21,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from ck3.gamestate import GameState, _ensure_list
-from ck3.names import decode_name, char_label
+from ck3.names import decode_name, char_label, title_ruler_label
 from ck3.geography import kingdom_to_region
 from ck3.province_data import (
     load_province_terrain, load_barony_provinces, load_county_capitals,
@@ -77,6 +77,7 @@ _BUILDING_CATEGORY: dict[str, str] = {
     "temple":             "religious",
     "temple_citadel":     "religious",
     "hospices":           "religious",
+
     "monastic_schools":   "religious",
     "city":               "urban",
     "tribe":              "tribal",
@@ -84,10 +85,37 @@ _BUILDING_CATEGORY: dict[str, str] = {
 }
 
 _HOLDING_TYPE_SHORT = {
-    "castle_holding":    "castle",
-    "city_holding":      "city",
-    "church_holding":    "church",
-    "tribal_holding":    "tribal",
+    "castle_holding":          "castle",
+    "city_holding":            "city",
+    "church_holding":          "church",
+    "tribal_holding":          "tribal",
+    "temple_citadel_holding":  "temple_citadel",
+    "nomad_holding":           "nomad",
+    "herder_holding":          "herder",
+}
+
+# Maps the prefix of a holding's primary_building → short holding type.
+# Source: game/common/holdings/00_holdings.txt (primary_building field).
+# Used as a fallback when the province record lacks an explicit holding.type.
+_PRIMARY_BUILDING_TYPE: dict[str, str] = {
+    "castle":        "castle",
+    "city":          "city",
+    "temple":        "church",
+    "tribe":         "tribal",
+    "temple_citadel": "temple_citadel",
+    "nomadic_camp":  "nomad",
+    "herder_camp":   "herder",
+}
+
+# Display abbreviation for each holding type (used in compact vassal table).
+_TYPE_ABBREV: dict[str, str] = {
+    "castle":          "cas",
+    "city":            "cit",
+    "church":          "chu",
+    "tribal":          "tri",
+    "temple_citadel":  "tct",
+    "nomad":           "nom",
+    "herder":          "hrd",
 }
 
 _CONTROL_WARN = 75   # county control below this is flagged
@@ -102,6 +130,8 @@ class HoldingProfile:
     """Detailed profile of one barony/holding."""
     barony_key: str
     county_key: str
+    barony_name: str           # decoded display name (from title_name_data, falling back to key)
+    county_name: str           # decoded display name (from title_name_data, falling back to key)
     holding_type: str          # short form: castle / city / church / tribal / unknown
     terrain: str               # from game/common/province_terrain (plains, hills, mountains, …)
     fort_level: int
@@ -129,8 +159,9 @@ class DomainSummary:
 class VassalProfile:
     """Terrain/holding summary for one direct vassal."""
     char_id: int
-    char_name: str
+    char_name: str             # given name + house only (no title clause)
     highest_title_key: str
+    title_label: str           # e.g. "Duke of Brno" from title_ruler_label
     holding_count: int
     type_counts: dict[str, int]
     total_development: int
@@ -170,7 +201,7 @@ class TerrainReport:
             f"  Terrain:         {terrain_str}",
         ]
         if ds.low_control:
-            lines.append(f"  Low control (<{_CONTROL_WARN}):  " + ", ".join(ds.low_control))
+            lines.append(f"  Low control (<{_CONTROL_WARN}):  " + ", ".join(_key_label(k) for k in ds.low_control))
 
         cat_parts = []
         for cat in ("fortification", "military", "agriculture", "commerce", "resource", "religious", "urban", "tribal"):
@@ -190,11 +221,9 @@ class TerrainReport:
         for h in sorted(self.domain_holdings, key=lambda x: (-x.development, x.county_key)):
             specials = "  [" + " ".join(h.special_features) + "]" if h.special_features else ""
             ctrl_str = f"{h.county_control:.0f}%" if h.county_control else " —"
-            barony_display = _key_label(h.barony_key)
-            county_display = _key_label(h.county_key)
             fort_str = str(h.fort_level) if h.fort_level else "—"
             lines.append(
-                f"  {barony_display:<28}  {county_display:<20}  {h.holding_type:<7}  "
+                f"  {h.barony_name:<28}  {h.county_name:<20}  {h.holding_type:<7}  "
                 f"{h.development:>3}  {ctrl_str:>5}  {fort_str:>4}  {h.terrain}{specials}"
             )
 
@@ -202,7 +231,7 @@ class TerrainReport:
         if self.vassal_profiles:
             lines.append(f"\n--- Vassal Territories ({len(self.vassal_profiles)}) ---")
             lines.append(
-                f"  {'Name':<28}  {'Title':<22}  {'Hold':>4}  "
+                f"  {'Name':<28}  {'Title':<24}  {'Hold':>4}  "
                 f"{'Dev':>3}  {'AvgDev':>6}  {'LowCtrl':>7}  Terrain"
             )
             lines.append("  " + "-" * 90)
@@ -210,11 +239,8 @@ class TerrainReport:
                 terrain = "  ".join(
                     f"{t}×{cnt}" for t, cnt in sorted(v.terrain_counts.items(), key=lambda x: -x[1])
                 ) or "—"
-                type_str = "/".join(
-                    f"{cnt}{t[0]}" for t, cnt in sorted(v.type_counts.items(), key=lambda x: -x[1])
-                )
                 lines.append(
-                    f"  {v.char_name:<28}  {_key_label(v.highest_title_key):<22}  "
+                    f"  {v.char_name:<28}  {v.title_label:<24}  "
                     f"{v.holding_count:>4}  {v.total_development:>3}  "
                     f"{v.avg_development:>6.1f}  {v.low_control_count:>7}  {terrain}"
                 )
@@ -332,12 +358,26 @@ class TerrainEvaluator:
             prov = gs.provinces.get(str(province_id), {}) or {}
         holding = prov.get("holding", {}) if isinstance(prov, dict) else {}
         raw_type = holding.get("type", "") if isinstance(holding, dict) else ""
-        holding_type = _HOLDING_TYPE_SHORT.get(raw_type, raw_type or "unknown")
-        fort_level = int(prov.get("fort_level", 0)) if isinstance(prov, dict) else 0
-        special_features = _ensure_list(prov.get("points_of_interest", [])) if isinstance(prov, dict) else []
+        holding_type = _HOLDING_TYPE_SHORT.get(raw_type, raw_type or "")
 
         buildings = self._buildings_from_province(prov)
         building_cats = self._classify_buildings(buildings)
+
+        # Fallback: if the province record has no usable holding.type, infer
+        # the type from whichever primary building is present in the slot.
+        # Primary buildings (castle_01, city_01, temple_01, tribe_01, …) are
+        # always present when a holding exists and uniquely identify its type.
+        if not holding_type or holding_type not in _HOLDING_TYPE_SHORT.values():
+            for btype in buildings:
+                inferred = _PRIMARY_BUILDING_TYPE.get(_btype_prefix(btype))
+                if inferred:
+                    holding_type = inferred
+                    break
+            else:
+                holding_type = holding_type or "unknown"
+
+        fort_level = int(prov.get("fort_level", 0)) if isinstance(prov, dict) else 0
+        special_features = _ensure_list(prov.get("points_of_interest", [])) if isinstance(prov, dict) else []
 
         # Terrain: resolve through barony → map_province_id → terrain string.
         # Domain titles may be c_* (county seats) or b_* (baronies).
@@ -352,6 +392,14 @@ class TerrainEvaluator:
         if terrain in WATER_TERRAIN:
             return None
 
+        # Decoded display names — use title_name_data.name + decode_name when available,
+        # falling back to the key-stripping approach.
+        name_data = title.get("title_name_data", {}) if isinstance(title, dict) else {}
+        raw_barony_name = name_data.get("name", "") if isinstance(name_data, dict) else ""
+        barony_name = decode_name(raw_barony_name) if raw_barony_name else _key_label(barony_key)
+        # County title record requires a key-lookup (O(n)); key-stripping is fine here.
+        county_name = _key_label(county_key)
+
         # County data
         county = self._county_data.get(county_key, {})
         development = int(county.get("development", 0))
@@ -361,6 +409,8 @@ class TerrainEvaluator:
         return HoldingProfile(
             barony_key=barony_key,
             county_key=county_key,
+            barony_name=barony_name,
+            county_name=county_name,
             holding_type=holding_type,
             terrain=terrain,
             fort_level=fort_level,
@@ -436,8 +486,9 @@ class TerrainEvaluator:
             if not vassal_char:
                 continue
 
-            # Highest title
+            # Highest title (save the record for title_ruler_label)
             best_key = ""
+            best_title = None
             best_order = 99
             for t in gs.titles_held_by(vassal_id):
                 if not isinstance(t, dict):
@@ -447,6 +498,10 @@ class TerrainEvaluator:
                 if o < best_order:
                     best_order = o
                     best_key = k
+                    best_title = t
+
+            is_female = vassal_char.get("female") == "yes"
+            title_label = title_ruler_label(best_title, female=is_female) if best_title else _key_label(best_key)
 
             # Holdings profile
             holdings = self._profile_domain(vassal_char)
@@ -456,8 +511,9 @@ class TerrainEvaluator:
 
             profiles.append(VassalProfile(
                 char_id=vassal_id,
-                char_name=char_label(vassal_char, gs, vassal_id),
+                char_name=char_label(vassal_char, gs, vassal_id, include_title=False),
                 highest_title_key=best_key,
+                title_label=title_label,
                 holding_count=summary.total_holdings,
                 type_counts=summary.type_counts,
                 total_development=summary.total_development,

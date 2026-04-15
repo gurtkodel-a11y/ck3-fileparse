@@ -42,6 +42,7 @@ class LiegeRecord:
     char_id: int
     char_name: str
     highest_title_key: str
+    highest_title_label: str       # human-readable, e.g. "King of Germany"
     highest_title_tier: str
     contract_group: str
     is_top: bool
@@ -194,7 +195,7 @@ class RelationshipsReport:
                 depth = "  " + ("  " * i)
                 top_mark = "  [sovereign]" if lg.is_top else ""
                 lines.append(
-                    f"{depth}↑ {lg.char_name}  [{lg.highest_title_key}]"
+                    f"{depth}↑ {lg.char_name}  [{lg.highest_title_label}]"
                     f"  ({lg.contract_group}){top_mark}"
                 )
 
@@ -282,7 +283,7 @@ class RelationshipsReport:
                         f"  [{status}]"
                     )
                 else:
-                    title_str = fm.titles[0] if fm.titles else "unlanded"
+                    title_str = _humanize_title_key(fm.titles[0]) if fm.titles else "unlanded"
                     loc_note = {
                         "player_court": "your court",
                         "own_realm":    "own realm",
@@ -315,7 +316,7 @@ class RelationshipsReport:
             for c in sorted(members, key=lambda x: x.char_name):
                 fam_note = f"  ({c.family_relation})" if c.family_relation else ""
                 pos_note = f"  — {c.court_position_type}" if c.court_position_type else ""
-                title_str = c.titles[0] if c.titles else ""
+                title_str = _humanize_title_key(c.titles[0]) if c.titles else ""
                 title_note = f"  [{title_str}]" if title_str else ""
                 lines.append(
                     f"    {c.char_name:<22}  (id {c.char_id})"
@@ -334,7 +335,7 @@ class RelationshipsReport:
             for rtype in sorted(by_type.keys()):
                 for pr in by_type[rtype]:
                     dir_str = "→" if pr.direction == "player_to_other" else "←"
-                    title_str = pr.other_titles[0] if pr.other_titles else "unlanded"
+                    title_str = _humanize_title_key(pr.other_titles[0]) if pr.other_titles else "unlanded"
                     loc = {
                         "player_court": "your court",
                         "own_realm":    "own realm",
@@ -513,10 +514,18 @@ class RelationshipsEvaluator:
             seen.add(liege_id)
             title_key, title_tier = self._highest_title(liege_id)
             is_top = gs.contract_for_vassal(liege_id) is None
+            liege_char = gs.character(liege_id) or {}
+            is_female = liege_char.get("female") == "yes"
+            title_rec = gs.title_by_key(title_key) if title_key else None
+            if title_rec:
+                title_label = title_ruler_label(title_rec, female=is_female)
+            else:
+                title_label = title_key[2:].replace("_", " ").title() if len(title_key) > 2 else title_key
             chain.append(LiegeRecord(
                 char_id=liege_id,
                 char_name=self._char_name(liege_id),
                 highest_title_key=title_key,
+                highest_title_label=title_label,
                 highest_title_tier=title_tier,
                 contract_group=contract.get("contract_group", "unknown"),
                 is_top=is_top,

@@ -76,6 +76,8 @@ ck3/
 assessments/                Written strategic assessments (context for LLM advisor)
   Vratislav_II_1066-09-20_assessment.txt
   Vratislav_II_1072-09-13_assessment.txt
+  Vratislav_II_1083-09-14_assessment.txt
+  Vratislav_II_1088-01-02_assessment.txt
 
 game/
   common/
@@ -90,6 +92,8 @@ sample-saves/
     Duke_Vratislav_II_of_Bohemia_1066_09_20.txt   (62 MB)   char (use default)
     Duke_Vratislav_II_of_Bohemia_1067_01_13.txt   (68 MB)   char (use default)
     Duke_Vratislav_II_of_Bohemia_1072_09_13.txt   (89 MB)   char (use default)
+    King_Vratislav_of_Bohemia_1083_09_14.txt      (110 MB)  char (use default)
+    King_Vratislav_of_Bohemia_1088_01_02.txt      (118 MB)  char (use default)
     Petty_King_Murchad_of_Munster_1066_09_15.txt  (62 MB)   char 31762
     Petty_King_Murchad_of_Munster_1069_11_28.txt  (81 MB)   char 31762
     Petty_King_Murchad_of_Munster_1071_01_07.txt  (86 MB)   char 31762

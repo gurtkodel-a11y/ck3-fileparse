@@ -4,7 +4,9 @@
       "Bash(python3 -)",
       "Bash(python3 run_report.py sample-saves/extracted/Petty_King_Murchad_of_Munster_1069_11_28.txt)",
       "Bash(python3 run_report.py sample-saves/murchad.txt 18269)",
-      "Bash(python3 run_report.py sample-saves/murchad.txt)"
+      "Bash(python3 run_report.py sample-saves/murchad.txt)",
+      "Bash(ls -lh /Users/kevink/ck3-fileparse/sample-saves/*.ck3)",
+      "Bash(python3 run_report.py sample-saves/extracted/King_Vratislav_of_Bohemia_1088_01_02.txt)"
     ]
   }
 }

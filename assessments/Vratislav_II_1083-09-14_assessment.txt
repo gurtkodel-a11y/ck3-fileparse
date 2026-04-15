@@ -1,0 +1,248 @@
+Strategic Assessment — Vratislav II Přemyslid, King of Bohemia (1083.9.14)
+Generated from save: King_Vratislav_of_Bohemia_1083_09_14.txt
+Compared against: Vratislav_II_1066-09-20_assessment.txt
+                  Vratislav_II_1072-09-13_assessment.txt
+================================================================
+
+
+WHAT HAS CHANGED: 1072 → 1083
+------------------------------
+
+The headline is the title. Vratislav is no longer Duke of Bohemia — he is
+King of Bohemia. This elevation, which the 1072 assessment identified as the
+likely reward for loyalty to Heinrich during the Investiture Controversy, has
+been delivered. The royal title changes Vratislav's position in the HRE's
+pecking order, his leverage over vassals, and the scope of future ambition.
+Everything else in this assessment should be read against that backdrop.
+
+The realm has grown again. Vassal count expanded from 17 to 24, and the new
+additions are uniformly German: Wettins (Osterland, Merseburg, Wittenberg),
+Ludowingers (Orlamünde, though Schmalkalden is now a separate Ludowinger
+branch under Berengar), von Dagsburg (Görlitz), von Baerenburg (Sommerfeld),
+Renart (Spreewald), and a new theocracy vassal Viktor von Arnstein (Naumburg).
+The German integration project that began with four acquisitions in 1072 now
+extends deep into eastern Thuringia and Saxony.
+
+The critical diplomatic achievement of the period is the Konrád alliance.
+Konrád Přemyslid — flagged in 1066 as the structural overmighty-vassal risk,
+still dominant in 1072 — is now a negotiated ally with +55 opinion. This is the
+single most important internal stabilization of the whole eleven-year arc.
+
+Development has finally moved. Praha reached 14 (from 12 in both 1066 and 1072);
+the six secondary holdings all advanced to 10 (from 8). Domain is no longer
+stagnating.
+
+Domain levy capacity, however, dropped sharply: from 3,524 in 1072 to 2,471
+now. Total max fell from 4,650 to 3,707 despite more vassals. The most likely
+explanations are domain reorganization when the royal title was granted (perhaps
+Vratislav was required to hold fewer counties directly), or that some holdings
+were regranted to new vassals. Whatever the cause, his personal military reach
+has shrunk relative to the expanded realm — a meaningful shift.
+
+The papal relationship, which stood at -30 in 1072 (Investiture alignment),
+no longer appears as a notable opinion modifier. Either the immediate crisis
+has eased or the penalty decayed. Heinrich's opinion sits at +30 (a generous
+gift at a feast), suggesting the Imperial relationship remains warm.
+
+On the dark side: Jan, the trusted friend installed as Count of Opava in 1072
+to replace the hostile Jaromír, has attempted to murder someone close to
+Vratislav. Vratislav holds -70 opinion of Jan for this ("attempted_murder_
+close_family_crime"). This is a serious betrayal — but Jan holds a theocracy
+vassalage that cannot be revoked by normal means. The problem created by
+Jaromír (an unremovable hostile bishop) has been recreated in new form.
+
+
+I. THE REALM: HOLDINGS, VASSALS, AND INTERNAL BALANCE
+------------------------------------------------------
+
+Vratislav's personal domain is the familiar seven holdings — Praha, Boleslav,
+Čáslav, Doudleby, Hradec, Litomeřice, Plzeň — all at full control. Praha at
+development 14 is a respectable capital; the remaining six at 10 are solidly
+average. Terrain profile is defensible: hills and mountains dominate the core
+(Praha, Čáslav, Doudleby on hills; Hradec in mountains), farmlands in
+Litomeřice, plains in Boleslav and Plzeň. Commercially and ecclesiastically
+wealthy, still castle-light.
+
+The vassal roster at 24 divides into four distinct clusters:
+
+Cluster 1 — The Přemyslid-Bohemian core:
+  Konrád Přemyslid (Brno) remains the dominant vassal at 1,916 total troops —
+  still the largest individual levy by a significant margin. But the political
+  relationship has transformed: he is now a negotiated ally (+55 opinion,
+  courtly title creation +30, sway schemes x2). The 1066-era "overmighty
+  vassal" risk has been converted into a structural anchor for the realm.
+  Ota Přemyslid (Olomouc, 1,014 troops) and Jan (Opava, 1,129 troops) fill
+  out the Moravian-northeastern flank. Jan's situation is covered below.
+
+Cluster 2 — The cultivated Bohemian barons:
+  Česlav Vrsovid (Žatec, +125 opinion) and the city-baron republicans are
+  effectively loyal clients. No faction flags among them. The western border
+  strip — Děčín (Hroznata), Domažlice (Božepor), Bílina (Záviš) — remains
+  mountain-terrain barons in the castle-holder mold. Neuša (Beroun) and
+  Beneš (Vyšehrad) round out the Bohemian baronage.
+
+Cluster 3 — The established German vassals:
+  Ludwig II Ludowinger (Orlamünde, 1,112 troops) and Hinrik von Löningen
+  (Wolkenstein, 1,059 troops) are the strongest non-Přemyslid German counts.
+  Hinrik is in a liberty faction — the Löningen family has now been in some
+  form of faction across two saves, shifting from implied discontent in 1072
+  (low-control counties) to formal rebellion demand in 1083. Otto von Weimar
+  (Meissen, 945 troops) remains stubbornly in a claimant faction — eleven
+  years on, this grievance has never been resolved. The two faction members
+  individually lack the strength to act, but together they represent 2,004
+  troops in organized opposition within the German territories.
+
+Cluster 4 — The newly absorbed Germans:
+  Konrad II Wettin (Osterland, 1,257 troops, 3 holdings) is the most
+  significant new arrival — larger than most earlier German additions. Dedo III
+  Wettin (Merseburg, 926 troops), Friedrich von Dagsburg (Görlitz, 865 troops),
+  Dietrich III Wettin (Wittenberg, 512 troops, zero levy — likely recently
+  acquired or in some disrupted state), and the remaining minor counts
+  (Spreewald, Schmalkalden, Sommerfeld) fill out the eastern German fringe.
+  Viktor von Arnstein holds Naumburg as a theocracy vassal with a warm +60
+  opinion. Ludwig Renart has -14 from "opinion_of_predecessor" — a holdover
+  grievance from whoever Vratislav succeeded or displaced in that comital seat.
+
+The Jan (Opava) problem warrants separate attention. Jan was Vratislav's
+personal friend, placed in Opava in 1072 as a trusted replacement for the
+hostile Jaromír. By 1083 Vratislav holds -70 opinion of Jan for attempted
+murder against his close family. Jan holds +15 (grateful opinion) — presumably
+from the original appointment. A theocracy vassal cannot be revoked. The
+northeast is now held by a man Vratislav regards as a would-be murderer of
+his kin, in a position he cannot be removed from. Jaromír (now a mutual
+nemesis, still unlanded in a foreign court) is a personal antagonist; Jan
+is a structural governance crisis waiting to deepen.
+
+
+II. THE EXTERNAL SITUATION
+--------------------------
+
+The royal title elevates Bohemia's formal standing within the HRE. Vratislav
+is no longer simply "Duke of Bohemia subject to Heinrich" — he is a king within
+the empire, nominally equal to the kings of Poland and Hungary in rank, even
+if subordinate to the Emperor in feudal fact. This affects how neighboring
+rulers perceive the realm and what diplomatic moves are available.
+
+Heinrich III Salian remains the formal overlord at 7,329 troops and 198,148
+combat power — larger than in 1072. The relationship is warm (+30). But the
+Investiture Crisis' arc is still running; Bohemia's ongoing loyalty yields
+rewards but keeps the papal complication potentially active.
+
+Poland (Bolesław III Piast, 4,468 troops) has grown substantially from 3,535
+in 1072 — Poland is expanding, most likely eastward into Ruthenia or against
+the pagan belt. This is the most significant change in Bohemia's immediate
+external environment. A strengthening Poland on the northeast, combined with
+the Bohemian realm now extending deep into Thuringia and Saxony to the west,
+means Vratislav is developing a realm that stretches across two very different
+strategic frontiers simultaneously.
+
+The pagan northern belt persists. Jaromil Lutici (Duke of Luticia, 2,592
+troops, slavic pagan), Swietibor of Pomerania (2,195 troops), and Krutoj
+Wizlawid of Veletia (2,109 troops) remain unconverted and collectively large.
+These powers have not consolidated but they have not shrunk either. Bohemia's
+German expansion has brought the realm closer to their territory.
+
+Hungary: Géza (Duke of Nyitra, 3,097 troops) has grown considerably and holds
+a much stronger position than the weakened Salamon Árpád of the 1072 assessment.
+László II Árpád of Transylvania (2,446 troops) is a personal friend of
+Vratislav's — a valuable relationship on the southeastern frontier.
+
+Magnus Billung (Duke of Angria, 4,296 troops) is the largest military power
+in the immediate German neighborhood. The Billung-Saxon sphere continues to
+loom over Bohemia's western acquisitions. If Saxon resistance to Heinrich were
+to resume seriously, the German counties would be in the crossfire.
+
+The Byzantine Empire (Isaakios II Komnenos, 5,869 troops) is a significant
+nearby power at the "nearby" zone — relevant insofar as it anchors the Orthodox
+bloc in the south and east. Matilda of Tuscany (4,130 troops) remains the
+Italian counterweight to Imperial power. The broader European landscape is
+stable for Bohemia but crowded.
+
+
+III. THREATS AND ALLIES
+-----------------------
+
+Immediate concerns:
+  1. Otto von Weimar (claimant faction, 945 troops) — PERSISTENT. This grievance
+     has now survived two full assessment cycles without resolution. At 945 troops
+     Otto alone cannot threaten the realm, and his faction has not grown (still
+     one member), but the longer an organized claimant faction exists, the more
+     opportunity it has to attract sympathizers. Eleven years of inaction suggests
+     this is a hard problem — possibly Otto holds a claim that cannot be easily
+     bought out, or there is a rights dispute with no clean resolution. Active
+     resolution must be a priority before the faction grows.
+
+  2. Hinrik von Löningen (liberty faction, 1,059 troops) — NEW. The Löningen
+     holding passed to a new holder since 1072 but the political culture of the
+     county remained fractious. A liberty faction aims to reduce Vratislav's
+     control over the vassal — if successful it would undermine his ability to
+     govern the German territories. Combined with Otto's claimant faction, there
+     are now two organized factions among the German vassals totaling ~2,000 troops.
+
+  3. Jan of Opava (theocracy, -70 from Vratislav, +15 from Jan) — STRUCTURAL
+     CRISIS. An unremovable vassal who attempted murder against the king's family
+     sits in the northeastern salient controlling 1,129 troops. Options are
+     limited: theocracy vassals cannot be revoked. Assassination schemes are risky
+     and the character is presumably on guard. The Opava problem is now worse than
+     the original Jaromír situation because the relationship failure was personal
+     rather than purely political.
+
+  4. Konrad II Wettin (Osterland, 1,257 troops) — WATCH. As the strongest new
+     German vassal, Wettin could become the next "Konrád of Brno" problem in the
+     German territories if his opinion turns. No faction flag yet; worth monitoring.
+
+Medium-term concerns:
+  5. Poland (Bolesław III Piast, 4,468 troops, growing) — the northeastern
+     external power is strengthening. As long as Poland expands eastward into the
+     pagan and Rus territories rather than westward toward Bohemia this is benign,
+     but the trajectory should be watched.
+
+  6. The German realm-management problem generally — 24 vassals means a larger
+     opinion management surface area. Ludwig Renart's predecessor-grievance and
+     Adelheid's chancellor-induced displeasure are minor individually, but the
+     German counties as a bloc are not well-integrated. A wave of faction
+     membership among the German counts would be a serious crisis.
+
+Allies and assets:
+  1. Konrád Přemyslid (negotiated ally, +55 opinion) — the resolution of the
+     1066-era overmighty vassal problem is the most important diplomatic success
+     of the period. A loyal Konrád anchors Moravia and backstops any internal
+     challenge.
+
+  2. László II Árpád (Duke of Transylvania, personal friend) — a Hungarian duke
+     as a personal friend provides informal alignment with Hungary without a
+     formal treaty. The southeastern frontier is quiet.
+
+  3. Česlav Vrsovid (+125 opinion) — still a client, unchanged.
+
+  4. Viktor von Arnstein (+60 opinion, theocracy Naumburg) — a friendly bishop
+     in the German territories is an asset against the faction-prone lay counts.
+
+  5. Heinrich III Salian (+30 opinion) — the Imperial relationship remains warm.
+     The royal crown itself is the most tangible product of this alignment.
+
+  6. Sons: Vladislav is a mutual friend and a knight in court; Boleslav, Bořivoj,
+     and Přibyslav are present. Succession is in better shape than it appears —
+     the house-head hooks on eleven Přemyslid family members give Vratislav
+     leverage over dynastic behavior.
+
+Bottom line:
+  Vratislav II is now a king, and Bohemia is now a kingdom. The arc from 1066
+  is remarkable: from a compact duchy with one rival bishop, no alliances, and
+  an overmighty cousin, to a multi-ethnic realm spanning Bohemia, Moravia, and
+  eastern Germany, with a royal title, a loyal Konrád, a cultivated Vrsovid,
+  and a warm relationship with the Emperor.
+
+  The vulnerabilities are the product of this scale. Two organized factions in
+  the German territories, an irremovable vassal who committed a crime against the
+  king's family, and a growing Poland on the eastern flank are serious problems
+  that did not exist in 1066. The realm has grown faster than its institutions.
+
+  The highest-priority internal actions: resolve or contain the Otto von Weimar
+  claimant faction before it attracts the Löningen liberty faction and others;
+  find a path to neutralize Jan of Opava (this may require patience — waiting
+  for his death and choosing a replacement carefully). The highest-priority
+  external action: formalize the relationship with László of Transylvania into
+  a proper alliance, closing the southeastern flank. With Konrád secured and
+  the Emperor warm, the core is stable — the German periphery is where Bohemia's
+  next decade will be decided.
