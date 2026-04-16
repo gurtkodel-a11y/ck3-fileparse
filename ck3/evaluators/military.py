@@ -16,9 +16,12 @@ from __future__ import annotations
 from dataclasses import dataclass, field, asdict
 from typing import Any
 
-from ck3.gamestate import GameState, _ensure_list
+from ck3.gamestate import GameState
 from ck3.names import decode_name, char_label
 from ck3.geography import kingdom_to_region, zone_between
+from ck3.evaluators.base import (
+    _ensure_list, _participants, title_full_label,
+)
 
 
 # --------------------------------------------------------------------------- #
@@ -191,7 +194,7 @@ class MilitaryReport:
             for r in display:
                 zone_str = _ZONE_LABEL.get(r.geo_zone, "?")
                 lines.append(
-                    f"    {r.char_name:<32}  {_title_display(r.highest_title_key):<28}"
+                    f"    {r.char_name:<32}  {title_full_label(r.highest_title_key):<28}"
                     f"  levy {r.levy_capacity:>5,}  total {r.total_max:>5,}"
                     f"  power {int(r.combat_power):>6,}  [{zone_str}]  {r.faith_tag}"
                 )
@@ -571,23 +574,3 @@ class MilitaryEvaluator:
 # Module-level helpers
 # --------------------------------------------------------------------------- #
 
-def _title_display(key: str) -> str:
-    """Short human-readable label for a title key, e.g. 'k_ireland' → 'King of Ireland'."""
-    _LABELS = {"e": "Emperor", "k": "King", "d": "Duke", "c": "Count", "b": "Baron"}
-    if not key:
-        return "(no title)"
-    tier = key[0]
-    label = _LABELS.get(tier, "Lord")
-    place = key[2:].replace("_", " ").title() if len(key) > 2 else key
-    return f"{label} of {place}"
-
-
-def _participants(war: dict, side: str) -> list[int]:
-    side_data = war.get(side, {})
-    if not isinstance(side_data, dict):
-        return []
-    ids = []
-    for p in _ensure_list(side_data.get("participants", [])):
-        if isinstance(p, dict) and "character" in p:
-            ids.append(int(p["character"]))
-    return ids

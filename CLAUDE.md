@@ -29,9 +29,9 @@ produced by each evaluator's `summary()` method.
 ## Save File Pipeline
 
 ```
-[Gaming PC]  watch_autosaves.py
+[Gaming PC]  scripts/watch_autosaves.py
                  ↓  copies new manual .ck3 saves to sample-saves/
-[Mac]        extract_snapshots.py
+[Mac]        scripts/extract_snapshots.py
                  ↓  unzips old-format saves; invokes ck3-melt for binary saves
              sample-saves/extracted/*.txt   ← plaintext Clausewitz format
                  ↓
@@ -46,7 +46,7 @@ produced by each evaluator's `summary()` method.
 - Old format (pre-1.13): ZIP containing a plaintext `gamestate` entry
 - New format (1.18+): `SAV0` plaintext header (~32 KB) followed by an embedded
   ZIP archive containing a plaintext `gamestate` entry — **no ck3-melt needed**;
-  `extract_snapshots.py` detects this automatically and extracts directly
+  `scripts/extract_snapshots.py` detects this automatically and extracts directly
 
 All `.ck3` files in `sample-saves/` are the 1.18+ header+ZIP format and have
 been extracted to `sample-saves/extracted/`.  The extracted `.txt` files are
@@ -60,6 +60,10 @@ gitignored (too large to push); they live only on the local Mac.
 parse_gamestate.py          Clausewitz tokeniser + iterative parser
 run_report.py               CLI: parse a save, run selected evaluators, print report
 
+scripts/
+  watch_autosaves.py        Run on gaming PC: watches for new saves, copies to sample-saves/
+  extract_snapshots.py      Run on Mac: extracts .ck3 save files to plaintext
+
 ck3/
   __init__.py
   gamestate.py              GameState wrapper + all lookup indices
@@ -68,6 +72,8 @@ ck3/
   province_data.py          Static game data loader: terrain + barony→province bridge
   evaluators/
     __init__.py
+    base.py                 Shared utilities: _ensure_list, _tier_order, _contract_label,
+                            _participants, title_place(), title_full_label()
     military.py             MilitaryEvaluator  → MilitaryReport
     culture.py              CultureEvaluator   → CultureReport
     relationships.py        RelationshipsEvaluator → RelationshipsReport

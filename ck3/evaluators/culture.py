@@ -19,9 +19,12 @@ from __future__ import annotations
 from dataclasses import dataclass, field, asdict
 from collections import defaultdict
 
-from ck3.gamestate import GameState, _ensure_list
+from ck3.gamestate import GameState
 from ck3.geography import KINGDOM_TO_REGION, zone_between, kingdom_to_region
 from ck3.names import decode_name, char_label
+from ck3.evaluators.base import (
+    _ensure_list, _participants, title_place,
+)
 
 
 # --------------------------------------------------------------------------- #
@@ -127,7 +130,7 @@ class CultureReport:
             top_rulers = f.rulers_of_faith[:5]
             if top_rulers:
                 ruler_strs = [
-                    f"{r['name']} ({_key_to_label(r['highest_title_key'])})" for r in top_rulers
+                    f"{r['name']} ({title_place(r['highest_title_key'])})" for r in top_rulers
                 ]
                 lines.append(f"    Rulers: {', '.join(ruler_strs)}")
 
@@ -186,13 +189,6 @@ _HOLY_WAR_CBS = {
 
 # Tier ordering for "highest title" selection
 _TIER_ORDER = {"e": 0, "k": 1, "d": 2, "c": 3, "b": 4}
-
-
-def _key_to_label(key: str) -> str:
-    """Humanize a title key: k_england → 'England', d_munster → 'Munster'."""
-    if len(key) > 2 and key[1] == "_":
-        return key[2:].replace("_", " ").title()
-    return key.replace("_", " ").title()
 
 
 def _tenet_label(tenet: str) -> str:
@@ -469,12 +465,3 @@ class CultureEvaluator:
 # Helpers
 # --------------------------------------------------------------------------- #
 
-def _participants(war: dict, side: str) -> list[int]:
-    side_data = war.get(side, {})
-    if not isinstance(side_data, dict):
-        return []
-    ids = []
-    for p in _ensure_list(side_data.get("participants", [])):
-        if isinstance(p, dict) and "character" in p:
-            ids.append(int(p["character"]))
-    return ids

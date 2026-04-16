@@ -1,11 +1,12 @@
 """
 ck3.province_data
 ~~~~~~~~~~~~~~~~~
-Loads static province data from CK3 game files.
+Loads static province and building data from CK3 game files.
 
 Provides:
   - Province terrain lookup: map_province_id (int) → terrain type (str)
   - Barony→province bridge: barony_key (str) → map_province_id (int)
+  - Building category lookup: building_key (str) → category (str)
 
 The save file assigns its own sequential title database IDs that differ
 from the map province IDs used in province_terrain.txt.  The bridge is
@@ -17,6 +18,10 @@ Lookup chain used by TerrainEvaluator:
                →  barony_to_map_province[barony_key]
                →  terrain_map[map_province_id]
                →  terrain string
+
+Building categories are derived from game/common/buildings/*.txt.
+Each file covers a single category except 00_standard_economy_buildings.txt,
+which is categorised by building-key prefix.
 """
 
 from __future__ import annotations
@@ -36,6 +41,7 @@ _ROOT = Path(__file__).parent.parent   # project root (ck3-fileparse/)
 _terrain_cache: dict[int, str] | None = None
 _barony_cache: dict[str, int] | None = None
 _county_capital_cache: dict[str, str] | None = None   # county_key → capital barony_key
+_building_category_cache: dict[str, str] | None = None
 
 
 # --------------------------------------------------------------------------- #
@@ -181,4 +187,125 @@ def _ensure_loaded(path: str | Path | None = None) -> None:
         _county_capital_cache = {}
         return
     _barony_cache, _county_capital_cache = _load_landed_titles(path)
+
+
+# --------------------------------------------------------------------------- #
+# Building categories (building_key → category string)
+# --------------------------------------------------------------------------- #
+
+# Maps each building file to its single category.
+# 00_standard_economy_buildings.txt is mixed and handled separately below.
+_BUILDING_FILE_CAT: dict[str, str] = {
+    "00_castle_buildings.txt":                  "fortification",
+    "00_standard_fortification_buildings.txt":  "fortification",
+    "00_standard_military_buildings.txt":       "military",
+    "00_city_buildings.txt":                    "urban",
+    "00_temple_buildings.txt":                  "religious",
+    "00_common_buildings.txt":                  "religious",
+    "temple_citadel_buildings.txt":             "religious",
+    "00_tribal_buildings.txt":                  "tribal",
+    "00_nomad_buildings.txt":                   "tribal",
+    "00_admin_buildings.txt":                   "administrative",
+    "00_duchy_capital_buildings.txt":           "duchy_capital",
+    "00_special_buildings.txt":                 "special",
+    "00_special_mines.txt":                     "resource",
+    "00_legendary_buildings.txt":               "special",
+    "tgp_great_project_buildings.txt":          "special",
+    "ccp3_special_buildings.txt":               "special",
+    "cp6_special_buildings.txt":                "special",
+    "cp8_special_buildings.txt":                "special",
+    "99_ach_buildings.txt":                     "special",
+}
+
+# Per-prefix categories for the mixed economy file.
+_ECONOMY_PREFIX_CAT: dict[str, str] = {
+    "caravanserai":     "commerce",
+    "common_tradeport": "commerce",
+    "watermills":       "commerce",
+    "windmills":        "commerce",
+    "qanats":           "commerce",
+    "waterworks":       "commerce",
+    "cereal_fields":    "agriculture",
+    "farm_estates":     "agriculture",
+    "paddy_fields":     "agriculture",
+    "pastures":         "agriculture",
+    "hill_farms":       "agriculture",
+    "orchards":         "agriculture",
+    "elephant_pens":    "agriculture",
+    "logging_camps":    "resource",
+    "hunting_grounds":  "resource",
+    "quarries":         "resource",
+    "peat_quarries":    "resource",
+    "plantations":      "resource",
+    "spice_plantation": "resource",
+    "murex_farm":       "resource",
+}
+
+_BUILDING_KEY_RE = re.compile(r"^([a-z][a-z0-9_]+)\s*=\s*\{")
+_TIER_SUFFIX_RE  = re.compile(r"^(.+)_\d{1,2}$")
+
+
+def _strip_tier(key: str) -> str:
+    """Strip trailing numeric tier suffix: 'ramparts_03' → 'ramparts'."""
+    m = _TIER_SUFFIX_RE.match(key)
+    return m.group(1) if m else key
+
+
+def load_building_categories(path: str | Path | None = None) -> dict[str, str]:
+    """
+    Return mapping of building_key → category for all buildings in
+    game/common/buildings/.
+
+    Categories returned:
+      fortification, military, agriculture, commerce, resource,
+      religious, urban, tribal, administrative, duchy_capital, special.
+
+    Buildings not matched (unknown DLC, modded content) are omitted.
+    Cached after first load.
+    """
+    global _building_category_cache
+    if _building_category_cache is not None:
+        return _building_category_cache
+
+    if path is None:
+        path = _ROOT / "game" / "common" / "buildings"
+    path = Path(path)
+    if not path.exists():
+        _building_category_cache = {}
+        return _building_category_cache
+
+    result: dict[str, str] = {}
+    econ_file = path / "00_standard_economy_buildings.txt"
+
+    for filepath in sorted(path.glob("*.txt")):
+        fname = filepath.name
+        # Skip info files and the pure-graphics background file
+        if fname.startswith("_") or fname == "99_background_graphics_buildings.txt":
+            continue
+
+        if filepath == econ_file:
+            # Mixed economy file — categorise by base-name prefix
+            with open(filepath, encoding="utf-8-sig", errors="ignore") as f:
+                for line in f:
+                    m = _BUILDING_KEY_RE.match(line)
+                    if not m:
+                        continue
+                    key = m.group(1)
+                    cat = _ECONOMY_PREFIX_CAT.get(_strip_tier(key))
+                    if cat:
+                        result[key] = cat
+            continue
+
+        cat = _BUILDING_FILE_CAT.get(fname)
+        if cat is None:
+            continue  # unrecognised file — skip
+
+        with open(filepath, encoding="utf-8-sig", errors="ignore") as f:
+            for line in f:
+                m = _BUILDING_KEY_RE.match(line)
+                if m:
+                    result[m.group(1)] = cat
+
+    _building_category_cache = result
+    return _building_category_cache
 

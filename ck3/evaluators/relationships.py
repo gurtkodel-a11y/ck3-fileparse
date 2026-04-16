@@ -4,8 +4,6 @@ ck3.evaluators.relationships
 Level-1 relationships evaluator — surfaces the full web of formal and personal
 relationships visible around a character.
 
-Supersedes hierarchy.py (which covered hierarchical sections only).
-
 Sections:
   1. Hierarchical Position  — liege chain upward
   2. Vassals               — direct vassal contracts, faction flags
@@ -28,12 +26,15 @@ from __future__ import annotations
 from dataclasses import dataclass, field, asdict
 from typing import Any
 
-from ck3.gamestate import GameState, _ensure_list
+from ck3.gamestate import GameState
 from ck3.names import decode_name, char_label, house_prefix_name, title_ruler_label
+from ck3.evaluators.base import (
+    _ensure_list, _tier_order, _contract_label, title_full_label,
+)
 
 
 # --------------------------------------------------------------------------- #
-# Data classes — hierarchical (carried over from hierarchy.py)
+# Data classes
 # --------------------------------------------------------------------------- #
 
 @dataclass
@@ -209,7 +210,7 @@ class RelationshipsReport:
             for v in sorted(vassals, key=lambda x: (_tier_order(x.highest_title_tier), x.char_name)):
                 faction_flag = "  ⚠ IN FACTION" if v.in_faction_against_liege else ""
                 faction_detail = f" ({', '.join(v.faction_types)})" if v.faction_types else ""
-                title_str = _humanize_title_key(v.titles[0]) if v.titles else "(no title)"
+                title_str = title_full_label(v.titles[0]) if v.titles else "(no title)"
                 lines.append(
                     f"    {v.char_name:<28}  {title_str:<26}"
                     f"  levy {v.levy_capacity:>5,}  total {v.total_strength:>5,}"
@@ -230,7 +231,7 @@ class RelationshipsReport:
         # ── 4. Alliances ─────────────────────────────────────────────────── #
         lines.append(f"\n--- Alliances ({len(self.alliances)}) ---")
         for a in sorted(self.alliances, key=lambda x: x.ally_name):
-            title_str = _humanize_title_key(a.ally_titles[0]) if a.ally_titles else "(unlanded)"
+            title_str = title_full_label(a.ally_titles[0]) if a.ally_titles else "(unlanded)"
             bonds_str = f"  [{a.bond_count} bonds]" if a.bond_count > 1 else ""
             if a.is_negotiated:
                 via = "negotiated"
@@ -283,7 +284,7 @@ class RelationshipsReport:
                         f"  [{status}]"
                     )
                 else:
-                    title_str = _humanize_title_key(fm.titles[0]) if fm.titles else "unlanded"
+                    title_str = title_full_label(fm.titles[0]) if fm.titles else "unlanded"
                     loc_note = {
                         "player_court": "your court",
                         "own_realm":    "own realm",
@@ -316,7 +317,7 @@ class RelationshipsReport:
             for c in sorted(members, key=lambda x: x.char_name):
                 fam_note = f"  ({c.family_relation})" if c.family_relation else ""
                 pos_note = f"  — {c.court_position_type}" if c.court_position_type else ""
-                title_str = _humanize_title_key(c.titles[0]) if c.titles else ""
+                title_str = title_full_label(c.titles[0]) if c.titles else ""
                 title_note = f"  [{title_str}]" if title_str else ""
                 lines.append(
                     f"    {c.char_name:<22}  (id {c.char_id})"
@@ -335,7 +336,7 @@ class RelationshipsReport:
             for rtype in sorted(by_type.keys()):
                 for pr in by_type[rtype]:
                     dir_str = "→" if pr.direction == "player_to_other" else "←"
-                    title_str = _humanize_title_key(pr.other_titles[0]) if pr.other_titles else "unlanded"
+                    title_str = title_full_label(pr.other_titles[0]) if pr.other_titles else "unlanded"
                     loc = {
                         "player_court": "your court",
                         "own_realm":    "own realm",
@@ -381,18 +382,15 @@ class RelationshipsReport:
 # Evaluator
 # --------------------------------------------------------------------------- #
 
-# Scripted relation types that represent meaningful personal bonds
+# Scripted relation types that represent meaningful personal bonds.
+# "potential_*" types (potential_friend, potential_rival, potential_lover,
+# potential_hook, wedding_good_fertility) are deliberately excluded — they
+# indicate pending relationship formation, not established bonds.
 _PERSONAL_RELATION_TYPES = {
     "friend", "best_friend", "rival", "nemesis", "lover", "soulmate",
     "crush", "old_flame", "mentor", "student", "intrigue_mentor",
     "intrigue_student", "guardian", "ward", "soldier_friend",
     "oaf", "bully", "grudge", "victim",
-}
-
-# Scripted relation types that are "pending" / informational (less narrative weight)
-_POTENTIAL_RELATION_TYPES = {
-    "potential_friend", "potential_rival", "potential_lover", "potential_hook",
-    "wedding_good_fertility",
 }
 
 # Minimum abs(total opinion value) to surface in notable opinions
@@ -465,7 +463,7 @@ class RelationshipsEvaluator:
         )
 
     # ---------------------------------------------------------------------- #
-    # Hierarchical helpers (carried over from hierarchy.py)
+    # Hierarchical helpers
     # ---------------------------------------------------------------------- #
 
     def _char_name(self, char_id: int | None) -> str:
@@ -945,33 +943,6 @@ class RelationshipsEvaluator:
 # --------------------------------------------------------------------------- #
 # Module-level helpers
 # --------------------------------------------------------------------------- #
-
-_TIER_MAP = {"e": 0, "k": 1, "d": 2, "c": 3, "b": 4}
-
-
-def _tier_order(tier: str) -> int:
-    return _TIER_MAP.get(tier, 9)
-
-
-def _humanize_title_key(key: str) -> str:
-    """Convert a raw title key like 'c_desmond' to 'Count of Desmond'."""
-    if not key:
-        return "(no title)"
-    _RULER_LABEL = {"e": "Emperor", "k": "King", "d": "Duke", "c": "Count", "b": "Baron"}
-    tier = key[0] if key else "b"
-    label = _RULER_LABEL.get(tier, "Lord")
-    place = key[2:].replace("_", " ").title() if len(key) > 2 else key
-    return f"{label} of {place}"
-
-
-def _contract_label(contract_group: str) -> str:
-    return {
-        "feudal_vassal":   "Feudal vassals",
-        "tribal_vassal":   "Tribal vassals",
-        "clan_vassal":     "Clan vassals",
-        "republic_vassal": "Republic vassals",
-    }.get(contract_group, contract_group.replace("_", " ").title())
-
 
 def _parse_opinion_modifiers(entry: dict) -> tuple[int, list[dict]]:
     """

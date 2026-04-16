@@ -20,69 +20,17 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from ck3.gamestate import GameState, _ensure_list
+from ck3.gamestate import GameState
 from ck3.names import decode_name, char_label, title_ruler_label
 from ck3.geography import kingdom_to_region
 from ck3.province_data import (
     load_province_terrain, load_barony_provinces, load_county_capitals,
+    load_building_categories,
     WATER_TERRAIN, _DEFAULT_TERRAIN,
 )
+from ck3.evaluators.base import _ensure_list, title_place
 
 
-# --------------------------------------------------------------------------- #
-# Building classification tables
-# --------------------------------------------------------------------------- #
-
-# Maps building-type prefix → economic/military category.
-_BUILDING_CATEGORY: dict[str, str] = {
-    "castle":             "fortification",
-    "palisades":          "fortification",
-    "ramparts":           "fortification",
-    "curtain_walls":      "fortification",
-    "watchtowers":        "fortification",
-    "outposts":           "fortification",
-    "hill_forts":         "fortification",
-    "idjang_forts":       "fortification",
-    "barracks":           "military",
-    "war_camps":          "military",
-    "military_camps":     "military",
-    "regimental_grounds": "military",
-    "warrior_lodges":     "military",
-    "stables":            "military",
-    "cereal_fields":      "agriculture",
-    "farm_estates":       "agriculture",
-    "pastures":           "agriculture",
-    "hill_farms":         "agriculture",
-    "orchards":           "agriculture",
-    "paddy_fields":       "agriculture",
-    "camel_farms":        "agriculture",
-    "horse_pastures":     "agriculture",
-    "market_villages":    "commerce",
-    "guild_halls":        "commerce",
-    "common_tradeport":   "commerce",
-    "caravanserai":       "commerce",
-    "workshops":          "commerce",
-    "breweries":          "commerce",
-    "smiths":             "commerce",
-    "windmills":          "commerce",
-    "watermills":         "commerce",
-    "logging_camps":      "resource",
-    "hunting_grounds":    "resource",
-    "quarries":           "resource",
-    "peat_quarries":      "resource",
-    "spice_plantation":   "resource",
-    "plantations":        "resource",
-    "murex_farm":         "resource",
-    "wind_furnace":       "resource",
-    "temple":             "religious",
-    "temple_citadel":     "religious",
-    "hospices":           "religious",
-
-    "monastic_schools":   "religious",
-    "city":               "urban",
-    "tribe":              "tribal",
-    "longhouses":         "tribal",
-}
 
 _HOLDING_TYPE_SHORT = {
     "castle_holding":          "castle",
@@ -201,10 +149,14 @@ class TerrainReport:
             f"  Terrain:         {terrain_str}",
         ]
         if ds.low_control:
-            lines.append(f"  Low control (<{_CONTROL_WARN}):  " + ", ".join(_key_label(k) for k in ds.low_control))
+            lines.append(f"  Low control (<{_CONTROL_WARN}):  " + ", ".join(title_place(k) for k in ds.low_control))
 
         cat_parts = []
-        for cat in ("fortification", "military", "agriculture", "commerce", "resource", "religious", "urban", "tribal"):
+        for cat in (
+            "fortification", "military", "agriculture", "commerce",
+            "resource", "religious", "urban", "tribal",
+            "administrative", "duchy_capital", "special",
+        ):
             n = ds.category_totals.get(cat, 0)
             if n:
                 cat_parts.append(f"{cat} {n}")
@@ -247,6 +199,40 @@ class TerrainReport:
 
         return "\n".join(lines)
 
+    # ---------------------------------------------------------------------- #
+    # Query methods — targeted follow-up after seeing the report
+    # ---------------------------------------------------------------------- #
+
+    def holdings_by_terrain(self, terrain: str) -> list[HoldingProfile]:
+        """All domain holdings on a given terrain type (e.g. 'mountains', 'plains')."""
+        return [h for h in self.domain_holdings if h.terrain == terrain]
+
+    def holdings_by_type(self, holding_type: str) -> list[HoldingProfile]:
+        """All domain holdings of a given type: 'castle', 'city', 'church', 'tribal', etc."""
+        return [h for h in self.domain_holdings if h.holding_type == holding_type]
+
+    def holdings_with_category(self, category: str) -> list[HoldingProfile]:
+        """Domain holdings that have at least one building in the given category."""
+        return [h for h in self.domain_holdings if h.building_cats.get(category, 0) > 0]
+
+    def special_holdings(self) -> list[HoldingProfile]:
+        """Domain holdings with special features (wonders, holy sites, points of interest)."""
+        return [h for h in self.domain_holdings if h.special_features]
+
+    def holding_detail(self, barony_key: str) -> HoldingProfile | None:
+        """Look up one domain holding by its barony key (e.g. 'b_prague')."""
+        for h in self.domain_holdings:
+            if h.barony_key == barony_key:
+                return h
+        return None
+
+    def vassal_profile(self, char_id: int) -> VassalProfile | None:
+        """Look up a direct vassal's summary profile by character ID."""
+        for v in self.vassal_profiles:
+            if v.char_id == char_id:
+                return v
+        return None
+
 
 # --------------------------------------------------------------------------- #
 # Evaluator
@@ -286,6 +272,19 @@ class TerrainEvaluator:
             domain_summary=domain_summary,
             vassal_profiles=vassal_profiles,
         )
+
+    def vassal_holdings(self, vassal_id: int) -> list[HoldingProfile]:
+        """
+        Full per-holding profile for one direct vassal.
+
+        VassalProfile in the report carries only aggregate statistics; call
+        this when per-holding detail (buildings, fort level, control, terrain)
+        is needed for a specific vassal.
+        """
+        vassal_char = self.gs.character(vassal_id)
+        if not vassal_char:
+            return []
+        return self._profile_domain(vassal_char)
 
     # ---------------------------------------------------------------------- #
     # Private helpers
@@ -327,9 +326,10 @@ class TerrainEvaluator:
 
     def _classify_buildings(self, buildings: list[str]) -> dict[str, int]:
         """Return category → count for a list of building types."""
+        cat_map = load_building_categories()
         cats: dict[str, int] = {}
         for btype in buildings:
-            cat = _BUILDING_CATEGORY.get(_btype_prefix(btype))
+            cat = cat_map.get(btype)
             if cat:
                 cats[cat] = cats.get(cat, 0) + 1
         return cats
@@ -396,9 +396,9 @@ class TerrainEvaluator:
         # falling back to the key-stripping approach.
         name_data = title.get("title_name_data", {}) if isinstance(title, dict) else {}
         raw_barony_name = name_data.get("name", "") if isinstance(name_data, dict) else ""
-        barony_name = decode_name(raw_barony_name) if raw_barony_name else _key_label(barony_key)
+        barony_name = decode_name(raw_barony_name) if raw_barony_name else title_place(barony_key)
         # County title record requires a key-lookup (O(n)); key-stripping is fine here.
-        county_name = _key_label(county_key)
+        county_name = title_place(county_key)
 
         # County data
         county = self._county_data.get(county_key, {})
@@ -501,7 +501,7 @@ class TerrainEvaluator:
                     best_title = t
 
             is_female = vassal_char.get("female") == "yes"
-            title_label = title_ruler_label(best_title, female=is_female) if best_title else _key_label(best_key)
+            title_label = title_ruler_label(best_title, female=is_female) if best_title else title_place(best_key)
 
             # Holdings profile
             holdings = self._profile_domain(vassal_char)
@@ -537,10 +537,53 @@ def _btype_prefix(btype: str) -> str:
     return btype
 
 
-def _key_label(key: str) -> str:
-    """Human-readable place name from a title key, e.g. 'c_prague' → 'Prague'."""
-    if not key:
-        return "(unknown)"
-    # Strip tier prefix (c_, d_, b_, k_, e_)
-    name = key[2:] if len(key) > 2 and key[1] == "_" else key
-    return name.replace("_", " ").title()
+# --------------------------------------------------------------------------- #
+# Standalone province / terrain utilities
+#
+# These work purely from static game data (no GameState needed) and are
+# intended as building blocks for geography.py path and travel calculations.
+# --------------------------------------------------------------------------- #
+
+def terrain_for_key(key: str) -> str:
+    """
+    Return the terrain type string for a barony or county key.
+
+    For county keys (c_*) the capital barony is resolved first via the static
+    landed_titles data.  Returns _DEFAULT_TERRAIN ('plains') when the key is
+    not found in game data.
+
+    Examples::
+        terrain_for_key('b_prague')     → 'plains'
+        terrain_for_key('c_bohemia')    → 'plains'  (via capital barony)
+        terrain_for_key('b_innsbruck')  → 'mountains'
+    """
+    lookup = key
+    if key.startswith("c_"):
+        lookup = load_county_capitals().get(key, key)
+    prov_id = load_barony_provinces().get(lookup)
+    if prov_id is None:
+        return _DEFAULT_TERRAIN
+    return load_province_terrain().get(prov_id, _DEFAULT_TERRAIN)
+
+
+def terrain_summary(keys: list[str]) -> dict[str, int]:
+    """
+    Return terrain-type counts for a collection of barony or county keys.
+
+    Accepts a mix of b_* and c_* keys.  Water terrain (sea, coastal_sea) is
+    excluded.  Intended for characterising the terrain along a route or within
+    a region — geography.py can pass a path of province keys here to get a
+    terrain breakdown.
+
+    Example::
+        terrain_summary(['b_prague', 'b_brno', 'b_innsbruck'])
+        → {'plains': 2, 'mountains': 1}
+    """
+    counts: dict[str, int] = {}
+    for key in keys:
+        t = terrain_for_key(key)
+        if t not in WATER_TERRAIN:
+            counts[t] = counts.get(t, 0) + 1
+    return counts
+
+
