@@ -6,7 +6,9 @@
       "Bash(python3 run_report.py sample-saves/murchad.txt 18269)",
       "Bash(python3 run_report.py sample-saves/murchad.txt)",
       "Bash(ls -lh /Users/kevink/ck3-fileparse/sample-saves/*.ck3)",
-      "Bash(python3 run_report.py sample-saves/extracted/King_Vratislav_of_Bohemia_1088_01_02.txt)"
+      "Bash(python3 run_report.py sample-saves/extracted/King_Vratislav_of_Bohemia_1088_01_02.txt)",
+      "Bash(grep -rh \"family = \" /Users/kevink/ck3-fileparse/game/common/religion/religions/*.txt)",
+      "Bash(python3 -c ':*)"
     ]
   }
 }

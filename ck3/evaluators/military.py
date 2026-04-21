@@ -22,6 +22,7 @@ from ck3.geography import kingdom_to_region, zone_between
 from ck3.evaluators.base import (
     _ensure_list, _participants, title_full_label,
 )
+from ck3.maa_data import load_maa_definitions, maa_class_label
 
 
 # --------------------------------------------------------------------------- #
@@ -70,6 +71,9 @@ class RealmStrength:
     combat_power: int        # game's internal power metric (bonuses included)
     domain_garrisons: list[dict]   # per-province garrison info
     knights: list[dict]      # each knight: id, name, prowess, power
+    maa_regiments: list[dict] = field(default_factory=list)
+    # each regiment: {key, maa_class, class_label, size, damage, toughness,
+    #                 pursuit, screen, terrain_bonus}
 
 
 @dataclass
@@ -121,8 +125,25 @@ class MilitaryReport:
             f"  Total max:         {rs.total_max:>6,}",
             f"  Currently raised:  {rs.total_troops:>6,}  (levy + MaA combined)",
             f"  Combat power:      {rs.combat_power:>6,}  (game internal metric)",
-            f"  Knights ({len(rs.knights)}):",
         ]
+
+        if rs.maa_regiments:
+            lines.append(f"\n--- Men-at-Arms Regiments ({len(rs.maa_regiments)}) ---")
+            for r in rs.maa_regiments:
+                tb_parts = []
+                for terrain, stats in r["terrain_bonus"].items():
+                    dmg_mod = stats.get("damage", 0)
+                    if dmg_mod != 0:
+                        tb_parts.append(f"{terrain}:{dmg_mod:+d}dmg")
+                tb_str = "  " + ", ".join(tb_parts) if tb_parts else ""
+                lines.append(
+                    f"  {r['key']:<28}  {r['class_label']:<18}"
+                    f"  size {r['size']:>4}"
+                    f"  dmg {r['damage']:>3}  tough {r['toughness']:>3}"
+                    f"{tb_str}"
+                )
+
+        lines.append(f"\n--- Knights ({len(rs.knights)}) ---")
         for k in rs.knights:
             lines.append(f"    {k['name']:<24}  prowess {k['prowess']}  power {k['power']}")
 
@@ -470,6 +491,47 @@ class MilitaryEvaluator:
                 "power":  prowess * 100,   # CK3 approximation: each prowess ≈ 100 power
             })
 
+        # Men-at-Arms regiments
+        maa_defs = load_maa_definitions()
+        maa_regiments = []
+        for reg_id, reg in gs.regiments.items():
+            if not isinstance(reg, dict):
+                continue
+            if reg.get("owner") != self.char_id:
+                continue
+            reg_type = reg.get("type")
+            if not reg_type:
+                continue
+            size = int(reg.get("size", 0) or 0)
+            d = maa_defs.get(reg_type)
+            if d:
+                maa_regiments.append({
+                    "key":          reg_type,
+                    "maa_class":    d.maa_class,
+                    "class_label":  maa_class_label(d.maa_class),
+                    "size":         size,
+                    "damage":       d.damage,
+                    "toughness":    d.toughness,
+                    "pursuit":      d.pursuit,
+                    "screen":       d.screen,
+                    "terrain_bonus": d.terrain_bonus,
+                })
+            else:
+                # Unknown type — surface it anyway
+                maa_regiments.append({
+                    "key":          reg_type,
+                    "maa_class":    "unknown",
+                    "class_label":  "Unknown",
+                    "size":         size,
+                    "damage":       0,
+                    "toughness":    0,
+                    "pursuit":      0,
+                    "screen":       0,
+                    "terrain_bonus": {},
+                })
+        # Sort by class then key for consistent display
+        maa_regiments.sort(key=lambda r: (r["maa_class"], r["key"]))
+
         return RealmStrength(
             char_id=self.char_id,
             total_troops=current_str,
@@ -479,6 +541,7 @@ class MilitaryEvaluator:
             combat_power=power,
             domain_garrisons=garrisons,
             knights=knights,
+            maa_regiments=maa_regiments,
         )
 
     def _classify_armies(

@@ -21,8 +21,10 @@ The project proceeds in layers:
    meaningful facts from `GameState` (military, culture, diplomacy, etc.)
 4. **Report** — human-readable summaries of evaluator output.
 
-Only layers 1–3 are complete.  Layer 4 exists as plain-text summaries
-produced by each evaluator's `summary()` method.
+Layers 1–3 are complete.  Layer 4 (Evaluate) exists as plain-text summaries
+from each evaluator's `summary()` method.  Layer 5 (Advise) is the council
+advisor layer in `ck3/advisors/`, which interprets evaluator output and
+produces strategic briefs structured around the five CK3 council roles.
 
 ---
 
@@ -39,7 +41,9 @@ produced by each evaluator's `summary()` method.
                  ↓
              ck3.gamestate.GameState        ← structured model + indices
                  ↓
-             ck3.evaluators.*              ← domain evaluators
+             ck3.evaluators.*              ← domain evaluators (level 1: facts)
+                 ↓
+             ck3.advisors.*               ← council advisors (level 2: interpretation)
 ```
 
 **Save formats encountered:**
@@ -59,6 +63,7 @@ gitignored (too large to push); they live only on the local Mac.
 ```
 parse_gamestate.py          Clausewitz tokeniser + iterative parser
 run_report.py               CLI: parse a save, run selected evaluators, print report
+run_council.py              CLI: parse a save, run selected council advisors, print briefs
 
 scripts/
   watch_autosaves.py        Run on gaming PC: watches for new saves, copies to sample-saves/
@@ -70,6 +75,18 @@ ck3/
   geography.py              Region definitions + interaction-proximity zones
   names.py                  Name decoding, house labels, ordinals, char_label()
   province_data.py          Static game data loader: terrain + barony→province bridge
+  culture_data.py           Static culture definitions loader: CultureDef, pillar/tradition labels,
+                            RELIGION_FAMILY_LABELS
+  maa_data.py               Static MaA type definitions loader: MaaDef, maa_class_label(),
+                            load_maa_definitions() — reads game/common/men_at_arms_types/
+  advisors/
+    __init__.py             Council class — lazy report cache + advisor access
+    base.py                 BaseAdvisor, Priority dataclass, shared helpers
+    marshal.py              MarshalAdvisor   → MarshalBrief
+    chancellor.py           ChancellorAdvisor → ChancellorBrief
+    steward.py              StewardAdvisor   → StewardBrief
+    councilor.py            CouncilorAdvisor → CouncilorBrief
+    spymaster.py            SpymasterAdvisor → SpymasterBrief
   evaluators/
     __init__.py
     base.py                 Shared utilities: _ensure_list, _tier_order, _contract_label,
@@ -91,6 +108,9 @@ game/
       00_province_terrain.txt   map_province_id → terrain string (static CK3 data)
     landed_titles/
       00_landed_titles.txt      barony→province bridge + county capital lookup
+    buildings/                  building definitions (loaded by province_data.load_building_categories())
+    culture/cultures/           culture definitions (loaded by culture_data.load_culture_definitions())
+    men_at_arms_types/          MaA type definitions (loaded by maa_data.load_maa_definitions())
 
 sample-saves/
   extracted/                16 saves extracted to plaintext (gitignored):
@@ -165,13 +185,14 @@ sample-saves/
 ## Evaluator Status & Validation Notes
 
 ### Military (`ck3/evaluators/military.py`)
-**Validated against murchad.txt (1087.3.24) and Vratislav II 1066–1072**
+**Validated against murchad.txt (1087.3.24) and Vratislav II 1066–1088**
 
 - `RealmStrength` correctly separates:
   - `levy_capacity` — max levy from `landed_data.levy`
   - `maa_capacity` — computed as `strength - levy` (men-at-arms)
   - `total_troops` — current raised troops, summed from active army unit objects
   - `total_max` — combined maximum (from `strength`)
+  - `maa_regiments` — list of player's MaA regiments with type stats from game files
 - `total_troops` is computed by iterating `gs.armies` and summing
   `gs.army_strength(army_id)["current"]` for armies owned by the character.
   **Not** from `landed_data.current_strength`, which equals `strength` (max) when
@@ -179,6 +200,15 @@ sample-saves/
 - Combat power is the game's internal metric; not directly visible to the player
   but directionally correct
 - Knights are listed with prowess and approximate power (prowess × 100)
+
+**MaA Regiments (new):**
+- Sourced from `gs.regiments` — filter by `r.get('owner') == char_id` and `r.get('type')` present
+- Each regiment: `{key, maa_class, class_label, size, damage, toughness, pursuit, screen, terrain_bonus}`
+- `terrain_bonus` is a `dict[terrain, dict[stat, int]]` from static game data
+- Displayed in summary with damage modifier per terrain type for tactically relevant bonuses
+- Regiment type → `maa_data.MaaDef` lookup via `load_maa_definitions()` (109 types from 10 files)
+- Unknown types surface with class "unknown" and zero stats (not silently dropped)
+- `maa_data.maa_class_label()` humanises class keys: "heavy_infantry" → "Heavy Infantry"
 
 **Nearby Rulers section:**
 - `NearbyRuler` dataclass and `nearby_rulers` field on `MilitaryReport`
@@ -194,28 +224,30 @@ sample-saves/
 - Neutral armies are omitted from the field army report (intentional — too noisy)
 
 ### Culture (`ck3/evaluators/culture.py`)
-**Validated against murchad.txt (1087.3.24)**
+**Validated against Vratislav II 1083 and Murchad 1080**
 
-Religion is one axis of culture; future work will add ethnicity/language groups
-and cultural innovations.  Current content:
+Now covers both culture identity and faith.  Static data loaded from
+`ck3/culture_data.py` (236 cultures from `game/common/culture/cultures/*.txt`).
 
-- Faith profiles include fervor, tenets, doctrines, religious head, title count,
-  and top rulers
-- Geographic zone filtering groups faiths into:
-  - Local/nearby (full detail with rulers and tenets)
-  - Continental (summary rows)
-  - Global major (>50 titles, name + count only)
-  - Global minor (omitted)
-- Zone is computed from the player's capital kingdom → region, then
-  `zone_between(player_region, faith_region)` using region adjacency graph
-- `own_religion` uses `graphical_faith` as a proxy for religion family
-  (e.g. `catholic_gfx`); true religion names require static game data files
+**Culture section (new):**
+- `own_culture_template` resolved from `character.culture` → `culture_manager.cultures[id].culture_template`
+- Pillars: `language`, `heritage`, `ethos`, `martial_custom`, `head_determination` — sourced
+  directly from the save's culture record (already embedded, no game-file lookup needed)
+- `own_traditions`: list of tradition keys, displayed via `tradition_label()` from `culture_data.py`
+- `own_culture_era`: derived from `culture_era_data` — last era with `left` key is graduated; the
+  next era is current; falls back to last entered if all completed
+- `CultureProfile` per culture: template, name, language, heritage, ethos, traditions, era,
+  relation (same_culture/same_heritage/same_language/other), titles_held, rulers, zone, head
+- Geographic zone filtering: local/nearby (full detail), continental (summary), global major (≥20 titles)
+- `RELIGION_FAMILY_LABELS` maps `rf_*` keys to human names (Abrahamic, Eastern/Dharmic, etc.)
+
+**Faith section (unchanged from before):**
+- Faith profiles with fervor, tenets, doctrines, religious head, title count, top rulers
+- Zone-filtered display (local/nearby full detail, continental summary, global major >50 titles)
 
 **Known gaps:**
-- `hostile` relation type removed; currently only "own", "same_religion", "other"
-  — religious hostility would need game data files to compute
-- Cultural group / language family not yet surfaced (save stores `culture` key
-  per character and `culture_template` in cultures db — not yet parsed)
+- `hostile` relation type not yet computed (would need faith doctrine cross-reference)
+- Culture hybridisation / divergence not surfaced (save has the data; not yet parsed)
 
 ### Relationships (`ck3/evaluators/relationships.py`)
 **Validated against murchad.txt (1087.3.24) and Vratislav II 1066–1072**
@@ -282,14 +314,35 @@ Reports holding geography using authoritative CK3 static data (not inferred).
 
 Key dataclasses: `HoldingProfile`, `DomainSummary`, `VassalProfile`, `TerrainReport`
 
-- `HoldingProfile` fields: barony_key, county_key, holding_type, terrain,
-  fort_level, development, development_progress, county_control, buildings,
-  building_cats, special_features
+- `HoldingProfile` fields: barony_key, county_key, barony_name, county_name,
+  holding_type, terrain, fort_level, development, development_progress,
+  county_control, buildings, building_cats, special_features
+  - `barony_name`/`county_name`: decoded display names from `title_name_data.name`
+    (falling back to key-stripping)
 - `DomainSummary` aggregates: type_counts, total/avg development, low_control
   holdings, terrain_counts, category_totals
 - Vassal profiles include terrain and building summary for each direct vassal's domain
-- Building categories mapped via `_BUILDING_CATEGORY` prefix dict:
-  fortification, military, agriculture, commerce, resource, religious, urban, tribal
+- Building categories sourced from `province_data.load_building_categories()`:
+  fortification, military, agriculture, commerce, resource, religious, urban, tribal,
+  administrative, duchy_capital, special
+
+**Public query API on `TerrainReport`** (for targeted follow-up after the summary):
+- `holdings_by_terrain(terrain)` → `list[HoldingProfile]`
+- `holdings_by_type(holding_type)` → `list[HoldingProfile]`
+- `holdings_with_category(category)` → `list[HoldingProfile]`
+- `special_holdings()` → `list[HoldingProfile]`  (holdings with `points_of_interest`)
+- `holding_detail(barony_key)` → `HoldingProfile | None`
+- `vassal_profile(char_id)` → `VassalProfile | None`
+
+**Public method on `TerrainEvaluator`**:
+- `vassal_holdings(vassal_id)` → `list[HoldingProfile]` — per-holding detail for
+  one vassal (the report carries only aggregate `VassalProfile` stats)
+
+**Module-level standalone utilities** (no `GameState` needed; pure static data;
+intended as building blocks for `geography.py` path/travel calculations):
+- `terrain_for_key(key)` — resolves a `b_*` or `c_*` title key to a terrain string
+- `terrain_summary(keys)` — terrain-type counts for a list of barony/county keys;
+  excludes water terrain
 
 **Key implementation notes:**
 - Domain list may contain duchy-tier (d_*) entries as seat titles — skipped in
@@ -299,11 +352,61 @@ Key dataclasses: `HoldingProfile`, `DomainSummary`, `VassalProfile`, `TerrainRep
   province lookup
 - Vassal profiles built by calling `contracts_for_liege()` and profiling each
   vassal's domain the same way as the player's
+- `special_features` sourced from `province.points_of_interest` (save field)
 
 **Known gaps:**
 - Building benefit values not yet extracted (only names/categories surfaced)
-- Special features (wonders, holy sites) detection is heuristic — based on
-  building key patterns, not game data
+- Special features list is whatever the save records in `points_of_interest` —
+  not cross-referenced against game data (wonders, holy sites may appear as raw keys)
+
+---
+
+## Advisor Layer (`ck3/advisors/`)
+
+Level-2 analysis: interprets evaluator output and produces strategic briefs
+structured around the five CK3 council roles.
+
+### Design
+
+- **`Council`** (`__init__.py`) — central hub; owns `GameState` + `char_id`;
+  lazily builds and caches all four evaluator reports so multiple advisors
+  share them without re-computing.
+- **`BaseAdvisor`** (`base.py`) — common interface: `advise()` returns a brief
+  dataclass with a `summary()` method; shared helpers (`_power_label`,
+  `Priority` dataclass with `urgency` ∈ high/medium/low).
+- Each advisor pulls from the reports it needs and uses query APIs (e.g.
+  `terrain_report.holdings_by_terrain()`) for targeted follow-up.
+- Output dataclasses carry structured fields for programmatic access **and**
+  a `summary()` that produces narrative prose (contrast with evaluators, which
+  produce tabular fact summaries).
+
+### Advisors
+
+| Role | Class | Reports used | Focus |
+|------|-------|-------------|-------|
+| Marshal | `MarshalAdvisor` | Military, Terrain | Power posture, threats, wars, knights, defensibility |
+| Chancellor | `ChancellorAdvisor` | Relationships, Military, Culture | Vassals, alliances, external relations, hooks, heritage affinities |
+| Steward | `StewardAdvisor` | Terrain | Domain dev, building gaps, control, vassal domain summary |
+| Councilor | `CouncilorAdvisor` | Culture | Faith fervor, nearby hostile/pagan faiths, holy wars |
+| Spymaster | `SpymasterAdvisor` | Relationships | Hook inventory, enemies, crime opinions, factions |
+
+### Output structure
+
+Each `*Brief` dataclass holds:
+- Structured fields (for programmatic access or LLM context injection)
+- `observations: list[str]` — synthesised analytical notes
+- `priorities: list[Priority]` — ranked actionable items with urgency tags
+- `summary() -> str` — human-readable narrative brief
+
+### Known gaps / future work
+
+- Advisors currently work from top-level report data; deeper targeted queries
+  (e.g. "which specific vassal to prioritise?", "what building to build next
+  and where?") are possible by adding query calls but not yet written
+- No cross-advisor synthesis — each brief is independent; a future `council.full_brief()`
+  could identify conflicts and consensus across roles
+- MarshalAdvisor does not yet reference `own_armies` / `enemy_armies` during
+  active wars (those fields exist in `MilitaryReport`)
 
 ---
 
@@ -320,6 +423,15 @@ python3 run_report.py sample-saves/extracted/<save>.txt 18269 --modules culture 
 
 Available modules: `military`, `culture`, `relationships`, `terrain` (default: all four).
 Parse/load progress goes to stderr; report content to stdout.
+
+```bash
+# Council advisor briefs (level 2)
+python3 run_council.py sample-saves/extracted/<save>.txt
+python3 run_council.py sample-saves/extracted/<save>.txt 18269
+python3 run_council.py sample-saves/extracted/<save>.txt --advisors marshal chancellor
+```
+
+Available advisors: `marshal`, `chancellor`, `steward`, `councilor`, `spymaster` (default: all five).
 
 ---
 

@@ -25,11 +25,34 @@ from ck3.names import decode_name, char_label
 from ck3.evaluators.base import (
     _ensure_list, _participants, title_place,
 )
+from ck3.culture_data import (
+    load_culture_definitions, pillar_label, tradition_label,
+    RELIGION_FAMILY_LABELS,
+)
 
 
 # --------------------------------------------------------------------------- #
 # Data classes
 # --------------------------------------------------------------------------- #
+
+@dataclass
+class CultureProfile:
+    """Everything knowable about a single culture from the save."""
+    culture_id: str
+    template: str              # game-data key, e.g. "czech"
+    name: str                  # display name, e.g. "Czech"
+    language: str              # e.g. "language_czech_slovak"
+    heritage: str              # e.g. "heritage_west_slavic"
+    ethos: str                 # e.g. "ethos_bureaucratic"
+    traditions: list[str]      # e.g. ["tradition_hard_working", ...]
+    relation_to_player: str    # "same_culture" | "same_heritage" | "same_language" | "other"
+    titles_held: int
+    rulers: list[dict]         # [{id, name, highest_title_key}]
+    zone: int                  # proximity to player (0=local, 1=nearby, 2=continental, 3=global)
+    era: str                   # current culture era, e.g. "high_medieval"
+    head_id: int | None
+    head_name: str | None
+
 
 @dataclass
 class FaithProfile:
@@ -71,6 +94,16 @@ class CultureReport:
     char_id: int
     char_name: str
     game_date: str
+    # ── Culture ───────────────────────────────────────────────────────────── #
+    own_culture_id: str
+    own_culture_template: str     # game-data key, e.g. "czech"
+    own_culture_name: str         # display name
+    own_language: str             # e.g. "language_czech_slovak"
+    own_heritage: str             # e.g. "heritage_west_slavic"
+    own_ethos: str                # e.g. "ethos_bureaucratic"
+    own_traditions: list[str]
+    own_culture_era: str          # e.g. "high_medieval"
+    cultures: list[CultureProfile]  # all cultures with at least one title-holding ruler
     # ── Faith / Religion ──────────────────────────────────────────────────── #
     own_faith_id: str
     own_faith_tag: str
@@ -91,12 +124,70 @@ class CultureReport:
             "=" * 70,
         ]
 
+        # ── Culture section ───────────────────────────────────────────────── #
+        fam_label = RELIGION_FAMILY_LABELS.get(self.own_religion_family, self.own_religion_family)
+        lines += [
+            "\n--- Culture ---",
+            f"Your culture:  {self.own_culture_name}  (era: {self.own_culture_era.replace('_', ' ').title()})",
+            f"Language:      {pillar_label(self.own_language)}",
+            f"Heritage:      {pillar_label(self.own_heritage)}",
+            f"Ethos:         {pillar_label(self.own_ethos)}",
+            f"Traditions:    {', '.join(tradition_label(t) for t in self.own_traditions) or 'none'}",
+        ]
+
+        # ── Nearby cultures (zone 0+1) — full detail ──────────────────────── #
+        local_nearby_c = [c for c in self.cultures if c.zone <= 1]
+        local_nearby_c.sort(key=lambda c: (c.relation_to_player != "same_culture", c.relation_to_player, -c.titles_held))
+        lines.append(f"\n--- Cultures in Your Region & Neighbours ({len(local_nearby_c)}) ---")
+        lines.append(f"  {'culture':<28}  {'titles':>6}  {'zone':<6}  {'relation'}")
+        for c in local_nearby_c:
+            marker = " ◄ YOUR CULTURE" if c.relation_to_player == "same_culture" else ""
+            zone_label = "local " if c.zone == 0 else "nearby"
+            lines.append(
+                f"  {c.name:<28}  {c.titles_held:>6}  {zone_label}  {c.relation_to_player}{marker}"
+            )
+            if c.relation_to_player != "same_culture":
+                parts = []
+                if c.heritage:
+                    parts.append(f"heritage: {pillar_label(c.heritage)}")
+                if c.language:
+                    parts.append(f"language: {pillar_label(c.language)}")
+                if parts:
+                    lines.append(f"    {' | '.join(parts)}")
+            if c.traditions:
+                lines.append(f"    Traditions: {', '.join(tradition_label(t) for t in c.traditions[:4])}")
+            top_rulers = c.rulers[:4]
+            if top_rulers:
+                ruler_strs = [f"{r['name']} ({title_place(r['highest_title_key'])})" for r in top_rulers]
+                lines.append(f"    Rulers: {', '.join(ruler_strs)}")
+
+        # ── Continental cultures (zone 2) — summary ───────────────────────── #
+        continental_c = [c for c in self.cultures if c.zone == 2]
+        continental_c.sort(key=lambda c: -c.titles_held)
+        lines.append(f"\n--- Continental Cultures ({len(continental_c)}) ---")
+        lines.append(f"  {'culture':<28}  {'titles':>6}  {'heritage':<24}  {'relation'}")
+        for c in continental_c:
+            lines.append(
+                f"  {c.name:<28}  {c.titles_held:>6}  {pillar_label(c.heritage):<24}  {c.relation_to_player}"
+            )
+
+        # ── Global cultures (zone 3) — major only ─────────────────────────── #
+        global_major_c = [c for c in self.cultures if c.zone == 3 and c.titles_held >= 20]
+        global_minor_c_count = sum(1 for c in self.cultures if c.zone == 3 and c.titles_held < 20)
+        global_major_c.sort(key=lambda c: -c.titles_held)
+        lines.append(f"\n--- Major Cultures Beyond the Horizon ({len(global_major_c)} shown, {global_minor_c_count} minor omitted) ---")
+        lines.append(f"  {'culture':<28}  {'titles':>6}  {'heritage'}")
+        for c in global_major_c:
+            lines.append(
+                f"  {c.name:<28}  {c.titles_held:>6}  {pillar_label(c.heritage)}"
+            )
+
         # ── Religion section ─────────────────────────────────────────────── #
         lines += [
             "\n--- Religion ---",
             f"Your faith:    {self.own_faith_tag}  (fervor {self.own_faith_fervor:.1f})",
             f"Your religion: {self.own_religion_tag}",
-            f"Your family:   {self.own_religion_family}",
+            f"Your family:   {fam_label}",
         ]
 
         own = next((f for f in self.faiths if f.relation_to_player == "same_faith"), None)
@@ -191,6 +282,36 @@ _HOLY_WAR_CBS = {
 _TIER_ORDER = {"e": 0, "k": 1, "d": 2, "c": 3, "b": 4}
 
 
+def _current_era(cult_rec: dict) -> str:
+    """
+    Derive the culture's current era from the culture_era_data list.
+
+    The list is ordered oldest→newest.  We find the last era that was entered
+    (has 'join', 'left', or progress > 0) and treat it as completed if its
+    progress == 100; in that case the next era is the current one.
+    """
+    era_data = _ensure_list(cult_rec.get("culture_era_data", []))
+    valid = [e for e in era_data if isinstance(e, dict) and e.get("type")]
+    if not valid:
+        return "unknown"
+
+    last_entered_idx = -1
+    for i, entry in enumerate(valid):
+        if "join" in entry or "left" in entry or entry.get("progress", 0) > 0:
+            last_entered_idx = i
+
+    if last_entered_idx == -1:
+        # Nothing entered — return the first era
+        return valid[0].get("type", "unknown").removeprefix("culture_era_")
+
+    last_entered = valid[last_entered_idx]
+    if last_entered.get("progress", 0) >= 100 and last_entered_idx + 1 < len(valid):
+        # Completed — the next era is current
+        return valid[last_entered_idx + 1].get("type", "unknown").removeprefix("culture_era_")
+
+    return last_entered.get("type", "unknown").removeprefix("culture_era_")
+
+
 def _tenet_label(tenet: str) -> str:
     """Humanize a tenet key: tenet_ecumenism → 'Ecumenism'."""
     return tenet.removeprefix("tenet_").replace("_", " ").title()
@@ -214,6 +335,26 @@ class CultureEvaluator:
             raise ValueError(f"Character {self.char_id} not found in living")
 
         char_name = decode_name(char.get("first_name", str(self.char_id)))
+
+        # ── Culture ──────────────────────────────────────────────────────── #
+        own_culture_id = str(char.get("culture", ""))
+        own_cult_rec = gs.culture(own_culture_id) or {}
+        own_culture_template = own_cult_rec.get("culture_template", own_culture_id)
+        own_culture_name = own_cult_rec.get("name", own_culture_template).replace("_", " ").title()
+        own_language = own_cult_rec.get("language", "")
+        own_heritage = own_cult_rec.get("heritage", "")
+        own_ethos = own_cult_rec.get("ethos", "")
+        own_traditions = _ensure_list(own_cult_rec.get("traditions", []))
+        own_culture_era = _current_era(own_cult_rec)
+
+        # Determine player's geographic region from their capital kingdom
+        player_region = self._player_region(char)
+
+        culture_profiles = self._build_culture_profiles(
+            own_culture_id, own_heritage, own_language, player_region
+        )
+
+        # ── Faith / Religion ─────────────────────────────────────────────── #
         own_faith_id = str(char.get("faith", ""))
         own_faith = gs.faith(own_faith_id) or {}
         own_faith_tag = own_faith.get("tag", own_faith_id)
@@ -224,9 +365,6 @@ class CultureEvaluator:
         own_religion_tag = own_religion.get("tag", own_religion_id)
         own_religion_family = own_religion.get("family", "")
 
-        # Determine player's geographic region from their capital kingdom
-        player_region = self._player_region(char)
-
         faith_profiles = self._build_faith_profiles(
             own_faith_id, own_religion_id, own_religion_family, player_region
         )
@@ -236,6 +374,15 @@ class CultureEvaluator:
             char_id=self.char_id,
             char_name=char_name,
             game_date=gs.date,
+            own_culture_id=own_culture_id,
+            own_culture_template=own_culture_template,
+            own_culture_name=own_culture_name,
+            own_language=own_language,
+            own_heritage=own_heritage,
+            own_ethos=own_ethos,
+            own_traditions=own_traditions,
+            own_culture_era=own_culture_era,
+            cultures=culture_profiles,
             own_faith_id=own_faith_id,
             own_faith_tag=own_faith_tag,
             own_faith_fervor=own_faith_fervor,
@@ -284,6 +431,119 @@ class CultureEvaluator:
                     best_region = region
 
         return best_region
+
+    def _build_culture_profiles(
+        self,
+        own_culture_id: str,
+        own_heritage: str,
+        own_language: str,
+        player_region: str,
+    ) -> list[CultureProfile]:
+        gs = self.gs
+
+        # Count titles per culture and collect rulers
+        culture_title_count: dict[str, int] = defaultdict(int)
+        culture_rulers: dict[str, list[dict]] = defaultdict(list)
+
+        for tid, title in gs.titles.items():
+            if not isinstance(title, dict):
+                continue
+            holder_id = title.get("holder")
+            if holder_id is None:
+                continue
+            char = gs.character(holder_id)
+            if not char:
+                continue
+            cid = str(char.get("culture", ""))
+            if not cid:
+                continue
+
+            culture_title_count[cid] += 1
+
+            title_key = title.get("key", "")
+            tier_prefix = title_key[0] if title_key else "b"
+            tier_order = _TIER_ORDER.get(tier_prefix, 4)
+
+            existing = next(
+                (r for r in culture_rulers[cid] if r["id"] == holder_id), None
+            )
+            if existing is None:
+                culture_rulers[cid].append({
+                    "id": holder_id,
+                    "name": decode_name(char.get("first_name", str(holder_id))),
+                    "highest_title_key": title_key,
+                    "highest_tier": tier_prefix,
+                    "_tier_order": tier_order,
+                })
+            elif tier_order < existing["_tier_order"]:
+                existing["highest_title_key"] = title_key
+                existing["highest_tier"] = tier_prefix
+                existing["_tier_order"] = tier_order
+
+        profiles = []
+        for cid, count in culture_title_count.items():
+            cult_rec = gs.culture(cid) or {}
+            template = cult_rec.get("culture_template", cid)
+            name = cult_rec.get("name", template).replace("_", " ").title()
+            language = cult_rec.get("language", "")
+            heritage = cult_rec.get("heritage", "")
+            ethos = cult_rec.get("ethos", "")
+            traditions = _ensure_list(cult_rec.get("traditions", []))
+            era = _current_era(cult_rec)
+
+            head_id = cult_rec.get("head")
+            head_name = self._char_name(head_id) if head_id else None
+
+            if cid == own_culture_id:
+                relation = "same_culture"
+            elif heritage and heritage == own_heritage:
+                relation = "same_heritage"
+            elif language and language == own_language:
+                relation = "same_language"
+            else:
+                relation = "other"
+
+            rulers = culture_rulers[cid]
+            for r in rulers:
+                r.pop("_tier_order", None)
+
+            zone = self._culture_zone(rulers, player_region)
+
+            profiles.append(CultureProfile(
+                culture_id=cid,
+                template=template,
+                name=name,
+                language=language,
+                heritage=heritage,
+                ethos=ethos,
+                traditions=traditions,
+                relation_to_player=relation,
+                titles_held=count,
+                rulers=rulers,
+                zone=zone,
+                era=era,
+                head_id=head_id,
+                head_name=head_name,
+            ))
+
+        return profiles
+
+    def _culture_zone(self, rulers: list[dict], player_region: str) -> int:
+        """Zone (0–3) for a culture based on where its highest-tier rulers hold titles."""
+        gs = self.gs
+        best = 3
+        for ruler in rulers:
+            title_key = ruler.get("highest_title_key", "")
+            if not title_key:
+                continue
+            kingdom_key = gs.title_key_to_kingdom(title_key)
+            culture_region = kingdom_to_region(kingdom_key)
+            z = zone_between(player_region, culture_region)
+            if z < best:
+                best = z
+            if best == 0:
+                break
+        return best
 
     def _build_faith_profiles(
         self,
