@@ -349,13 +349,22 @@ class TerrainEvaluator:
             return None
 
         barony_key = key_check or str(title_id)
-        province_id = title.get("capital")
         county_key = self._county_key_for(title)
 
-        # Province data
-        prov: dict = {}
-        if province_id is not None:
-            prov = gs.provinces.get(str(province_id), {}) or {}
+        # Terrain + province data: resolve through barony → map_province_id.
+        # Domain titles may be c_* (county seats) or b_* (baronies).
+        # For counties, use the capital barony from the static landed_titles.
+        # We use the static map_prov_id for ALL province lookups rather than
+        # title.capital because title.capital changed format between save
+        # versions (older saves stored the map province ID; newer saves store
+        # the county's own title ID).  The static barony→map-province path is
+        # stable across versions.
+        lookup_key = barony_key
+        if barony_key.startswith("c_"):
+            lookup_key = self._county_capitals.get(barony_key, barony_key)
+        map_prov_id = self._barony_provinces.get(lookup_key)
+
+        prov: dict = gs.provinces.get(str(map_prov_id), {}) or {} if map_prov_id is not None else {}
         holding = prov.get("holding", {}) if isinstance(prov, dict) else {}
         raw_type = holding.get("type", "") if isinstance(holding, dict) else ""
         holding_type = _HOLDING_TYPE_SHORT.get(raw_type, raw_type or "")
@@ -365,8 +374,6 @@ class TerrainEvaluator:
 
         # Fallback: if the province record has no usable holding.type, infer
         # the type from whichever primary building is present in the slot.
-        # Primary buildings (castle_01, city_01, temple_01, tribe_01, …) are
-        # always present when a holding exists and uniquely identify its type.
         if not holding_type or holding_type not in _HOLDING_TYPE_SHORT.values():
             for btype in buildings:
                 inferred = _PRIMARY_BUILDING_TYPE.get(_btype_prefix(btype))
@@ -378,14 +385,6 @@ class TerrainEvaluator:
 
         fort_level = int(prov.get("fort_level", 0)) if isinstance(prov, dict) else 0
         special_features = _ensure_list(prov.get("points_of_interest", [])) if isinstance(prov, dict) else []
-
-        # Terrain: resolve through barony → map_province_id → terrain string.
-        # Domain titles may be c_* (county seats) or b_* (baronies).
-        # For counties, use the capital barony from the static landed_titles.
-        lookup_key = barony_key
-        if barony_key.startswith("c_"):
-            lookup_key = self._county_capitals.get(barony_key, barony_key)
-        map_prov_id = self._barony_provinces.get(lookup_key)
         terrain = self._terrain_map.get(map_prov_id, _DEFAULT_TERRAIN) if map_prov_id is not None else _DEFAULT_TERRAIN
 
         # Skip water provinces (sea zones in the domain list — shouldn't normally occur)

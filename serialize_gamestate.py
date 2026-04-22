@@ -193,6 +193,60 @@ def _write_list(key: str, items: list, out: list[str], indent: int) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Whitespace compaction
+# ---------------------------------------------------------------------------
+
+def compact_whitespace(text: str) -> str:
+    """
+    Strip structural whitespace (newlines, tabs, leading spaces) from
+    serialized Clausewitz text without touching content inside quoted strings.
+
+    Outside quotes: newlines and tabs are replaced with a single space;
+    runs of spaces are collapsed to one.  The Clausewitz parser only needs
+    whitespace as a token separator — indentation is purely cosmetic.
+
+    Inside quotes: content is preserved exactly, including literal \\n
+    characters embedded in CK3 activity-log strings.
+    """
+    out: list[str] = []
+    in_string = False
+    prev_backslash = False
+    last_was_space = False
+
+    for ch in text:
+        if in_string:
+            out.append(ch)
+            if prev_backslash:
+                prev_backslash = False
+            elif ch == '\\':
+                prev_backslash = True
+            elif ch == '"':
+                in_string = False
+                last_was_space = False
+        else:
+            if ch == '"':
+                in_string = True
+                last_was_space = False
+                out.append(ch)
+            elif ch in ' \t\n\r':
+                # Structural whitespace: collapse to a single space, but only
+                # if the previous output character needs a separator.  Braces
+                # and '=' are explicit delimiters so no space is required
+                # adjacent to them.
+                if not last_was_space and out and out[-1] not in ('{', '}', '='):
+                    out.append(' ')
+                    last_was_space = True
+            else:
+                # Remove any pending space before an explicit delimiter.
+                if last_was_space and ch in ('{', '}', '='):
+                    out.pop()
+                last_was_space = False
+                out.append(ch)
+
+    return ''.join(out)
+
+
+# ---------------------------------------------------------------------------
 # Repack helpers (for .ck3 save construction)
 # ---------------------------------------------------------------------------
 

@@ -24,7 +24,7 @@ import zipfile
 from pathlib import Path
 
 
-REPO_ROOT     = Path(__file__).parent
+REPO_ROOT     = Path(__file__).parent.parent
 SNAPSHOT_DIR  = REPO_ROOT / "sample-saves"
 EXTRACTED_DIR = REPO_ROOT / "sample-saves" / "extracted"
 
