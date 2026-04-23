@@ -39,12 +39,23 @@ _TOKEN_RE = re.compile(
 )
 
 
+class _QuotedStr(str):
+    """A string value that was enclosed in quotes in the source file.
+
+    Behaves identically to str everywhere except that the serializer uses it
+    as a signal to re-emit the value with quotes, preserving the original
+    quoting exactly.  This matters because CK3's C++ parser may treat certain
+    quoted atoms differently from unquoted ones (e.g. version strings, gene
+    slot names, file-path values).
+    """
+
+
 def tokenize(text: str) -> List[Tuple[str, str]]:
     """Return a list of (token_type, value) pairs."""
     tokens = []
     for m in _TOKEN_RE.finditer(text):
         if m.group(1) is not None:
-            tokens.append((TOK_STR, m.group(1)))
+            tokens.append((TOK_STR, _QuotedStr(m.group(1))))
         elif m.group(2) is not None:
             tokens.append((m.group(2), m.group(2)))
         else:

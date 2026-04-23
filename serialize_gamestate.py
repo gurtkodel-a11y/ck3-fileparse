@@ -27,7 +27,7 @@ import re
 import sys
 from typing import Any
 
-from parse_gamestate import _RepeatedList
+from parse_gamestate import _RepeatedList, _QuotedStr
 
 
 # ---------------------------------------------------------------------------
@@ -43,6 +43,11 @@ _SAFE_ATOM = re.compile(r'^[a-zA-Z0-9_\-.:@+^]+$')
 
 def _needs_quotes(s: str) -> bool:
     """Return True if this string must be wrapped in quotes when serialized."""
+    # Preserve original quoting: strings that were quoted in the source file
+    # are marked as _QuotedStr by the parser and must stay quoted.  The game's
+    # C++ parser may treat certain quoted atoms differently from unquoted ones.
+    if isinstance(s, _QuotedStr):
+        return True
     if not s:
         return True
     if not _SAFE_ATOM.match(s):
@@ -76,15 +81,10 @@ def _fmt_scalar(value: Any) -> str:
     if isinstance(value, float):
         return f"{value:.6f}"
     s = str(value)
-    if _needs_quotes(s):
-        # The parser preserves escape sequences verbatim: a \" in the file
-        # is stored as the two characters \ + " in the Python string.
-        # We must NOT double-escape; just re-wrap in outer quotes.
-        # Only bare " characters (not already preceded by \) need escaping —
-        # but the tokenizer regex only captures " inside a quoted string as
-        # part of a \. escape, so all " in parsed strings already have a
-        # preceding \. Programmatic mutations that set raw Python strings
-        # with literal " should pre-escape them as \".
+    # Check the original value type (before str() strips the subclass) so that
+    # _QuotedStr values are re-quoted even when their content would otherwise
+    # look safe to write unquoted.
+    if isinstance(value, _QuotedStr) or _needs_quotes(s):
         return f'"{s}"'
     return s
 
