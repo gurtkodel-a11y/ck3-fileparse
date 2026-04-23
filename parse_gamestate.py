@@ -176,14 +176,24 @@ def parse(text: str) -> dict:
     return result_dict
 
 
+class _RepeatedList(list):
+    """List formed by merging duplicate key assignments (key=v1 key=v2 …).
+
+    Distinguishable from a regular list, which comes from a single anonymous
+    block  key={ item1 item2 … }.  The serializer uses this to choose the
+    correct output form: repeated key assignments vs. one anonymous block.
+    Behaves identically to list in all other respects.
+    """
+
+
 def _dict_insert(d: dict, key: str, value: Any) -> None:
-    """Insert key→value into d, merging duplicates into a list."""
+    """Insert key→value into d, merging duplicates into a _RepeatedList."""
     if key in d:
         existing = d[key]
-        if isinstance(existing, list):
+        if isinstance(existing, _RepeatedList):
             existing.append(value)
         else:
-            d[key] = [existing, value]
+            d[key] = _RepeatedList([existing, value])
     else:
         d[key] = value
 

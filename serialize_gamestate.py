@@ -27,6 +27,8 @@ import re
 import sys
 from typing import Any
 
+from parse_gamestate import _RepeatedList
+
 
 # ---------------------------------------------------------------------------
 # Scalar formatting
@@ -150,15 +152,17 @@ def _write_list(key: str, items: list, out: list[str], indent: int) -> None:
     """
     Dispatch a list value to the appropriate Clausewitz serialisation form.
 
-    - All primitives  →  anonymous inline block:  key={ v1 v2 v3 }
-    - Any non-primitive →  anonymous block of sub-blocks:
-                           key={ {k=v} {k=v} }
+    _RepeatedList  →  repeated key assignments:  key={k=v}\nkey={k=v}
+    regular list   →  depends on content:
+                        all primitives  →  inline block:  key={ v1 v2 v3 }
+                        any non-primitive → anonymous sub-blocks:
+                                           key={ {} {k=v} {} }
 
-    The anonymous sub-block form is the only option that round-trips
-    correctly for single-element lists: key={ {k=v} } re-parses as
-    [{k: v}], while key={k=v} (one bare block) re-parses as {k: v}.
-    It also works for multi-element lists and for the empty-slot pattern
-    buildings={ {} {type=X} {} }.
+    _RepeatedList is set by the parser whenever a key appears more than once in
+    a block.  Regular lists come from a single  key={ … }  block.  This one-bit
+    of provenance is the only reliable way to choose the correct output form —
+    shape-based heuristics break on fields like culture_innovation (108 uniform
+    dicts in a single block) vs triggered_event (many dicts from repeated keys).
     """
     tab = "\t" * indent
     inner = "\t" * (indent + 1)
@@ -167,11 +171,27 @@ def _write_list(key: str, items: list, out: list[str], indent: int) -> None:
         out.append(f"{tab}{key}={{}}\n")
         return
 
-    if all(_is_primitive(v) for v in items):
+    if isinstance(items, _RepeatedList):
+        # Repeated key assignments — one assignment per item.
+        for item in items:
+            if isinstance(item, dict):
+                out.append(f"{tab}{key}={{\n")
+                _write_body(item, out, indent + 1)
+                out.append(f"{tab}}}\n")
+            elif isinstance(item, list):
+                if not item:
+                    out.append(f"{tab}{key}={{}}\n")
+                else:
+                    vals = " ".join(_fmt_scalar(v) for v in item if _is_primitive(v))
+                    out.append(f"{tab}{key}={{ {vals} }}\n")
+            else:
+                out.append(f"{tab}{key}={_fmt_scalar(item)}\n")
+    elif all(_is_primitive(v) for v in items):
+        # Single anonymous block of primitives.
         vals = " ".join(_fmt_scalar(v) for v in items)
         out.append(f"{tab}{key}={{ {vals} }}\n")
     else:
-        # Anonymous block of sub-blocks.
+        # Single anonymous block of sub-blocks (buildings, slot arrays, etc.)
         out.append(f"{tab}{key}={{\n")
         for item in items:
             if isinstance(item, dict):
@@ -179,15 +199,12 @@ def _write_list(key: str, items: list, out: list[str], indent: int) -> None:
                 _write_body(item, out, indent + 2)
                 out.append(f"{inner}}}\n")
             elif isinstance(item, list):
-                # Empty list [] came from an empty anonymous block {}.
-                # Non-empty anonymous list is unusual; write inline.
                 if not item:
                     out.append(f"{inner}{{}}\n")
                 else:
                     vals = " ".join(_fmt_scalar(v) for v in item if _is_primitive(v))
                     out.append(f"{inner}{{ {vals} }}\n")
             else:
-                # Primitive mixed in with non-primitives — bare value.
                 out.append(f"{inner}{_fmt_scalar(item)}\n")
         out.append(f"{tab}}}\n")
 
