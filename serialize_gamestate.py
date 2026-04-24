@@ -79,7 +79,12 @@ def _fmt_scalar(value: Any) -> str:
     if isinstance(value, int):
         return str(value)
     if isinstance(value, float):
-        return f"{value:.6f}"
+        # Use Python's shortest round-trip representation (matches what CK3 writes).
+        # Fall back to fixed notation if repr() produces scientific notation.
+        s = repr(value)
+        if 'e' in s or 'E' in s:
+            s = f"{value:.10f}".rstrip('0').rstrip('.')
+        return s
     s = str(value)
     # Check the original value type (before str() strips the subclass) so that
     # _QuotedStr values are re-quoted even when their content would otherwise
@@ -266,6 +271,145 @@ def compact_whitespace(text: str) -> str:
 # ---------------------------------------------------------------------------
 # Repack helpers (for .ck3 save construction)
 # ---------------------------------------------------------------------------
+
+def split_sections(compact_text: str) -> list:
+    """
+    Split a compact Clausewitz gamestate into a list of (key, section_text) tuples,
+    one entry per top-level key=value occurrence (repeated keys yield multiple entries).
+
+    section_text is the bare `key=value` span with no surrounding spaces.
+    The caller reassembles by joining with single spaces.
+    """
+    sections = []
+    i = 0
+    n = len(compact_text)
+
+    while i < n:
+        # Skip spaces between sections
+        while i < n and compact_text[i] == ' ':
+            i += 1
+        if i >= n:
+            break
+
+        key_start = i
+
+        # Read the key token (quoted or unquoted)
+        if compact_text[i] == '"':
+            i += 1
+            while i < n:
+                c = compact_text[i]
+                if c == '\\':
+                    i += 2
+                elif c == '"':
+                    i += 1
+                    break
+                else:
+                    i += 1
+            key = compact_text[key_start + 1 : i - 1]
+        else:
+            while i < n and compact_text[i] not in ' {}=':
+                i += 1
+            key = compact_text[key_start:i]
+
+        if i >= n or compact_text[i] != '=':
+            # Stray token at top level — skip one character and continue
+            i = max(i, key_start + 1)
+            continue
+        i += 1  # consume '='
+
+        # Read the value: block or scalar (possibly quoted)
+        if i >= n:
+            sections.append((key, compact_text[key_start:i]))
+            break
+
+        if compact_text[i] == '{':
+            depth = 1
+            i += 1
+            in_str = False
+            while i < n and depth > 0:
+                c = compact_text[i]
+                if in_str:
+                    if c == '\\':
+                        i += 1
+                    elif c == '"':
+                        in_str = False
+                elif c == '"':
+                    in_str = True
+                elif c == '{':
+                    depth += 1
+                elif c == '}':
+                    depth -= 1
+                i += 1
+        elif compact_text[i] == '"':
+            # Quoted scalar
+            i += 1
+            while i < n:
+                c = compact_text[i]
+                if c == '\\':
+                    i += 2
+                elif c == '"':
+                    i += 1
+                    break
+                else:
+                    i += 1
+        else:
+            # Unquoted scalar: ends at next space
+            while i < n and compact_text[i] not in ' {}':
+                i += 1
+
+        sections.append((key, compact_text[key_start:i]))
+
+    return sections
+
+
+def rebuild_gamestate(original_text: str,
+                      active_keys: "frozenset[str]" = frozenset(),
+                      data: dict | None = None) -> str:
+    """
+    Reconstruct the compacted gamestate, replacing active_keys with freshly
+    serialized output and passing all other keys through unchanged.
+
+    With active_keys=frozenset() the result is byte-for-byte identical to
+    compact_whitespace of the original (the wsonly baseline).
+
+    For repeated-key fields (e.g. triggered_event appears N times), all
+    occurrences in the original are replaced by the single serialized form
+    emitted at the position of the first occurrence; later occurrences are
+    dropped.
+    """
+    import re as _re
+    compact = compact_whitespace(_re.sub(r'#[^\n]*', '', original_text))
+
+    if not active_keys:
+        return compact
+
+    sections = split_sections(compact)
+    if data is None:
+        from parse_gamestate import parse
+        data = parse(original_text)
+
+    # Pre-serialise each active key once
+    serialized: dict[str, str] = {}
+    for key in active_keys:
+        if key in data:
+            serialized[key] = compact_whitespace(serialize({key: data[key]})).rstrip()
+
+    parts: list[str] = []
+    emitted: set[str] = set()
+
+    for key, section_text in sections:
+        if key in active_keys:
+            if key not in emitted:
+                if key in serialized:
+                    parts.append(serialized[key])
+                emitted.add(key)
+            # subsequent occurrences of this key are already folded into the
+            # serialized block above — skip them
+        else:
+            parts.append(section_text)
+
+    return ' '.join(parts)
+
 
 def repack_save(gamestate_text: str, original_ck3_path: str, output_path: str) -> None:
     """
