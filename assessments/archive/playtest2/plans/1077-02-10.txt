@@ -1,0 +1,290 @@
+Plans — Vratislav II Přemyslid, King of Bohemia
+Date: 1077.2.10  |  Playtest 2
+================================================================
+
+Living planning document. See plans/archive/plans_archive.txt for resolved
+items from earlier plan sets (1066.10.5 and 1071.2.5).
+
+Temporal categories: IMMEDIATE (next session), SHORT-TERM (1-5 years),
+LONG-TERM (5-20 years), GRAND AMBITIONS (generational).
+
+The dominant strategic fact of 1077: Bohemia is a king-tier realm with three
+royal alliances and a stable (if restive) Saxon bloc. The dominant structural
+problem: Seniority succession with an excommunicated man (Jaromír) second in
+line. The dominant personal risk: Vratislav has consumption + health 3.5 at
+age 45. The dominant narrative development: Jaromír is excommunicated, holds
+a grudge against Jan, and is second in the succession line. Also ongoing and
+initially overlooked: Reginar's vassal Benno von Lóningen is fighting a
+claimant war to seat Otto von Weimar as Duke of Meissen (started 1073.7.25).
+
+
+================================================================
+I. IMMEDIATE
+================================================================
+
+[VASSAL WAR] Reginar's war in Meissen — monitor and decide on intervention
+  Context: Benno von Lóningen (Count of Wolkenstein, one of Reginar's own
+    Saxon counts) formed a claimant faction in July 1073 to seat Otto von
+    Weimar as Duke of Meissen. The war has dragged for 3.5 years (July 1073
+    → February 1077) with warscore barely in the attackers' favor (+4.846).
+  Current troop balance:
+    Defender (Reginar + Ludwig): ~2,607 current / ~2,760 max combined
+    Attacker (Benno + Otto):       ~583 current /   ~711 max combined
+    Reginar has a roughly 4-to-1 troop advantage but isn't pushing it.
+  Stakes: If Otto wins, a hostile duke (declared_war -25 opinion) replaces
+    Reginar (+55 opinion) in Meissen. Bohemia's most loyal Saxon vassal
+    would be gone. Ludwig was called to help defend — showing the Saxon bloc
+    can coordinate, but they need the king's backing to close this out.
+  Options:
+    A. Intervene directly with Vratislav's 4,205-troop force — decisive
+       but costs a campaign season and opens Bohemia to risk
+    B. Call Reginar's levies to be more aggressive with existing forces
+       (in-game nudge: move armies to push sieges in Meissen)
+    C. Wait and watch — the troop balance favors Reginar; patience may work,
+       but the 3.5-year stalemate suggests AI Reginar won't close it alone
+  Recommendation: At minimum, check in-game whether you can intervene as
+    the liege without triggering complications. If the option is available
+    cleanly, do it. Reginar winning cements the Saxon bloc. Reginar losing
+    is the worst internal outcome possible at this stage.
+
+[SUCCESSION] Deal with the Jaromír problem — the specific urgent priority
+  Clarification: Konrád inheriting is not the crisis. Playing as Konrád is
+    acceptable. The specific problem is Jaromír (age 38, EXCOMMUNICATED) being
+    SECOND in the succession line. If Konrád dies before the law changes or
+    Jaromír's claim is removed, an excommunicated man becomes King of Bohemia.
+  The goal is "Jaromír does not inherit," not "Břetislav inherits."
+  Solutions (in rough order of elegance):
+    A. Change succession law to Primogeniture — removes everyone from active
+       succession except Bresislav; Konrád's +55 suggests he won't fight hard
+    B. Push Jaromír into the church — voluntary monastery entry removes him from
+       lay succession entirely; his current marginalized state (grudge against Jan,
+       excommunicated, hunter lifestyle) may make him receptive or vulnerable
+    C. Disinherit or imprison Jaromír — requires cause (caught scheme, etc.);
+       politically messy but possible if he acts against the realm
+    D. Passive: Jaromír's health (3.9 below-avg at 38) may resolve it naturally,
+       especially if the excommunication generates stress/health events
+  Mechanism for law change: In CK3, succession law changes require vassal
+    approval or cost prestige/influence. Konrád (+55), Reginar (+55), Ota
+    (unknown), and Časlav (+30) are all in a favorable-to-moderate band.
+  Priority A (law change) and Priority B (Jaromír's church path) can be
+    pursued simultaneously — they are not mutually exclusive.
+
+[SUCCESSION] Know the line and watch it
+  1. Konrád (age 42, health 3.9) — acceptable as heir; not an emergency
+  2. Jaromír (age 38, health 3.9, EXCOMMUNICATED) — the emergency case
+  3. Ota Přemyslid (id 35734, age 32, health 4.5) — healthy; if Konrád dies
+     and Jaromír is still in the line, Ota is the only buffer before Jaromír
+  4. Břetislav (age 19) — would require all three above to predecease him
+     under Seniority; this is why law reform matters
+
+  Monitor: Konrád's health (3.9 below-avg); if he dies, Jaromír inherits
+  unless the law has changed or Jaromír's claim is removed.
+
+[FAMILY] Address the Bořivoj trajectory decision (~now, was ~1075)
+  Who: Bořivoj (age 13, greedy + trusting + diligent + charming, Dipl focus)
+  Status: Under Vratislav's guardianship with Diplomacy focus. This is a change
+    from the 1071 plan (Intrigue was his focus then). Decision to make:
+    Is this the final trajectory (Diplomacy → lay career, possibly in Bohemia's
+    court or minor holding)? Or is the church path still viable?
+  Current lean: With diligent + charming and a Diplomacy focus, he is developing
+    as a plausible courtier or administrator. The greedy+trusting profile is
+    less dangerous in a non-ruling role. The church path for greedy characters
+    creates its own scandal risks. Lay courtier is probably the right call.
+  Action: Commit to the lay path. Identify a marriage target for ~1081 (age 17).
+
+[HEALTH] Monitor Vratislav's consumption
+  Context: Consumption (tuberculosis/wasting) is a progressive CK3 health trait.
+    Combined with health 3.5 (below average), the mortality risk over the next
+    decade is real. There is no guaranteed way to remove this trait — it may
+    require a specific health event chain or a court physician event.
+  Dimi (id 40499) is Vratislav's court physician. His competence affects
+    health event outcomes. Worth noting as a key position.
+  Action: Do not trigger unnecessary health-damaging events (wars, stress,
+    character interactions that generate stress traits).
+
+
+================================================================
+II. SHORT-TERM (~1077–1082)
+================================================================
+
+[FOREIGN] Hungary alliance — still the key gap
+  Context: Three royal alliances now (England, Denmark, Poland), but no
+    Hungarian bond. Géza (King of Hungary, 4,275 troops, nearby, Catholic)
+    is the obvious missing partner. Hungary is the most important regional
+    power with whom we have no relationship.
+  Mechanism: A marriage between a younger Přemyslid and a Hungarian noble.
+    Boleslav (age 14, opens ~1079) is the most available piece. Alternatively,
+    a diplomatic approach through Bretislav's English alliance (William has
+    continental reach). Check whether Géza has unmarried children.
+
+[FOREIGN] The Papal problem — reclassify as URGENT
+  Context: Anselmo still -30. Now we also have Jaromír excommunicated. An
+    excommunicated Přemyslid is second in the succession line. If Konrád dies
+    and the succession law hasn't changed, an excommunicated man becomes King
+    of Bohemia — which may trigger papal intervention.
+  Jaromír dimension: His excommunication may be separable from Vratislav's
+    impious_opinion. The -30 on Vratislav predates Jaromír's excommunication.
+    But having both the king and his second-in-line at odds with Rome is a
+    serious vulnerability.
+  Immediate action: Find out what drives the -30. Is it a lifestyle trait?
+    A sin? A specific decision?
+
+[FAMILY] Vladislav's trajectory — reassess given Polish guardianship
+  Who: Vladislav (age 12, Kraków, guardian = King Bolesław III)
+  Context: He has Martial focus under Poland's king. He's gained "ambitious"
+    as a trait since 1071 — positive for lay career, complicated for a
+    younger son. The possessed_1 trait persists; no resolution event fired.
+  The church path is now less appropriate (ambitious + martial). The more
+    likely trajectory is a military/court career in Bohemia or Poland.
+  Question: Will he return to Praha at the end of his guardianship? Or will
+    Bolesław keep him as a courtier/commander? This matters for succession
+    (he is 7th in line, behind many Přemyslids, but still ahead of Slavibor
+    and Mikul).
+
+[FAMILY] Boleslav's guardian quality — assess Petr
+  Who: Boleslav (age 14, Brno, guardian Petr id 55287)
+  Context: Petr is unknown to us. We know Boleslav is at Brno (Konrád's court)
+    with Martial focus and rivals with Adelheid (id 39569), a 12-year-old
+    Saxon girl from the Stade area. The rivalry is unexplained.
+  Action: Profile Petr. If his Martial skills are poor, consider a guardian
+    change before Boleslav's education window closes.
+  Note on Adelheid: Her dynasty head is Lothar-Udo (id 31612). The rivalry
+    between Boleslav (in Brno) and Adelheid (at Stade) suggests they were at
+    the same court at some point. Context unknown but worth monitoring — she
+    could become a marriage candidate or political complication.
+
+[FAMILY] Bretislav's marriage — confirm Agathe
+  Context: English alliance runs through "Břetislav ↔ Agathe" but Agathe does
+    not appear in the living characters search. She may be at the English court
+    (not in Bohemia), encoded differently, or deceased.
+  Action: Confirm in-game whether Agathe is alive and where she is. If they
+    are betrothed rather than married, this is the window to complete the marriage
+    (Bretislav is 19). If she is deceased, the English alliance may be at risk
+    of dissolving.
+
+[FAMILY] Slavibor — hunchbacked
+  Who: Slavibor (id 16820219, born 1073.2.6, age 4)
+  Context: Has the "hunchbacked" congenital physical trait. This is a negative
+    trait (charisma penalty, possible health effects). Its presence means the
+    gene entered the Přemyslid line from somewhere — Šwiétosława or Vratislav
+    may carry a hidden congenital.
+  Implication: Future children may also be at risk. Worth noting when planning
+    marriages for the children — genetic inheritance becomes a factor.
+
+[DOMAIN] Čáslav development — continue investment
+  Context: Čáslav still at dev 9 with the economic special building
+    (poi_special_buildings_economic) apparently unbuilt. Fort level 10 suggests
+    defensive investment was prioritized. The economic site is still the
+    highest-return investment available.
+  Action: Shift the Čáslav building queue to the special economic building.
+
+
+================================================================
+III. LONG-TERM (~1082–1095)
+================================================================
+
+[SUCCESSION] Bretislav's reign preparation — contingent on succession reform
+  If the succession law is changed to Primogeniture, Bretislav (effective Dipl 20,
+  tier 3 education, English alliance) is well-positioned to inherit. His trait
+  profile (compassionate, honest, generous) is exactly right for a trust-based
+  reign. He needs:
+    — A domain (ideally a county before inheriting the duchy/kingdom)
+    — Confirmed marriage (Agathe situation resolved)
+    — No hooks on Bretislav from hostile parties (Šwiétosława's intrigue layer
+      remains a concern; Záviš at Intrigue 15 is still present)
+  If the succession law is NOT changed, Bretislav's long-term trajectory must
+  account for the possibility that he inherits only after Konrád and Ota (and
+  Ota's sons) all die — which could be 30-40 years from now.
+
+[SUCCESSION] Managing the Přemyslid seniority line
+  Even after law reform, Konrád's and Ota's claim does not disappear — it
+  becomes inactive (a claim rather than the succession). They could press claims
+  through wars. Managing their loyalty is therefore a permanent constraint.
+  Key: Konrád (+55 opinion) is already well-managed. Ota's opinion is unclear
+  but he was Ludmila's guardian (presumably well-treated). Their children's
+  claims extend the problem into the next generation.
+
+[DYNASTIC] The Jaromír problem — resolution required
+  Jaromír is excommunicated, holds a Grudge against Jan, is Vratislav's rival,
+  and is second in the Bohemian succession line. The combination is intolerable.
+  Options:
+    A. Pressure Jan to dismiss him from court service (the "task" assignment
+       suggests Jan still has some obligation to or over him)
+    B. Find grounds for imprisonment (if he schemes against Vratislav, a caught-
+       scheme would allow imprisonment)
+    C. Encourage him to enter a monastery (voluntary departure from lay life)
+    D. Do nothing and rely on natural mortality (health 3.9, age 38 — plausible
+       but not reliable)
+  The excommunication itself may resolve if Jaromír atones (does penance events).
+  His becoming a monk or friar would remove him from lay succession entirely.
+
+[DYNASTIC] Succession law reform — the generational question
+  If Primogeniture is achieved in the next 5 years, the long-term question
+  becomes: hold it through Bratislav's reign. Primogeniture requires all
+  major vassals to accept it. The Saxon bloc (Reginar, Ludwig), despite current
+  positive opinions, will have their own succession interests. Reginar's +55
+  is the best possible foundation for getting his buy-in. Ludwig's opinion is
+  not visible in notable opinions, suggesting it is moderate — needs monitoring.
+
+[DYNASTIC] The Polish Connection — reassess under Bolesław III
+  Vladislav is being raised by Bolesław III (King of Poland). This is a
+  significant diplomatic bond. A Bolesław-friendly Přemyslid at Bratislav's
+  future court (whether as advisor, marshal, or courtier) extends the
+  Czech-Polish axis into the next generation. If Vladislav's possessed_1
+  trait generates negative event chains, the Polish connection may sour.
+
+
+================================================================
+IV. GRAND AMBITIONS
+================================================================
+
+[DYNASTIC] Přemyslid Bohemia: Stability Through Character
+  Unchanged. The goal is to hand Bratislav a realm in better shape than it
+  began. The Saxon integration is proceeding (Reginar +55, Ludwig elevated).
+  The succession law is the remaining structural barrier. Bratislav's trait
+  profile remains excellent. The counterweights (Záviš, Jaromír, Bořivoj's
+  greedy+trusting) are less threatening now that Bořivoj is on a Diplomacy
+  path under Vratislav's direct guardianship.
+
+[DYNASTIC] The Royal Project: Hold What Was Built
+  Kingdom of Bohemia exists. Three royal alliances exist. The next question is
+  whether these achievements survive Vratislav's death intact. If he dies under
+  Seniority succession, Konrád becomes King — and Konrád, while loyal, is not
+  the ruler we've been building toward. All the alliance bonds (via Bratislav,
+  Ludmila) may weaken under a different king. The urgency of succession reform
+  is thus not just about Bratislav's inheritance — it is about preserving the
+  diplomatic architecture that took 11 years to build.
+
+
+================================================================
+OPEN QUESTIONS AT 1077.2.10
+================================================================
+
+  — What succession law specifically governs Bohemia, and what does it cost
+    (prestige? gold? vassal approval threshold?) to change it to Primogeniture?
+
+  — Is Agathe alive and where? Confirm Bretislav's marriage status in-game.
+
+  — Who is Petr (id 55287), Boleslav's guardian? Is he a competent educator?
+
+  — What triggered Jaromír's excommunication? When did it happen?
+
+  — What caused Bratislav's dread to rise from 0.5 → 10.0?
+
+  — What is Ota Přemyslid's current opinion of Vratislav? (Not in notable
+    opinions — likely between -10 and +10 with no single dominant modifier.)
+
+  — What drove the "minority_disapproves_of_conversion_opinion" on Filibert
+    and Reginar? Who was converted?
+
+  — How is Judita's death classified in the save? (Health event, murder,
+    or simple natural death event?)
+
+  — Who is id 35734's heir (id 33580878 = Václav, Ota's son). When does Václav
+    come of age? He extends the seniority line even further.
+
+  — What is Ludwig Ludowinger's current opinion of Vratislav? He was +20
+    (released_from_prison) in 1071 and the modifier may now have expired.
+
+  — Hedwig, Count of Göttingen: Vratislav has "oaf" relation with him.
+    When did this happen? "Oaf" is a scripted social event outcome.

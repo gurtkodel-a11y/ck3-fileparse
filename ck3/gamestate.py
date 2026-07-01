@@ -59,6 +59,16 @@ class GameState:
         self.active_relations: list = _ensure_list(raw.get("relations", {}).get("active_relations", []))
         self.factions: dict      = raw.get("faction_manager", {}).get("factions", {})
 
+        self.activities: dict    = raw.get("activity_manager", {}).get("database", {})
+        self.travel_plans: dict  = raw.get("travel_plans", {}).get("database", {})
+        self.memories: dict      = raw.get("character_memory_manager", {}).get("database", {})
+
+        _ct_raw = raw.get("council_task_manager", {}).get("active", {})
+        self.council_tasks: dict = _ct_raw if isinstance(_ct_raw, dict) else {}
+
+        _cp_raw = raw.get("court_positions", {}).get("database", {})
+        self.court_positions_db: dict = _cp_raw if isinstance(_cp_raw, dict) else {}
+
         self.date: str           = raw.get("date", "")
         _played = raw.get("played_character", {})
         if isinstance(_played, list):
@@ -74,6 +84,7 @@ class GameState:
         self._title_key_to_kingdom: dict[str, str] = {}        # title_key → kingdom_key
         self._contracts_by_liege:  dict[int, list[str]] = {}   # liege_id → [contract_id, ...]
         self._contract_by_vassal:  dict[int, str] = {}         # vassal_id → contract_id
+        self._titles_by_key:       dict[str, dict] = {}        # title_key → title record
         self._built = False
 
     # ---------------------------------------------------------------------- #
@@ -89,6 +100,7 @@ class GameState:
         self._build_war_index()
         self._build_title_key_to_kingdom_index()
         self._build_contract_indices()
+        self._build_title_by_key_index()
         self._built = True
 
     def title_key_to_kingdom(self, title_key: str) -> str:
@@ -99,6 +111,16 @@ class GameState:
         """
         self.build_indices()
         return self._title_key_to_kingdom.get(title_key, title_key)
+
+    def title_by_key(self, title_key: str) -> dict | None:
+        """
+        Return the full title record for a string key (e.g. "c_nf_kiyohara"),
+        or None if not found. Needed because gs.titles is keyed by numeric
+        title ID, not the string key — the string key only lives on the
+        record's own 'key' field.
+        """
+        self.build_indices()
+        return self._titles_by_key.get(title_key)
 
     def character(self, char_id: int | str) -> dict | None:
         """Return the living character record for *char_id*, or None."""
@@ -160,6 +182,39 @@ class GameState:
                 for wid in self._wars_by_char.get(char_id, [])
                 if wid in self.active_wars]
 
+    def claims_held_by(self, char_id: int) -> list[dict]:
+        """
+        All claims held by char_id, sourced from alive_data.claim (a list of
+        {'title': title_id, 'pressed': 'yes'?} records on the character itself).
+
+        Each returned dict: {'title_id', 'title_key', 'title', 'pressed'}.
+        'title' is the full title record (or None if the id doesn't resolve).
+        Note: the save does not record *how* or *when* a claim was acquired —
+        there's no history/memory entry for claim grants, only the resulting
+        claim list. 'pressed' reflects whether the claim has been formally
+        pressed (a prerequisite for some claim-based casus belli).
+        """
+        char = self.character(char_id)
+        if not char:
+            return []
+        ad = char.get("alive_data", {})
+        raw_claims = ad.get("claim", []) if isinstance(ad, dict) else []
+        if isinstance(raw_claims, dict):
+            raw_claims = [raw_claims]
+        results = []
+        for entry in raw_claims:
+            if not isinstance(entry, dict):
+                continue
+            title_id = entry.get("title")
+            title = self.title(title_id) if title_id is not None else None
+            results.append({
+                "title_id": title_id,
+                "title_key": title.get("key") if title else None,
+                "title": title,
+                "pressed": entry.get("pressed") == "yes",
+            })
+        return results
+
     def army_for_unit(self, unit: dict) -> dict | None:
         """Given a unit record, return the army record it belongs to."""
         army_id = unit.get("army")
@@ -203,6 +258,14 @@ class GameState:
             if holder is not None:
                 self._titles_by_holder.setdefault(int(holder), []).append(tid)
 
+    def _build_title_by_key_index(self):
+        for t in self.titles.values():
+            if not isinstance(t, dict):
+                continue
+            key = t.get("key")
+            if isinstance(key, str) and key:
+                self._titles_by_key[key] = t
+
     def _build_unit_index(self):
         for uid, u in self.units.items():
             if not isinstance(u, dict):
@@ -231,6 +294,34 @@ class GameState:
             if vassal is not None and liege is not None:
                 self._contracts_by_liege.setdefault(int(liege), []).append(cid)
                 self._contract_by_vassal[int(vassal)] = cid
+
+    def council_task_for_char(self, char_id: int) -> dict | None:
+        """Return the council_task_manager record for a character, or None."""
+        char = self.character(char_id)
+        if char is None:
+            return None
+        cd = char.get("court_data", {})
+        if not isinstance(cd, dict):
+            return None
+        task_id = cd.get("council_task")
+        if task_id is None:
+            return None
+        return self.council_tasks.get(str(task_id)) or self.council_tasks.get(task_id)
+
+    def court_positions_for_char(self, char_id: int) -> list[dict]:
+        """Return all court_position records where char_id is the employee."""
+        return [
+            entry for entry in self.court_positions_db.values()
+            if isinstance(entry, dict) and entry.get("employee") == char_id
+        ]
+
+    def opinions_list(self) -> list[dict]:
+        """Return the flat active_opinions list (cached on GameState)."""
+        if not hasattr(self, "_opinions_list"):
+            self._opinions_list = _ensure_list(
+                self._raw.get("opinions", {}).get("active_opinions", [])
+            )
+        return self._opinions_list
 
     def contracts_for_liege(self, liege_id: int) -> list[dict]:
         """All vassal contracts where *liege_id* is the liege."""

@@ -1,0 +1,622 @@
+Assessment — Vratislav II Přemyslid, King of Bohemia
+Date: 1077.2.10  |  Playtest 2
+================================================================
+
+In the six years since 1071, Bohemia underwent a quiet but fundamental
+transformation. No major wars are visible in the title history. Instead,
+the tools see a burst of administrative and diplomatic action in the opening
+months of 1072 that changed the character of the realm permanently. What
+began as a shaky duchy with six restive Saxon vassals and no alliances is
+now a kingdom with three royal alliances and a court positioned at the center
+of Central European Catholic politics.
+
+The cost of that ascent, and the structural risks underneath it, are what this
+assessment is about.
+
+
+================================================================
+I. WHAT HAPPENED (1071.2.5 → 1077.2.10)
+================================================================
+
+CONFIRMED FROM TITLE HISTORY:
+
+  1072.1.12 — k_bohemia created for Vratislav
+    The Kingdom of Bohemia was either claimed directly (gold + prestige path)
+    or granted through imperial favor. Given the speed — only 11 months after
+    we identified this as the long-term savings goal — the title-creation
+    mechanic seems most likely. Either way, Vratislav went from Duke to King
+    in the first quarter of 1072. Remarkable pace.
+
+  1072.1.26 — d_meissen granted to Reginar from Vratislav
+    Executed as planned, within two weeks of the royal elevation. The duchy
+    grant to Reginar was the first act of the new kingdom's administration.
+    His current opinion is +55 (received_title_duchy +60, partially offset
+    by a minority conversion modifier). The plan worked.
+
+  1072.3.17 — d_thuringia CREATED for Ludwig Ludowinger
+    Ludwig's elevation to Duke of Thuringia (title created, not transferred
+    from Vratislav's holdings) followed the Meissen grant by seven weeks.
+    Three saxon dukes in the realm now: Ludwig (Thuringia), Reginar (Meissen),
+    and Jan (Count of Opava, theocracy). This resolved the Saxon stabilization
+    question through elevation rather than absorption.
+
+CONFIRMED FROM RELATIONSHIPS AND PERSONAL RELATIONS:
+
+  Alliances formed:
+    — Ludmila married Thorgils (Danish; currently in Sjælland) → Danish
+      alliance with King Svend Estrid
+    — Břetislav paired with Agathe (search inconclusive, likely Norman) →
+      English alliance with William III de Normandie, King of England
+    — Polish alliance (via Šwiétosława) confirmed active
+
+  Three royal alliances. At the start of 1071, we had none. At 1077, we have
+  the Kings of England, Denmark, and Poland bound to Bohemia by marriage bonds.
+  This is the most significant development in the playtest.
+
+  Judita died 1075.11.18.
+    She was 19. She was in Regensburg when we last assessed her (possible
+    betrothal), but no marriage record survives and no betrothal is visible
+    in the save. The planned Styrian/Austrian marriage was never confirmed.
+    She is now listed as deceased in the family report, between the primary
+    spouse entry and Břetislav. The mystery of Regensburg remains unresolved.
+    We do not know if she died before a marriage was arranged or after.
+
+INFERRED (not confirmed from data):
+
+  The mechanism for k_bohemia is uncertain — title creation vs. imperial
+  grant. The speed suggests gold/prestige creation rather than waiting for
+  Heinrich's goodwill (we had -20 disapproving opinion of him and no plan to
+  fix it). But the fact that Ludwig received a duchy the same month suggests
+  this may also have been part of an imperial deal ("I'll grant you the
+  kingdom if you elevate my Saxon vassals"). We cannot confirm from the save.
+
+  How Vladislav ended up at the Polish court (guardian = Bolesław III Piast)
+  is unknown. It is a significant diplomatic placement — the King of Poland
+  personally educating a Přemyslid son suggests a deliberate arrangement,
+  possibly tied to the Polish alliance. Whether this was a negotiated quid pro
+  quo or an organic event is opaque to us.
+
+
+================================================================
+II. CURRENT POSITION (1077.2.10)
+================================================================
+
+REALM:
+  Title: King of Bohemia, feudal vassal of HRE (Heinrich III Salian, Emperor)
+  Domain: 20 titles (Praha, Boleslav, Doudleby, Hradec, Čáslav, Litoměřice,
+          Plzeň, and 13 more)
+  Direct vassals: 16 (2 feudal dukes, 6 feudal counts, 1 theocracy count,
+                       7 barons — 5 of which are Republic type)
+  Capital: Praha (dev 13, fort 8, hills, [poi_capitals])
+
+MILITARY:
+  4,205 max (3,378 levy + 827 MaA)
+  Currently raised: 0 (peacetime)
+  MaA: zbrojnoši (Heavy Infantry 500), light horsemen (200), pikemen (100),
+       mangonel (20) — same composition as 1071
+  Knights (7): Záviš (prowess 10), Reginar (prowess 10), Ludwig (prowess 9),
+               Boreš (9), Vznata (9), Veliš (9), Ingevald (2)
+  Vratislav: no active wars. But see Section III — an active war is ongoing
+  within the realm, between Reginar and Benno von Lóningen's claimant faction.
+
+FINANCES:
+  Gold 199 | Prestige 1552 (3295 lifetime) | Piety 628 (1478 lifetime)
+  Dread 10.0 (up from ~0.5 in 1071 — meaningful but not dominant)
+
+ALLIANCES:
+  William III (England):  8,649 troops, 229,085 power [continental, catholic]
+  Svend Estrid (Denmark): 4,340 troops, 118,890 power [nearby, catholic]
+  Bolesław III (Poland):  3,185 troops,  73,780 power [local, catholic]
+
+  Combined allied strength is roughly 3x Bohemia's own maximum. This is the
+  strongest external position of either playtest.
+
+NEIGHBOR COMPARISON:
+  Heinrich (Emperor):     8,238 troops (overlord)
+  Ludwig (D. Thuringia):  1,885 troops (vassal, duke)
+  Reginar (D. Meissen):     875 troops (vassal, duke)
+  Géza (Hungary):         4,275 troops [nearby, NO alliance]
+  Dedo II (D. Lausitz):   4,079 troops [nearby, uncertain relationship]
+  Magnus (D. Angria):     3,210 troops [nearby]
+
+  Hungary remains the conspicuous gap in the alliance picture.
+
+RELIGION:
+  Catholic fervor: 38.0 (low)
+  Anselmo still has -30 impious opinion of Vratislav. Unchanged since game
+  start. No progress on the papal problem.
+
+NOTABLE OPINIONS (others → Vratislav):
+  +55: Reginar (received_title_duchy +60, gift +15, conversion -20)
+  +55: Konrád Přemyslid (title_creation +30, scheme_sway +25)
+  +30: Časlav Vrsovid (title_creation +30)
+  +25: Ernst (scheme_sway +25)
+  +20: Eberhard (released_from_prison — still counting down)
+  +20: Tamar (released_from_prison — Tamar was imprisoned and released)
+  -20: Filibert (minority_disapproves_of_conversion_opinion)
+  -20: Markvart (fired_from_council_opinion)
+  -25: Otto (declared_war — unchanged from 1071)
+  -30: Anselmo (impious_opinion — unchanged)
+
+  The "conversion" modifier on both Filibert and Reginar (-20 each) is
+  unexplained. Someone was converted during this period; Filibert (Count of
+  Pula) and Reginar both disapprove. The modifier's source is not visible
+  from the save data.
+
+CHILDREN NOT IN COURT — PLACEMENT:
+  Ludmila  (17, Sjælland) — married Thorgils, Danish court
+  Boleslav (14, Brno) — at Konrád's court, guardian: Petr (id 55287)
+  Vladislav (12, Kraków) — at Polish court, guardian: King Bolesław III
+
+
+================================================================
+III. REGINAR'S WAR — THE MEISSEN SUCCESSION STRUGGLE
+================================================================
+
+[NOTE: This war was initially missed in this assessment. Corrected on review.]
+
+Active war (ID 50331738) started 1073.7.25. In July 1073 — just six months
+after Reginar received the Duchy of Meissen — Benno von Lóningen, Count of
+Wolkenstein (one of Reginar's own Saxon counts), formed a claimant faction
+and declared war to seat Otto von Weimar as Duke of Meissen.
+
+THE PARTIES:
+
+  Attacker: Benno von Lóningen, Count of Wolkenstein (age 57)
+    — Faction leader. One of Reginar's vassal counts; this is a rebellion
+      from within the duchy. Also one of the Saxon counts the 1071 plans
+      identified as a marriage alliance candidate.
+    Current strength: 392 / 520 max
+
+  Claimant: Otto von Weimar, Count of Meissen (age 50)
+    — The man who would become duke if the faction wins. Also the same
+      Otto who had -25 opinion of Vratislav from the original 1066 war.
+    Current strength: 191 / 191 max
+
+  Defender: Reginar, Duke of Meissen (age 47)
+    Current strength: 809 / 875 max
+
+  Called to war (defender): Ludwig Ludowinger, Duke of Thuringia (age 62)
+    — Reginar's neighbor and fellow Saxon vassal called in to help defend.
+    Current strength: 1798 / 1885 max
+
+THE CURRENT STATE:
+
+  Warscore: +4.846 (attacker-favorable — meaning Otto's faction is winning)
+  Duration: ongoing since July 1073 (3.5 years at this save date)
+
+  One battle on record: in 1073, Benno attacked with 1,847 troops (likely
+  the full faction mustered at war's start) against Reginar's 526. Benno
+  won and took province 3033 (within Meissen territory). Warscore: +4.846.
+
+  Since that battle, no further engagements — and the troop balance has
+  shifted dramatically:
+    Defender side (Reginar + Ludwig): ~2,607 current / ~2,760 max
+    Attacker side (Benno + Otto):       ~583 current /   ~711 max
+
+  Reginar now outnumbers the faction roughly 4-to-1. The war is almost
+  certainly winnable. But Reginar hasn't pressed the advantage — the
+  warscore has sat at +4.846 for however long since that opening battle,
+  meaning no sieges or battles have gone Reginar's way.
+
+WHY THIS MATTERS:
+
+  If Benno's faction wins, Otto becomes Duke of Meissen. That would:
+    — Replace Reginar (+55 opinion) with Otto (declared_war -25) as the
+      Saxon duke controlling Meissen's ~875 max troops
+    — Give Benno's faction a reward (likely county grants or influence),
+      entrenching an anti-Reginar power structure in the duchy
+    — Destabilize the core of the Saxon integration project — the entire
+      rationale for granting d_meissen was to lock in Reginar's loyalty
+
+  If Reginar wins (currently the military favorite), the internal Saxon
+  dynamics still need watching: Benno remains a vassal in the duchy, and
+  his willingness to rebel once suggests it could happen again.
+
+WHAT VRATISLAV CAN DO:
+
+  As Reginar's liege, Vratislav can call his own levies into the war on
+  Reginar's side. With 4,205 max troops of his own, his entry would be
+  decisive and immediate. This also sends a political signal: the King of
+  Bohemia protects loyal dukes.
+
+  Ludwig is already in — which means Bohemia's two Saxon dukes are defending
+  together, a heartening sign for the faction model. But the war's 3.5-year
+  stalemate suggests Reginar has not been given (or used) the tools to push
+  warscore into negative territory.
+
+  Even without direct intervention, Vratislav can watch the situation and
+  intervene only if Reginar's warscore deteriorates further.
+
+
+================================================================
+IV. VRATISLAV: THE HEALTH PROBLEM
+================================================================
+
+Age 45 | Health 3.5 (below average) | Consumption trait
+
+The "consumption" trait is a CK3 health condition (tuberculosis / wasting).
+Health 3.5 is a meaningful step below the baseline. At 45 with a chronic
+illness, the mortality risk over the next 5-10 years is real.
+
+Vratislav's build has moved decisively into Stewardship:
+  Education: Stewardship tier 5 (highest possible)
+  Effective Stewardship: 23 (!!!)
+  Lifestyle traits: architect, avaricious
+  19 perks deep into the Stewardship tree
+
+Skills: base Dipl 5, Mart 12, Stew 5, Intr 4, Lear 5, Prow 12
+        eff.  Dipl 4, Mart 15, Stew 23, Intr -2, Lear 12, Prow 10
+
+The Stewardship 23 is extraordinary for a ruler, and explains the realm's
+economic stability and the gold available for the royal elevation in 1072.
+The architect + avaricious lifestyle combination emphasizes domain building.
+The Intrigue effective score of -2 is a vulnerability.
+
+Dread 10.0 (up sharply from 0.5 in 1071). Enough to intimidate some vassals
+but not dominant. The source of this dread increase is unknown.
+
+
+================================================================
+V. THE SUCCESSION SITUATION
+================================================================
+
+[NOTE: The original draft of this assessment treated Konrád inheriting as
+a crisis. Corrected on review: Konrád as player heir is acceptable. The
+specific problem is Jaromír — second in line, excommunicated.]
+
+The heir to the Kingdom of Bohemia is NOT Břetislav. It is Konrád Přemyslid.
+
+Succession line for k_bohemia: [33299, 34156, 35734, 38159, ...]
+
+  33299 = Konrád Přemyslid (Count of Brno, age 42, our Spymaster)
+  34156 = Jaromír (age 38, EXCOMMUNICATED, our rival)
+  35734 = unknown (likely Ota Přemyslid, Count of Olomouc, age 32)
+  38159 = Břetislav (age 19)
+
+This is Seniority succession — the eldest living male Přemyslid inherits,
+regardless of parentage.
+
+KONRÁD AS HEIR — WORKABLE:
+
+  Konrád is 42, below-average health (3.9), loyal (+55 opinion), and our
+  Spymaster. Playing as Konrád is a viable continuation — he is not hostile.
+  If Vratislav dies before the succession law changes, Konrád inheriting is
+  not ideal (he is not the character we've been developing) but it is not
+  a disaster. He would have the same Saxon alliances to work with, the same
+  kingdom, and a loyal base.
+
+  Konrád's own heir is id 16787023 (Tas, his son), so the Přemyslid seniority
+  line extends through him. This matters if Konrád inherits and then dies.
+
+THE ACTUAL CRISIS: JAROMÍR IS SECOND:
+
+  Jaromír (id 34156) is second in line, and he is excommunicated. If Konrád
+  dies before the succession law changes, an excommunicated man becomes King
+  of Bohemia. That is the specific catastrophe to prevent.
+
+  An excommunicated king means:
+    — Papal hostility (Anselmo is already -30; he would be incandescent
+      about Jaromír on the throne)
+    — Potential papal interdict on the realm
+    — Likely faction pressure from Catholic vassals
+    — Alliance viability at risk (England, Denmark are Catholic kingdoms)
+
+  Jaromír's profile (arbitrary, lazy, wrathful, grudge against Jan) makes
+  him personally unsuited to rule as well. The combination of political
+  disqualification and character flaws is nearly total.
+
+THE REAL PRIORITY:
+
+  The goal is not "ensure Břetislav inherits" — it is "ensure Jaromír does
+  not inherit." That is a narrower problem with more solutions:
+
+  Option A: Change the succession law to Primogeniture
+    — Removes Konrád and Jaromír from active succession; Břetislav inherits
+    — Hardest to execute but the most complete fix
+
+  Option B: Remove Jaromír from the succession line specifically
+    — Excommunication alone doesn't remove him from Seniority succession
+    — He needs to: enter the church/monastery, be disinherited, die, or be
+      imprisoned long-term
+    — His current "Develop County" task under Jan suggests he is already
+      marginalized; pressing him into a monastery would resolve it cleanly
+
+  Option C: Outlast Jaromír passively
+    — Both Konrád (age 42, health 3.9) and Jaromír (age 38, health 3.9)
+      have below-average health; natural mortality is not impossible
+    — Ota Přemyslid (third in line, age 32, health 4.5 normal) is a healthier
+      but longer-lived stepping stone if Konrád dies first
+
+  If Konrád dies and the law has not changed, active intervention against
+  Jaromír's succession becomes urgent. This is why it's worth monitoring Ota
+  (third in line at 32 with normal health — a healthy Ota buying more time
+  before Jaromír is a viable if uncomfortable scenario).
+
+
+================================================================
+V. CHARACTER THREADS (1077.2.10)
+================================================================
+
+A. THE EXILE — JAROMÍR (id 34156), age 38
+
+The most dramatic thread development this period.
+
+  Traits (1077): arbitrary, lazy, wrathful
+  Education: Learning tier 2
+  Lifestyle: hunter (!)
+  Health: 3.9 (below average)
+  Gold: 166 | Prestige 600
+  EXCOMMUNICATED
+
+  Personal relations: Grudge → Jan (32280), Rival ↔ Jan (32280),
+                      Rival ↔ Vratislav (32778)
+
+  Jaromír has been excommunicated by the Church. He now holds a Grudge against
+  Jan — a deterioration beyond mere rivalry. The "Grudge" relation is stronger
+  than rivalry; it signals a sustained interpersonal wound.
+
+  Yet he is listed as performing "Task Develop County (for 32280)" — still
+  somehow in or associated with Jan's household. Whether he is there under
+  duress, as a lingering obligation, or because he has nowhere else to go is
+  unclear.
+
+  The character who began as a charming exile (Intrigue 8, Learning 10) has
+  degraded into a wrathful, lazy, arbitrary figure pursuing a hunter lifestyle.
+  The excommunication removes him from the Church career entirely. His effective
+  Intrigue has actually increased to 8 (up from the base 7 in 1071), but the
+  lifestyle and trait profile suggest a man who has stopped playing the long
+  game and is simply nursing grievances.
+
+  He is the second heir to the kingdom. If Konrád dies and the succession law
+  is not reformed, an excommunicated man inherits Bohemia.
+
+B. THE BISHOP-FRIEND — JAN (id 32280), Count of Opava
+
+  Still Vratislav's friend (mutual). Still theocracy vassal. Now holds a
+  Grudge FROM Jaromír and is a Rival to Jaromír.
+
+  The Jan-Jaromír relationship has fully inverted: what was a patron-client
+  arrangement has become mutual enmity. Jan is doing "Develop County" tasks
+  with Jaromír nominally assigned — possibly Jaromír was assigned to Jan's
+  service and the relationship broke down while the task remained active.
+
+  The Papal problem (-30 Anselmo) makes Jan an awkward channel to Rome.
+  A bishop who is housing (or being Grudged by) the excommunicated second
+  heir to Bohemia is not a compelling papal intermediary.
+
+C. THE POLISH WIFE — ŠWIÉTOSŁAWA (id 36471)
+
+  Still primary spouse, at Praha court.
+  Opinion of Vratislav: +15 (scheme_sway +25, VIET_opinion_chastise_tardy -10)
+  The chastise_tardy modifier suggests she was admonished for being late to
+  some obligation (a council task? a court attendance?). The net +15 is
+  adequate but not warm.
+
+  Her son Vladislav is being educated by her relative Bolesław III in Kraków.
+  Whether this was her initiative or Vratislav's is unknown.
+
+D. THE KNIGHT — ZÁVIŠ (id 63542)
+
+  Still a knight (prowess 10). Still in the military report.
+  No further changes visible from character data.
+
+E. THE SUCCESSION QUESTION — evolving, now a crisis
+
+  Břetislav (38159), age 19
+    Diplomacy tier 3 | Effective Diplomacy 20 (!!!)
+    Traits: compassionate, honest, generous
+    At Praha, Vratislav's friend
+    English alliance through Agathe (wife or betrothed; not in save characters
+    under that name — possible encoding mismatch or she is deceased/abroad)
+    No titles held (unlanded heir)
+
+    He is fourth in the succession line. His Diplomacy 20 is exceptional,
+    the highest we've seen in this playtest. But grooming alone doesn't
+    change the succession law.
+
+  Ludmila (38396), age 17
+    Martial tier 4 | Effective Martial 14 | Commander: flexible_leader
+    Traits: honest, diligent, lustful
+    Married to Thorgils (Danish court, Sjælland)
+    Positions: Travel Leader
+    Friends with Bořivoj (maintained across courts — notable)
+    Bully/victim dynamic with Bonifacio (id 64205 — unknown context)
+
+    The "Travel Leader" position is interesting — a court position for leading
+    expeditions or journeys. Combined with Martial tier 4 and the commander
+    trait, Ludmila has become more capable than any plan anticipated.
+
+  Boleslav (39160), age 14
+    Martial focus | Effective Martial 7, Diplomacy 12
+    Traits: diligent, compassionate, forgiving, rowdy
+    Guardian: Petr (id 55287, at Brno — likely Konrád's household)
+    Rival: Adelheid (id 39569) — unknown; possibly a Saxon vassal's child
+    Crush: Adela (id 61133) — unknown
+    Friends: Vladislav, Johanna (id 63718) — unknown
+
+    His education is proceeding under someone at Konrád's court. The rival
+    relationship with Adelheid is new — a name that sounds Saxon, which could
+    create political friction if she is from one of the German vassal households.
+
+  Bořivoj (39200), age 13
+    Diplomacy focus (changed from Intrigue!) | Traits: greedy, trusting,
+    diligent, charming
+    Guardian: Vratislav (personal guardianship)
+    Friends with Ludmila (maintained)
+
+    The focus change is deliberate. Vratislav took Bořivoj under direct
+    guardianship and shifted the Intrigue education to Diplomacy. The greedy+
+    trusting combination remains, but the charming trait softens it, and the
+    diligent addition is new and positive. The greedy+trusting personality is
+    still a vulnerability — charming can mean persuadable as much as charismatic.
+
+  Vladislav (39372), age 12
+    Martial focus | Effective Martial 8, Effective Learning 8
+    Traits: trusting, fickle, ambitious, rowdy
+    Other: possessed_1, scarred
+    Guardian: Bolesław III Piast (King of Poland!)
+    Location: Kraków
+    Friends: Boleslav, Lembert (id 63853)
+
+    Two trait developments since 1071: "ambitious" is new (positive if he is
+    destined for lay life, complicated if it generates ambition events), and
+    "scarred" suggests a physical injury at some point. Still has possessed_1.
+    Being educated by the King of Poland is a remarkable placement regardless
+    of motivation.
+
+  KristYna (16800260), age 8
+    Health 5.2 (good — illness resolved!)
+    Stewardship focus | Traits: bossy
+    Guardian: Vratislav | Friends: Henrik (id 39002)
+
+    The illness we were monitoring at 1071 has cleared. She is healthy and in
+    Praha. "Bossy" is a personality trait that usually develops in childhood.
+    Her focus is Stewardship, which may reflect Vratislav's own bias as
+    guardian.
+
+  New children: Slavibor (id 16820219) and Mikul (id 16802066)
+    Both unlanded, at Praha. Birth dates and details not yet profiled.
+    Both appear after 1071 in the succession line. Šwiétosława continues
+    to bear children.
+
+
+================================================================
+VI. STRATEGIC SITUATION vs. PLANS
+================================================================
+
+ACHIEVEMENTS THIS PERIOD:
+
+  [DONE] ✓ King of Bohemia — achieved 1072.1.12
+  [DONE] ✓ Grant d_meissen to Reginar — achieved 1072.1.26
+  [DONE] ✓ Ludwig became Duke of Thuringia — title created 1072.3.17
+  [DONE] ✓ Danish alliance — Ludmila ↔ Thorgils
+  [DONE] ✓ English alliance — Břetislav ↔ Agathe
+  [DONE] ✓ Polish alliance — confirmed via Šwiétosława
+  [DONE] ✓ KristYna's illness — resolved, she is healthy
+
+OPEN / ONGOING:
+
+  [ONGOING] Succession law reform — NOW URGENT
+    Was in Long-Term at 1071. With consumption and 3.5 health at 45,
+    Vratislav may not have Long-Term available. This is the critical
+    unresolved structural problem.
+
+  [ONGOING] Papal problem — unchanged
+    Anselmo still -30. Jan-Jaromír relationship degraded further.
+    No progress. Excommunicated Jaromír in the succession line makes
+    this geometrically worse.
+
+  [ONGOING] Hungary alliance — still not formed
+    Géza of Hungary has 4,275 troops [nearby]. Conspicuously absent from
+    the alliance picture despite being the obvious geographic partner.
+
+  [ONGOING] Čáslav development — some progress?
+    Terrain report: Čáslav dev 9, fort level 10 (up from fort 6 in likely
+    prior state). Some building has been done (fort priority visible),
+    but the economic special building (poi_special_buildings_economic)
+    is still there and presumably unactivated. Dev 9 on a 100% control
+    holding is below the Praha benchmark (13).
+
+  [RESOLVED — TRAGIC] Judita's marriage
+    She died before this was resolved (1075.11.18, age 19, cause unknown).
+    Archive this plan entry.
+
+  [RESOLVED] Guardian for Boleslav
+    Under Petr (at Brno), not ideal but functional. Martial focus proceeding.
+
+  [RESOLVED — MODIFIED] Bořivoj's trajectory
+    Focus changed from Intrigue to Diplomacy; Vratislav took direct guardianship.
+    The church path is still unresolved for Bořivoj at 13.
+
+  [UNCERTAIN] Vladislav / church path
+    He has ambitious + Martial focus under Poland's king. The church path
+    looks less likely than it did in 1071. Ambitious is a trait that does
+    not sit well with ecclesiastical submission.
+
+NOT YET ADDRESSED:
+
+  — Succession law reform (now urgent given health + consumption)
+  — Papal relationship (Anselmo -30, no movement)
+  — Hungary alliance (large nearby catholic ruler, no bond)
+  — The Konrád succession problem (structural, not just tactical)
+  — Jaromír excommunicated in the succession line (crisis if Konrád dies)
+
+
+================================================================
+VII. WHAT BETTER TOOLS WOULD TELL US
+================================================================
+
+  — SUCCESSION LAW: The save's laws structure returned empty (no top-level
+    "laws" key found). The heir array on k_bohemia confirms seniority order,
+    but the specific law name (Seniority? Elective Succession?) is not exposed
+    by current tools. The k_bohemia title record has no explicit law field
+    visible. Need to dig into the title or realm law structure.
+
+  — BRETISLAV/AGATHE MARRIAGE STATUS: The English alliance runs through
+    "Břetislav ↔ Agathe" but Agathe does not appear in the living characters
+    search under that name. Possible encoding issue. A betrothal_for() query
+    or a marriage record check on Břetislav would clarify whether this is a
+    betrothal (age ~19 → marriage pending?) or a completed marriage.
+
+  — JUDITA'S DEATH: Death date (1075.11.18) is visible in family record, but
+    cause is unknown. The dead_unprunable store may have a death reason field.
+    If she died of illness in Regensburg (or was murdered?), the story arc
+    changes.
+
+  — CONSUMPTION TRAIT SOURCE: The "consumption" health modifier on Vratislav
+    is critical information. CK3's consumption trait is typically acquired via
+    a health event chain. Whether it is early (likely to progress quickly) or
+    recently acquired affects the mortality timeline.
+
+  — CONVERSION MODIFIER: Filibert and Reginar both have
+    "minority_disapproves_of_conversion_opinion -20". Someone converted. The
+    modifier's source (who converted, from what, when) is not visible.
+
+  — JAROMÍR'S EXCOMMUNICATION: The excommunication is noted as a trait but
+    we cannot see when it occurred or what triggered it. Was it papal action
+    against Vratislav's realm? A personal sin? A political maneuver?
+
+  — ID 35734: The third heir in the succession line, unknown character.
+    A find_character query or direct profile lookup would identify them. They
+    sit between Jaromír (who we know is excommunicated) and Břetislav.
+
+
+================================================================
+VIII. THE OPEN QUESTIONS AT 1077.2.10
+================================================================
+
+  — Who holds the succession ahead of Břetislav? The line is clear (33299,
+    34156, 35734, 38159) but id 35734 is unidentified. If they are old or
+    unhealthy, the path to Břetislav clears faster.
+
+  — Will Vratislav survive long enough to change the succession law? At 45
+    with consumption and health 3.5, the window is probably a decade or less.
+    If the law doesn't change, Konrád inherits Bohemia.
+
+  — What triggered Jaromír's excommunication? And his grudge against Jan?
+    This is the most narratively interesting unresolved thread — a character
+    we've tracked since 1066 reaching a new low point.
+
+  — Is Agathe alive and where is she? The English alliance via Břetislav ↔
+    Agathe persists, suggesting the marriage bond exists, but she doesn't
+    appear in the living characters search. She may be at the English court
+    (William III's realm) rather than Bohemia.
+
+  — Why did Boleslav end up at Konrád's court? Was this a deliberate ward
+    placement, or a consequence of some earlier event chain?
+
+  — Who is Adelheid (id 39569), Boleslav's rival? If she is a Saxon vassal's
+    daughter, this matters politically. If she is unrelated, it is merely a
+    character quirk.
+
+  — What was the Judita-Regensburg situation? She died there at 19, unmarried
+    (or if married, we have no record). Did she have a betrothal to a Bavarian
+    or Austrian noble that we cannot see?
+
+  — What caused the dread increase (0.5 → 10.0)? Imprisonment, execution,
+    or intimidation events? The "released_from_prison" opinion on Tamar and
+    Eberhard suggests there were imprisonments this period.
+
+  — Why is Jaromír still doing tasks for Jan if they hold a Grudge? Is Jan
+    using him against his will? Is the task assignment stale data?

@@ -1,0 +1,133 @@
+Plans — Vratislav II Přemyslid, Duke of Bohemia
+Date: 1066.11.11  |  Playtest 5 (DLC-overhaul re-run)
+================================================================
+
+First plan set for this playtest. Carried forward from the 1066.11.11 family
+assessment (assessments/playtest5/Vratislav_II_1066-11-11_family_assessment.txt).
+
+Temporal categories: IMMEDIATE (next session), SHORT-TERM (1-5 years),
+LONG-TERM (5-20 years).
+
+
+================================================================
+I. IMMEDIATE (done this session)
+================================================================
+
+[FAMILY] Education focus changes — confirmed, action in-game
+  Judita (id 37766, age 10): Intrigue → Diplomacy. Personality (generous,
+    humble, calm, charming) clashes with Intrigue; her effective Dipl (9)
+    was already the standout stat.
+  Břetislav (id 38159, age 8, heir): Intrigue → Diplomacy. Same mismatch,
+    more pronounced — effective Intrigue was negative. Effective Dipl 11.
+  Ludmila (id 38396, age 6): Diplomacy → Learning. "Curious" leans Learning
+    more than Diplomacy; soft call, worth re-checking once she has more
+    than one trait rolled.
+  Boleslav (id 39160, age 3) / Bořivoj (id 39200, age 2): no focus yet
+    (too young). Deliberately holding off — see SHORT-TERM below.
+
+
+================================================================
+II. SHORT-TERM (~1067–1071)
+================================================================
+
+[FAMILY] Assign guardians — open for all six children
+  Status: no guardian assigned to anyone as of 1066.11.11. Not yet
+    prioritized by name/personality fit; do that pass once the next save
+    is loaded (check available household/court members against each
+    child's focus and personality, same logic as the Marshal/Steward
+    guardian fit reasoning used in past playtests).
+  Priority order: Judita and Břetislav first (closest to finishing
+    education), then Ludmila, then Boleslav/Bořivoj once their focus is set.
+
+[FAMILY] Revisit Boleslav (age 3) and Bořivoj (age 2) education focus
+  Holding off ~2-3 years per this session's decision so their personality
+  traits (currently just diligent+charming, and greedy+trusting
+  respectively) have more time to develop before committing to a focus.
+  Bořivoj's "greedy" is the one trait on the whole roster worth tracking
+  closely — flag if it persists or compounds with another vice trait.
+
+[FAMILY] Judita's betrothal — candidate shortlist (screen run 1066.11.11)
+  Tool: ck3/evaluators/matchmaker.py / run_matchmaker.py (new this session,
+  see III below). Re-run against the next save — ages will have ticked up
+  ~2 years and some candidates may have married elsewhere, gained vices, or
+  simply changed.
+
+  Noble / alliance track (no vice traits, Catholic, age 10-16 at time of screen):
+    — Gottschalk von Diepholz (id 37706), age 11, Saxon — patient, ambitious,
+      no vices. Page in the court of Hedwig (Göttingen/Goslar/Mühlhausen,
+      Saxony). RECOMMENDED — Saxony borders Bohemia directly, so this is
+      the one candidate where an alliance has real strategic teeth, not
+      just flavor.
+    — Oberto Parma (id 37643), age 11, Italian — chaste, just, patient,
+      no vices, "nearby" zone.
+    — Ezzo von Lóningen (id 63026), age 13, Saxon — calm, brave, temperate,
+      no vices, "nearby" zone.
+    — Gebhard Zähringen (id 37262), age 14, Swabian — humble, trusting,
+      just, no vices, "nearby" zone.
+    — Conan de Grandson (id 37181), age 14, French/Burgundian — patient,
+      diligent, calm — cleanest personality read on the list, but
+      geographically distant and 4 years older than Judita.
+    — Pierleone Pierleoni (id 37835), age 10, Roman — honest, pensive,
+      no vices. House Pierleoni is the real-history Roman banking family
+      with deep Papal ties — flavorful Church-adjacent pick, geographically
+      distant.
+
+  Noble / internal-alliance option (Bohemia-local, found via --max-zone 0):
+    — Mutina (id 38184), age 7, Czech, House Vrsovid — son of Časlav
+      Vrsovid (already one of Vratislav's own feudal vassals, Count of
+      Žatec). House Vršovid is the historical rival clan to the Přemyslids.
+      A touch young relative to Judita (3-year gap) but worth holding in
+      mind: marrying into the Vršovici would be a notable consolidation
+      move given the dynasty's real history. Re-screen at the right age gap.
+
+  Lowborn / matrilineal track:
+    — Prech (id 52571), age 16, Czech — honest, chaste, forgiving, no
+      vices. Currently a courtier under Ota Přemyslid (Vratislav's own
+      vassal, Count of Olomouc) — "local" proximity, the most logistically
+      straightforward matrilineal option found.
+    — Hermann (id 37576), age 11, Franconian, no house — courtier in
+      Frankfurt, temperate + charming, no vices. Central-Germany, well
+      inside the HRE.
+
+  Recommendation standing: Gottschalk (alliance value, real neighbor) or
+  Prech (matrilineal, already inside Vratislav's own vassal network) are
+  the two strongest combinations of "good for Judita personally" and
+  practical upside. Revisit once personalities are more settled — none of
+  these are locked in.
+
+
+================================================================
+III. TOOLING (built this session)
+================================================================
+
+[TOOL] Matchmaker — ck3/evaluators/matchmaker.py + run_matchmaker.py
+  Codifies the manual betrothal screen above into a reusable query:
+  find_candidates(gs, char_id, age_window=, faith_mode=, track=, max_zone=,
+  exclude_vices=, require_virtue=, limit=) → MatchmakerReport.
+  - Splits candidates into noble (alliance-relevant, has dynasty house) vs
+    lowborn (matrilineal-relevant) tracks.
+  - Classifies CK3 personality traits into virtue/vice sets (sourced from
+    the actual trait pairs in game/common/traits/00_traits.txt, not from
+    save data — CK3 doesn't tag traits as virtue/vice itself).
+  - Resolves faith/culture via dynasty-house-head fallback for unlanded
+    characters (same convention as character_profile()).
+  - Resolves geographic proximity via the employer chain for unlanded
+    courtiers, reusing geography.py's zone_between().
+  CLI: python run_matchmaker.py --char <id> [--age-window N]
+    [--track noble|lowborn] [--max-zone 0-3] [--faith same_faith|
+    same_religion|any] [--allow-vices] [--require-virtue]
+  Use this directly against the next save to re-screen Judita (and start
+  screening Ludmila once she's closer to marriageable age).
+
+
+================================================================
+OPEN QUESTIONS AT 1066.11.11
+================================================================
+
+  — None of the six children have guardians assigned. Needs an in-game
+    pass once the next save is loaded — check who in the household/court
+    fits each child's focus and personality.
+
+  — Re-run the Matchmaker for Judita against the next save before treating
+    any of the above as settled — candidates may have married elsewhere,
+    aged out of the window, or rolled new (possibly vice) traits.

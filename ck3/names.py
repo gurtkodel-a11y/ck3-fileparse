@@ -7,6 +7,9 @@ CK3 save files use a compact ASCII encoding for non-ASCII characters:
   - European diacritics: uppercase letter + "_"  →  accented lowercase
       A_ → á    E_ → é    I_ → í    O_ → ó    U_ → ú
       C_ → ç    N_ → ñ    Z_ → ź    S_ → š
+      R_ → ř    L_ → ł
+    Double-letter forms encode caron (háček) variants:
+      CC_ → č   EE_ → ě
   - CJK characters: "_XXXX" where XXXX is the Unicode code point in hex
       Daheng_5927_4EA8  →  Daheng大亨
 
@@ -24,12 +27,17 @@ import re
 # ── Diacritic decoding ────────────────────────────────────────────────────── #
 
 _UPPER_DIACRITICS: dict[str, str] = {
+    # Single-letter forms (acute, cedilla, etc.)
     "A": "á", "E": "é", "I": "í", "O": "ó", "U": "ú",
     "C": "ç", "N": "ñ", "Z": "ź", "S": "š",
+    "R": "ř", "L": "ł",
+    # Double-letter forms (caron / háček)
+    "CC": "č", "EE": "ě",
 }
 
-# Compiled pattern: uppercase letter + underscore, OR _XXXX hex sequence
-_DIACRITIC_RE  = re.compile(r"([AEIOUCNZS])_")
+# Double-letter forms must come first in the alternation so they win over
+# the single-letter forms when both could match (e.g. "CC_" vs "C_").
+_DIACRITIC_RE  = re.compile(r"(CC|EE|[AEIOUCNZSLR])_")
 _CJK_RE        = re.compile(r"_([0-9A-Fa-f]{4})")
 
 # Characters that begin a new "word" — diacritics after these should be uppercase
@@ -64,8 +72,12 @@ def decode_name(raw: str) -> str:
         at_word_start = m.start() == 0 or raw[m.start() - 1] in _WORD_STARTERS
         return decoded_lower.upper() if at_word_start else decoded_lower
 
-    result = _DIACRITIC_RE.sub(_replace_diacritic, raw)
-    result = _CJK_RE.sub(lambda m: chr(int(m.group(1), 16)), result)
+    # CJK codepoints must be decoded first: chained codepoints like
+    # "_5D6C_540D" put a hex digit (e.g. "C") right against the next
+    # underscore, which the diacritic pass would otherwise misread as its
+    # own "C_" diacritic marker and corrupt the codepoint.
+    result = _CJK_RE.sub(lambda m: chr(int(m.group(1), 16)), raw)
+    result = _DIACRITIC_RE.sub(_replace_diacritic, result)
     # Remaining underscores are word separators (e.g. "CU__Uladh" → "Cú Uladh")
     # or stray artefacts; replace with a space and collapse extras.
     result = result.replace("-_", "-")
@@ -87,14 +99,19 @@ def house_prefix_name(house: dict) -> tuple[str, str]:
       - Otherwise derive from 'key': "house_british_isles_briain" → last segment → "Briain"
     How prefixes are derived:
       - 'prefix' field holds a localization key "dynnp_ua" → strip "dynnp_" → "ua"
+
+    Procedurally-generated houses (no historical 'name' string) sometimes carry
+    a bare numeric 'key' — an ID into the game's dynamic name generator rather
+    than a "house_*" string we can derive text from. There's no name data
+    available for these in the save, so they fall back to "".
     """
     raw_name   = house.get("name", "")
     raw_prefix = house.get("prefix", "")
     key        = house.get("key", "")
 
-    if raw_name:
+    if isinstance(raw_name, str) and raw_name:
         name = decode_name(raw_name.removeprefix("dynn_"))
-    elif key:
+    elif isinstance(key, str) and key:
         # "house_british_isles_briain" → strip "house_" → split → last part → capitalize
         without_house = key.removeprefix("house_")
         parts = without_house.split("_")
@@ -102,7 +119,7 @@ def house_prefix_name(house: dict) -> tuple[str, str]:
     else:
         name = ""
 
-    prefix = decode_name(raw_prefix.removeprefix("dynnp_")) if raw_prefix else ""
+    prefix = decode_name(raw_prefix.removeprefix("dynnp_")) if isinstance(raw_prefix, str) and raw_prefix else ""
 
     return prefix, name
 

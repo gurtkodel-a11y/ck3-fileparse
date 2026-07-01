@@ -1,0 +1,155 @@
+PLAYTEST 5 — Vratislav II Přemyslid, Duke of Bohemia
+Save: Duke_Vratislav_II_of_Bohemia_1066_11_11.ck3  (1066.11.11)
+Focus: Family / children assessment (DLC-overhaul re-run of the Vratislav II line)
+
+============================================================
+THE CHILDREN
+============================================================
+
+1. Judita — age 10, F  (id 37766)
+   Personality: generous, humble, calm, charming
+   Education focus: Intrigue
+   Base/Eff. skills: Dipl 4/9, Mart 3/3, Stew 3/3, Intr 3/5, Lear 6/6, Prow 3/3
+   Read: a warm, sociable, even-tempered kid with real charm and a strong
+   Learning stat. The Intrigue focus doesn't fit her personality at all —
+   generous/humble/calm characters get little out of an Intrigue education
+   (which rewards scheming, ambition, ruthlessness). Her natural lane is
+   Diplomacy (the effective Dipl 9 already reflects an early trait/bonus
+   pulling that way) or Learning, given the base 6.
+   No guardian assigned yet.
+
+2. Břetislav — age 8, M  (id 38159)
+   Personality: compassionate, honest, generous, charming
+   Education focus: Intrigue
+   Base/Eff. skills: Dipl 3/11, Mart 3/3, Stew 3/3, Intr 2/-3, Lear 2/2, Prow 4/4
+   Read: as the eldest son he's the presumptive heir to watch most closely.
+   Same mismatch as Judita — compassionate/honest is about as far from an
+   Intrigue education's reward structure as a personality can get; the
+   effective Intrigue score is actually negative. His Dipl 11 effective is
+   the standout number here (likely a trait or tutor bonus already pulling
+   that way) — strongly suggests redirecting his focus to Diplomacy. As heir,
+   Martial or Stewardship would also be defensible long-term picks; Intrigue
+   is the one focus actively fighting his nature.
+   No guardian assigned yet.
+
+3. Ludmila — age 6, F  (id 38396)
+   Personality: curious
+   Education focus: Diplomacy
+   Base/Eff. skills: Dipl 3/4, Mart 1/1, Stew 1/2, Intr 3/3, Lear 3/4, Prow 3/3
+   Read: only one trait so far (still young), but "curious" pairs well with
+   a Learning education more than Diplomacy — curious characters tend toward
+   scholarly/Learning perk trees. Worth reconsidering at her next focus
+   checkpoint, though Diplomacy isn't a bad fit either; it's a fairly open
+   case.
+   No guardian assigned yet.
+
+4. Boleslav — age 3, M  (id 39160)
+   Personality: diligent, charming
+   No education focus yet (too young — focus typically starts age 6)
+   Read: diligent + charming is a strong, flexible combination — works for
+   Stewardship (diligent rewards build well there) or Diplomacy (charming).
+   Nothing to decide yet; flag for a focus decision around 1066+3 years.
+
+5. Bořivoj — age 2, M  (id 39200)
+   Personality: greedy, trusting
+   Read: greedy is the one personality flag among the six worth watching —
+   it cuts against vassal opinion and is a classic destabilizer if he ever
+   ends up landed. Trusting pairs oddly with it (greedy usually pairs with
+   suspicious). Too early to read further.
+
+6. Vladislav — age 1, M  (id 39372)
+   Personality: trusting
+   Too young for a meaningful read.
+
+Notes:
+- No guardians are assigned to any child in this save yet — this is an
+  open decision for all six, not just the younger ones.
+- Vratislav currently holds 3 house-head hooks on Boleslav, Bořivoj, and
+  Vladislav (visible in the relationships report) — these are dynasty-head
+  leverage, not personal-relation guardianships.
+- The evaluator's "Hierarchy" field reports "Independent ruler" for all six
+  children even though they're unlanded courtiers under Vratislav — this
+  looks like a character_profile() gap (liege resolution via vassal_contracts
+  doesn't cover unlanded court characters). Flagged for follow-up, not
+  corrected here.
+
+============================================================
+SHORT-TERM RECOMMENDATIONS
+============================================================
+- Judita: switch focus from Intrigue → Diplomacy (or Learning).
+- Břetislav: switch focus from Intrigue → Diplomacy, given the heir
+  question and his outsized effective Dipl score.
+- Ludmila: Diplomacy is fine; Learning is the case if you want to lean into
+  "curious."
+- Boleslav: no action needed yet; revisit focus choice in ~3 years.
+- Guardians: none assigned for any child — worth filling in, prioritizing
+  Judita and Břetislav since they're closest to finishing education.
+
+============================================================
+LONG-TERM / MARRIAGE NOTES
+============================================================
+Liege is Heinrich, Emperor of the Holy Roman Empire — Bohemia sits inside
+the Empire's orbit, so HRE-internal marriages (or marriages that buy claims
+within imperial vassal houses) carry the most direct strategic value for
+consolidating Vratislav's position relative to his liege and rival vassals.
+Jaromír (unlanded rival, in another court) reads as the recurring
+pretender/rival figure from this dynasty's prior runs — a marriage or
+alliance that isolates Jaromír's potential support base is worth keeping in
+mind as the children come of age, rather than treating these as purely
+personality-driven matches.
+
+No alliances currently held (0), which is unusual for a duke this early —
+matrilineal or regular marriages for Judita/Ludmila that create alliances
+with neighboring counts/dukes would directly address that gap once they're
+of marriageable age.
+
+============================================================
+JUDITA — BETROTHAL CANDIDATES (screened 1066.11.11)
+============================================================
+Screen criteria: unmarried/unbetrothed Catholic boys, age ~4-15, no vice
+personality traits, cross-checked against house/employer for geographic
+and political plausibility. World pool was ~3,450 unmarried Catholic boys
+total — narrowed to ~77 with zero vice traits, then hand-checked the
+strongest few below. All are young enough that traits may still shift
+before marriageable age (16); treat this as a first pass to revisit in
+a few years, the same way we're holding off on Boleslav/Bořivoj.
+
+Noble / alliance-track:
+- Gottschalk von Diepholz (id 37706), age 11, Saxon. Traits: patient,
+  ambitious, rowdy — no vices. Page in the court of Hedwig, a Saxon
+  countess holding Göttingen/Goslar/Gleichenstein/Mühlhausen. Saxony
+  borders Bohemia directly, so this is the one candidate on the list
+  where an alliance would have real strategic teeth, not just flavor.
+  "Ambitious" is double-edged (stress tolerance + scheme appetite) but
+  isn't a moral vice — worth knowing, not necessarily disqualifying.
+- Pierleone Pierleoni (id 37835), age 10, Italian (Roman). Traits:
+  honest, pensive — no vices. House Pierleoni is the real-history Roman
+  banking family with deep Papal ties — an interesting Church-adjacent
+  match if a Rome connection ever becomes useful, though geographically
+  distant from Bohemia.
+- Conan de Grandson (id 37181), age 14, French/Burgundian. Traits:
+  patient, diligent, calm, rowdy — no vices, the cleanest personality
+  read on the list. Oldest of the group (4 years on Judita), otherwise
+  geographically distant.
+
+Lowborn / matrilineal-track:
+- Hermann (id 37576), age 11, Franconian, no house — currently a
+  courtier in Frankfurt (central Germany, well inside the HRE, much
+  closer to Bohemia than the Italian/French nobles above). Traits:
+  temperate, stubborn, charming — no vices. Decent skill profile,
+  geographically and politically the most sensible commoner pick: a
+  matrilineal marriage here is plausible logistically, not just
+  thematically.
+- Ralph (id 37769), age 10, Norman, no house, currently has no
+  employer/court — virtue: forgiving, no vices. Personally fine, but
+  not currently attached anywhere, which may make him harder to locate
+  or arrange in practice.
+- Mauros (id 37779), age 10, Greek (Byzantine court of Konstantinos) —
+  virtue: trusting, no vices. Flavorful but logistically the most
+  distant option on this list.
+
+Recommendation: Gottschalk (neighbor + alliance value) or Hermann
+(matrilineal, nearby, clean personality) are the two with the best
+combination of "good for Judita personally" and practical upside.
+Revisit closer to marriageable age since personality traits for an
+11-year-old aren't fully locked in yet.

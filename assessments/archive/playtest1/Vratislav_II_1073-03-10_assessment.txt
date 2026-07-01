@@ -1,0 +1,304 @@
+Strategic Assessment — Vratislav II, King of Bohemia (1073.3.10)
+Generated from save: King_Vratislav_of_Bohemia_1073_03_10.ck3
+Previous assessment: Vratislav_II_1070-11-10_assessment.txt
+================================================================
+
+Since November 1070: two and a half years. The period has been one of controlled
+expansion, clever statecraft, and disciplined alliance-building. Several of the
+key risks flagged in the prior assessment have been resolved or transformed into
+strengths. New problems have emerged, largely as the downstream cost of success.
+
+Vratislav's personal profile: age 41, skills martial 12 / prowess 12 / stewardship
+5+ / diplomacy 5 / learning 5, with education_stewardship_5 (the highest tier),
+architect, scarred, just, diligent, wrathful. He is an exceptional military
+commander and administrator — stewardship_5 is rare and compounds across every
+domain decision. The wrathful trait is the principal character liability.
+
+
+I. WHAT CHANGED: THE HEADLINE MOVES
+--------------------------------------
+
+Otto von Weimar elevated to Duke of Meissen (+125 opinion):
+  The prior assessment's highest-risk item has been converted into the realm's
+  most loyal vassal. The sequence: two sway schemes (+50), formal vassal
+  incorporation (+40), and the duchy title grant (+60) produced a net of +125
+  — the highest single-vassal opinion in the realm. Otto holds d_meissen as
+  a duke; the old claimant faction dissolved. This is masterful: the problem
+  was solved not by suppression but by elevation, and it cost nothing that
+  wasn't already there to give.
+
+Oda von Weimar married to Svatobor Přemyslid (confirmed):
+  Both are in Vratislav's court as a married couple. Oda has completed her
+  education at diplomacy_4 — an excellent result; she grew from diplomacy 6 to
+  7 and learning from 7 to 8. Svatobor remains in court with the realm, meaning
+  neither yet holds independent land. Their children will be Přemyslid. When
+  Otto eventually dies, his holdings will pass through Oda into a Přemyslid line.
+  This creates a long-term dynastic consolidation mechanism for d_meissen that
+  requires no further action today.
+
+Alliance network: from one to three:
+  Poland (Šwiétosława ↔ Bolesław): unchanged — the founding alliance.
+  Styria (Judita ↔ Adalbero of Steyermark): Judita was married out to the
+    Duke of Steyermark, creating a new southern flank alliance. Styria fields
+    2,568 troops.
+  Bavaria (Břetislav ↔ Mechthild Nordheim): the heir is betrothed to the Duke
+    of Bavaria's daughter, creating an alliance with the most powerful German
+    duchy. Otto von Nordheim fields 2,577 troops. Bavaria is also a pivotal
+    political actor in the coming Investiture conflict.
+
+  Combined allied force: Poland (2,918) + Bavaria (2,577) + Styria (2,568) = 8,063.
+  Bohemian realm: 4,188. Total potential: ~12,250 against any single opponent.
+  This is a dominant power coalition for this region.
+
+Duchy of Lausitz absorbed:
+  Thimo Wettin appears as a direct vassal holding d_lausitz — a new duchy that
+  was not in Bohemia's vassal list in 1070. Dedo II Wettin (previously Duke of
+  Lausitz, now Count of Merseburg) apparently lost the duchy, which then came
+  under Bohemian suzerainty. Thimo was granted the title and holds it at +100
+  opinion (granted_vassal +40, received_title_duchy +60). The pattern mirrors
+  the Otto solution exactly: rather than holding the duchy directly, a loyal
+  local noble was elevated and bound with gratitude. Dedo II still operates
+  nearby with significant troop numbers (3,614 total — more than his levy
+  suggests, indicating raised armies in some conflict elsewhere).
+
+Břetislav developing well:
+  Age 15, skills now martial 8 (was 6), stewardship 5 (was 3), intrigue 4 (was 2),
+  prowess 5 (was 2) — meaningful improvement across the board. His traits remain
+  compassionate, honest, generous, charming — a remarkably clean character for a
+  future king. Education focus was intrigue; his formal education trait has not
+  yet resolved. He is betrothed to Mechthild of Bavaria. Marriage at ~16 in 1074.
+
+
+II. THE REALM: INTERNAL STRUCTURE
+-----------------------------------
+
+Vassal tier summary (1073):
+  [Dukes — 2]
+    Otto von Weimar, Duke of Meissen   1,330 troops  +125 opinion
+    Thimo Wettin,    Duke of Lausitz   1,012 troops  +100 opinion
+  [Counts — Přemyslid, loyal]
+    Konrád Přemyslid, Count of Brno   1,478 troops  +25 opinion
+    Ota Přemyslid,    Count of Olomouc  923 troops  (unlisted opinion, likely positive)
+  [Counts — other, loyal]
+    Jan (friend), Count of Opava         666 troops  (mutual friend)
+    Kuna,         Count of Hradec        471 troops  +20 opinion (was fired from council but given a county)
+  [Counts — faction risk]
+    Ludwig Ludowinger, Count of Schmalkalden  1,067 troops  liberty_faction
+    Česlav Vrsovid,    Count of Žatec          363 troops  liberty_faction
+  [Barons — stable]
+    Seven minor barons contributing ~70 each — politically negligible.
+
+The good news in the internal picture is structural: two very powerful, very
+loyal dukes (Otto +125, Thimo +100) now anchor the top of the vassal hierarchy.
+In 1066 there were no allied dukes; in 1070 both had negative opinions; in 1073
+they are the most supportive voices in the realm. The Přemyslid cousins (Konrád,
+Ota) remain stable at positive opinions with court title grants.
+
+The liberty faction:
+  Ludwig Ludowinger (3 counties, 1,067 troops) — faction founder; age 58;
+    faltering_heart; health 3.3. He has been in some form of faction since 1070.
+    His health is concerning but not terminal on its current trajectory. The
+    liberty faction's demand is autonomy — a lighter demand than the claimant
+    faction of 1070, but still a live irritant.
+  Česlav Vrsovid (1 county, 363 troops) — age 40; traits: brave, arbitrary,
+    generous. Critical detail: arbitrary is the trait that makes him prone to
+    spontaneous negative reactions. His return to opposition is directly traceable
+    to the council firing (-20 opinion). He was at +55 overall but the arbitrary
+    trait means a single negative event flips him.
+  Combined faction: 1,430 troops.
+  Military verdict: trivial — the combined allied force at ~12,000 could overwhelm
+    this faction twelve times over. The question is whether a military solution
+    is worth the general vassal opinion cost.
+
+Domain:
+  Domain shrank by one holding: Hradec (the mountains county) was given to Kuna,
+  who was elevated to Count of Hradec. This reduced domain development from 60 to
+  52. The exchange — a single barony for a loyal count who holds a strategic
+  mountain border county — is probably correct strategically, but the development
+  loss is real and the remaining six holdings are still at the same levels as
+  1066. Seven years on from game start, Praha (12) is the only developed holding;
+  five others remain at 8. The Čáslav economic site still has not been built out.
+  This is an accumulated opportunity cost that compounds with each year of inaction.
+
+
+III. THE IMPERIAL RELATIONSHIP AND INVESTITURE CONTEXT
+-------------------------------------------------------
+
+Vratislav has insulted Emperor Heinrich IV (-50 insult_opinion: You → Others).
+  This is the most diplomatically sensitive development in the period. Heinrich IV
+  (age 23, id 37020) is Vratislav's liege. An insult event at -50 is significant
+  and lingers roughly 10 years. The cause is not fully determinable from the save,
+  but given the timing (post-Lausitz/Meissen expansion), it may reflect friction
+  over Bohemia's aggressive territorial expansion within the empire, or a specific
+  political dispute.
+
+  The historically informed context makes this more complex: Heinrich IV is at the
+  beginning of his great crisis. In 1073 he is facing the Saxon revolt. By 1076 he
+  will be at open war with Pope Gregory VII (the Investiture Controversy). His need
+  for reliable vassal support will intensify sharply over the next three years.
+  Historically, Vratislav II was Heinrich IV's most loyal supporter during the
+  Investiture era, and was rewarded with the royal crown in 1085 (Bohemia already
+  has the crown here — likely already awarded as a result of early loyalty, which
+  makes the subsequent insult confusing).
+
+  The insult is a vulnerability. If Heinrich demands military support in the coming
+  Saxon conflict, Vratislav cannot refuse without making the relationship worse. But
+  participating loyally in Heinrich's campaigns would be the fastest repair mechanism
+  — and historically accurate.
+
+The Pope (-30 impious opinion, persisting since ~1070):
+  The papal relationship has not improved in two and a half years. An impious
+  opinion suggests alignment with the Emperor against Church prerogatives — probably
+  related to the Meissen/German expansion, which the Pope may have viewed as
+  conducted outside proper canonical channels.
+
+  The coming Investiture showdown places Bohemia in an awkward position: Vratislav
+  has insulted the Emperor AND angered the Pope. This is the worst of both worlds.
+  The strategic question is which relationship to prioritise repairing. Given that
+  Bohemia already has the royal crown (Heinrich's gift), the Emperor is the more
+  important partner going forward — but being excommunicated by the Pope would create
+  severe domestic opinion penalties and prevent marriages. Monitoring both is essential.
+
+
+IV. THE NORTHERN PAGAN FRONTIER
+---------------------------------
+
+The trend identified in previous assessments has continued and accelerated:
+
+  Slavic pagan (Pomerania/Veletia): fervor 58.1 (1070) → 64.6 (1073). +6.5 points.
+  Baltic pagan: 59.9 → 67.3. +7.4 points.
+  Norse pagan: 64.0 → 74.5. +10.5 points.
+  Catholic: 41.8 → 43.2. +1.4 points.
+
+The gap between Catholic fervor (43) and the leading pagan faiths (norse at 74,
+baltic at 67, slavic at 64) has grown substantially. At high fervor, these faiths
+become more resistant to conversion, more aggressive in their own holy war
+declarations, and harder to diplomatically engage.
+
+Siemomysl of Pomerania (3,871 troops, slavic pagan) remains the primary northern
+threat. He was 4,771 in 1070; the reduction to 3,871 may reflect losses in another
+conflict. Kasper Lutici of Veletia (2,442) and Krutoj Wizlawid of Veletia (2,113)
+add further slavic pagan weight to the northwest.
+
+Combined pagan belts reachable from Bohemia: Pomerania (3,871) + Veletia-Luticia
+(~4,500 combined) = ~8,300. Against Bohemia alone (4,188) this would be dangerous.
+Against Bohemia + Poland + Bavaria + Styria (~12,000+) this is decisively outmatched.
+The alliance structure built in 1070-1073 is precisely what a northern campaign
+would require.
+
+However: the longer this is delayed, the higher the fervor climbs and the more
+likely the pagans declare a defensive or offensive holy war of their own. The
+window for choosing the terms of engagement — rather than responding to a pagan
+declaration — is probably 5-10 more years.
+
+
+V. PRIORITIES: SHORT, MEDIUM, LONG TERM
+-----------------------------------------
+
+SHORT-TERM (next 1-2 years, by ~1075):
+
+  1. Reinstate Česlav Vrsovid to the council.
+     His faction membership is directly traceable to the council firing (-20). He
+     has low diplomacy (1) and low intrigue (1) — he is not a schemer by nature;
+     he reacts emotionally (arbitrary trait) to slights. Putting him back on the
+     council reverses the -20 and likely detaches him from the faction, leaving
+     Ludwig alone. Ludwig alone (1,067 troops) is not a meaningful threat and will
+     not survive indefinitely with faltering_heart.
+
+  2. Grant Svatobor a holding in d_meissen.
+     He and Oda are both still in Vratislav's court. For the dynastic plan to
+     function — Oda inheriting Meissen through Svatobor's line — Svatobor needs to
+     be established as a landed Přemyslid within the duchy. A single county or barony
+     from d_meissen gives him standing, removes him from the court head count, and
+     begins the process of normalising a Přemyslid presence in the German holdings.
+
+  3. Begin developing Čáslav.
+     Seven years of delay. The special economic site gives above-average development
+     returns. Every year of inaction is a compounding loss. This is the lowest-cost
+     action on this list and should have been done in 1067.
+
+  4. Attend to the Emperor.
+     The insult to Heinrich IV needs a repair plan. The Saxon revolt is beginning
+     now (1073-1075 historically). Participating in Heinrich's campaign — even with
+     a single levy contribution — is the fastest path from -50 to a functional
+     imperial relationship, and it is the historically natural move for Bohemia.
+     Refusing imperial calls to arms would compound the diplomatic damage.
+
+MEDIUM-TERM (2-5 years, by ~1077-1078):
+
+  5. Marry Břetislav to Mechthild Nordheim (due ~1074).
+     He turns 16 in January 1074. She is 13 in 1073 — likely old enough to complete
+     the marriage by late 1074 or 1075. This closes the Bavaria alliance as a formal
+     dynastic bond and secures the heir's position.
+
+  6. Assess Ludwig Ludowinger's succession.
+     Ludwig (age 58, health 3.3, faltering_heart) may die within the next few years.
+     His son Ludwig jr (age ~31, already married) holds no titles but will inherit
+     the three Schmalkalden counties. Ludwig jr's character — gluttonous, lazy,
+     wrathful — makes him liable to be a passive vassal rather than a faction leader.
+     If the elder Ludwig dies before the liberty faction reaches war threshold, the
+     faction may dissolve without intervention. Monitor.
+
+  7. Navigate the Investiture Controversy.
+     The Gregory VII / Heinrich IV showdown arrives ~1076. Bohemia's choice:
+     — Support Heinrich (historically correct, already begun): maintains imperial
+       relationship, risks papal excommunication, but Heinrich controls the path to
+       further German titles and imperial legitimacy.
+     — Side with the Pope: repairs the -30 impious penalty, but alienates the liege
+       and may forfeit imperial protections.
+     — Neutral opportunism: difficult to execute; both sides will demand commitment.
+     Given that Bohemia's royal crown came from Heinrich and the German vassal base
+     is already established, continuing to support the Emperor is the rational choice.
+     Plan for a temporary excommunication and its domestic opinion costs.
+
+  8. Plan the northern campaign.
+     The preconditions are nearly met: Poland (allied), Bavaria (allied), Styria
+     (allied), realm stabilised. The trigger condition is Catholic fervor above 50
+     (already at 43 and rising) and a declared holy war CB on Pomerania. The
+     practical timing: resolve the liberty faction, complete Břetislav's marriage,
+     then declare. A joint campaign with Poland (who has its own interest in
+     Pomeranian territory) would be the optimal execution.
+
+  9. Position younger sons.
+     Boleslav (7), Bořivoj (6), Vladislav (5), Albrecht (2), and Mlada (infant girl)
+     are all unlanded. As they mature, giving them titles — particularly from any
+     pagan holy war gains — channels their ambition outward rather than inward.
+     A landless Přemyslid cadet at 25 becomes a faction risk; one with a county does
+     not. Start planning land grants for the eldest (Boleslav) around 1080.
+
+LONG-TERM (5+ years, by ~1085 and beyond):
+
+  10. Consolidate d_meissen as a Přemyslid hereditary holding.
+      When Otto dies (he is 46 and holds no alarming health traits), d_meissen passes
+      to Oda, and from Oda to her Přemyslid children with Svatobor. At that point the
+      duchy can be reorganised as a Přemyslid cadet holding under the Bohemian crown.
+      No action required now beyond establishing Svatobor.
+
+  11. Extend Czech cultural influence.
+      Czech culture holds 42 titles — flat since 1066. Franconian (160), Saxon (119),
+      Hungarian (116), Russian (135) all show in the local zone. As Bohemia incorporates
+      German territories (Meissen, Lausitz), the cultural question becomes whether to
+      convert vassal lands or manage multi-cultural complexity. The Hard Working
+      tradition's development bonus gives an incentive to develop rather than convert.
+      No urgency here, but a long-term consideration.
+
+  12. Eventual kingdom elevation or peer recognition.
+      Bohemia is already a kingdom. The next ambition tier is either:
+      — Expanding the kingdom's de jure claim structure (absorbing more de jure
+        territory into k_bohemia's claim hierarchy)
+      — A title created from the German acquisitions (Meissen + Lausitz could, with
+        further additions, form a Lusatian or Meissen kingdom tier)
+      — Or simply maximising the existing kingdom's development and military dominance
+        without further formal elevation.
+      No immediate action needed, but the architecture for either path should be
+      considered as territory consolidates.
+
+Bottom line (1073):
+  Bohemia is in its strongest position since the game began. The realm has grown,
+  the alliance network is formidable, the two most dangerous vassals have been
+  converted into the two most loyal ones, and the heir is on track. The vulnerabilities
+  are diplomatic (insult to the Emperor, papal friction) and developmental (domain
+  stagnation). The next crisis is the Investiture Controversy, which arrives within
+  three years and will demand a clear strategic position. Everything before that
+  should be oriented toward entering that crisis from the strongest possible
+  domestic and alliance position.

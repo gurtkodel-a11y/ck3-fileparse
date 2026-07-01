@@ -6,6 +6,17 @@ character without making strategic judgements (those come at level 2).
 
 Output is plain dicts/lists — easy to feed into pandas or print.
 
+Gotcha worth knowing when reading active_wars (confirmed via play, 1075):
+when two separate claimants are independently fighting for the SAME title
+(e.g. two different rulers both pressing a claim on the same duchy against
+its current holder), winning your own war and taking the title does NOT
+resolve the other claimant's war. Their war simply retargets — the
+defender role transfers to whoever now holds the title, i.e. you. You can
+go from "I just won my war for Meissen" to "I am now being attacked over
+Meissen" in a single transition, with no warning beyond the new entry
+appearing in active_wars. Don't assume a title changing hands cleanly ends
+all contention over it; check active_wars fresh after any conquest.
+
 Usage:
     from ck3.evaluators.military import MilitaryEvaluator
     ev = MilitaryEvaluator(gs, char_id=18269)
@@ -48,7 +59,16 @@ class FieldArmy:
 
 @dataclass
 class ActiveWar:
-    """One active war."""
+    """
+    One active war.
+
+    Note: a war's title target can outlive the original dispute. If someone
+    else was already at war over the same title when you took it (e.g. a
+    rival claimant fighting the previous holder), their war retargets to
+    you as the new holder rather than resolving — you can inherit an active
+    war you never declared. See module docstring for the concrete case this
+    was caught from.
+    """
     war_id: str
     start_date: str
     casus_belli: str
@@ -82,6 +102,7 @@ class NearbyRuler:
     char_id: int
     char_name: str
     highest_title_key: str
+    highest_title_label: str  # resolved display label (see title_full_label)
     highest_title_tier: str
     political_relation: str   # "liege"|"vassal"|"ally"|"at_war"|"geo_neighbor"
     geo_zone: int             # 0=local, 1=nearby, 2=continental, 3=global
@@ -215,7 +236,7 @@ class MilitaryReport:
             for r in display:
                 zone_str = _ZONE_LABEL.get(r.geo_zone, "?")
                 lines.append(
-                    f"    {r.char_name:<32}  {title_full_label(r.highest_title_key):<28}"
+                    f"    {r.char_name:<32}  {r.highest_title_label:<28}"
                     f"  levy {r.levy_capacity:>5,}  total {r.total_max:>5,}"
                     f"  power {int(r.combat_power):>6,}  [{zone_str}]  {r.faith_tag}"
                 )
@@ -355,7 +376,7 @@ class MilitaryEvaluator:
                 vassal_ids.add(contract["vassal"])
 
         # Gather each landed character's highest title (skip the player)
-        char_best_title: dict[int, tuple[str, str]] = {}   # char_id → (key, tier)
+        char_best_title: dict[int, tuple[str, str, dict]] = {}   # char_id → (key, tier, title)
         for tid, title in gs.titles.items():
             if not isinstance(title, dict):
                 continue
@@ -369,10 +390,10 @@ class MilitaryEvaluator:
             order = tier_order.get(tier, 4)
             prev = char_best_title.get(holder_id)
             if prev is None or order < tier_order.get(prev[1], 4):
-                char_best_title[holder_id] = (key, tier)
+                char_best_title[holder_id] = (key, tier, title)
 
         results: list[NearbyRuler] = []
-        for char_id, (title_key, title_tier) in char_best_title.items():
+        for char_id, (title_key, title_tier, title_dict) in char_best_title.items():
             kingdom_key = gs.title_key_to_kingdom(title_key)
             char_region = kingdom_to_region(kingdom_key)
             geo_zone = zone_between(player_region, char_region)
@@ -413,6 +434,7 @@ class MilitaryEvaluator:
                 char_id=char_id,
                 char_name=char_label(char, gs, char_id),
                 highest_title_key=title_key,
+                highest_title_label=title_full_label(title_key, title_dict, female=char.get("female") == "yes"),
                 highest_title_tier=title_tier,
                 political_relation=relation,
                 geo_zone=geo_zone,

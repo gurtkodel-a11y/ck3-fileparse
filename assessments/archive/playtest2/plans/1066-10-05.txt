@@ -1,0 +1,318 @@
+Plans — Vratislav II Přemyslid, Duke of Bohemia
+Date: 1066.10.5  |  Playtest 2
+================================================================
+
+A living planning document. Each entry notes the plan, the rationale,
+and any dependencies or open questions. Update as things resolve.
+
+Temporal categories: IMMEDIATE (next session), SHORT-TERM (1-5 years
+in-game), LONG-TERM (5-20 years), GRAND AMBITIONS (generational).
+
+Within each: Family | Court | Domain | Dynastic | Foreign Affairs
+
+
+================================================================
+I. IMMEDIATE
+================================================================
+
+[FAMILY] Change Judita's education focus: Intrigue → Diplomacy
+  Who: Judita (id 37766), age 10, daughter
+  Why: Intrigue focus is wrong for her. Charming gives +5 Diplomacy,
+       lifting her effective Diplomacy to 9 while Intrigue sits at 5.
+       Her personality (generous, humble, calm, charming) is made for
+       trust and alliance, not deception.
+  How: In-game focus change. Free change is available (0 used).
+  Dependency: Do before next time advance.
+
+[FAMILY] Change Břetislav's education focus: Intrigue → Diplomacy
+  Who: Břetislav (id 38159), age 8, son (probable heir)
+  Why: URGENT. His effective Intrigue is -3 — honest + compassionate
+       actively penalize it. He is constitutionally unsuited to scheming.
+       Effective Diplomacy is 11. He has four personality traits:
+       compassionate, honest, generous, charming — all ruler virtues.
+       He needs to lean into what he is, not fight it.
+  How: In-game focus change. Free change is available (0 used).
+  Dependency: Do before next time advance. Higher priority than Judita.
+
+[FAMILY] Assign Bratislav as Vratislav's ward
+  Who: Břetislav (id 38159)
+  Why: No guardian currently set. As the probable heir and eldest son,
+       Břetislav should be raised directly under Vratislav's eye.
+       Paternal guardianship carries narrative weight (father teaching son
+       to rule) and keeps succession preparation in-house.
+  How: In-game guardian assignment.
+  Note: Vratislav's own skills (balanced, moderate-high Learning) are
+        adequate for a Diplomacy education. The relationship bond also
+        matters: heir and father growing close during these years.
+
+[FAMILY] Assign Jan of Opava as Judita's guardian
+  Who: Judita (id 37766); candidate: Jan (id 32280, c_opava)
+  Why: Jan is Vratislav's friend — there is already warmth between their
+       households. His traits (just, zealous, humble, devoted) are a
+       near-perfect complement to Judita's own personality (generous,
+       humble, calm, charming). No risk of passing harmful traits.
+       His Diplomacy (8) is strong; his Learning (18, tier 4 education)
+       is extraordinary — the most educated man in the realm. A bishop-
+       scholar mentoring the duke's eldest daughter has narrative richness:
+       the girl who will one day be someone else's alliance bride is shaped
+       by a man of exceptional learning and genuine virtue.
+  Alternative: Časlav of Žatec (id 32959), D=10, Diplomacy tier 4
+       education — the mechanical optimum if the Jan request is refused.
+       Arrogant trait is a mild concern; honest and trusting are fine.
+  How: Request guardianship from Jan in-game.
+
+[FAMILY] Assign education focus for Boleslav at age 6 (due: 1069)
+  Who: Boleslav (id 39160), age 3, Šwiétosława's eldest son
+  Why: Diligent + rowdy — a hard worker with restless energy. Diligent
+       naturally boosts Stewardship and Learning. Stewardship focus is
+       the obvious alignment when he comes of age.
+  Note: Not urgent now (too young), but flag for 1069.
+
+[COURT] Watch for Vladislav's illness resolution
+  Who: Vladislav (id 39372), age 1
+  Why: Ill at age 1. Child mortality at this age is real. His effective
+       Prowess is already -4. No planning committed to him until he
+       either recovers or does not.
+  Action: Monitor. Pray (in character).
+
+
+================================================================
+II. SHORT-TERM  (~1067–1071)
+================================================================
+
+[FAMILY] Survey broader realm for Ludmila's guardian (when ready)
+  Who: Ludmila (id 38396), age 6, currently in Martial focus
+  Why: In-realm martial candidates are thin. Top options:
+       — Vladimír (id 43851, b_bechyne): M=8 but CRAVEN with Stewardship
+         education. High martial number, wrong person entirely.
+       — Konrád Přemyslid (id 33299, c_brno): M=5, actual Martial-2
+         education, generous + honest traits, a Přemyslid cousin.
+         Lower stat but authentic martial mentor. No young son.
+  Decision deferred: Ludmila is only 6 and one trait (rowdy) is too
+       little data to commit a guardian. Revisit at age 8 when more
+       personality traits have emerged.
+  Broader search note: If Konrád's tier 2 education is insufficient,
+       consider requesting from a friendly neighboring ruler's court
+       (a Hungarian or German martial vassal may have a better-credentialed
+       martial guardian with suitable offspring).
+  Bonus flag: Mutina (id 38184, age 7, son of Časlav of Žatec) is the
+       closest male peer to Ludmila in age from within the realm.
+       Keep him in mind as a potential future match for Ludmila — not
+       a guardian candidate (his father is a diplomat, not a martial man),
+       but a marriage prospect worth watching.
+
+[FAMILY] Assign education focus for Bořivoj at age 6 (due: 1070)
+  Who: Bořivoj (id 39200), age 2, Šwiétosława's second son
+  Personality: greedy, trusting — a problematic pairing.
+  Note: Greedy ambition with trusting naivety. Whatever focus he gets,
+       his guardian selection will matter more than usual — he is
+       susceptible to the wrong influence. A just or temperate guardian
+       could moderate the greediness while it is still forming.
+
+[FAMILY] Begin planning Judita's marriage (betrothal possible now; marriage ~1072)
+  Who: Judita (id 37766), marriageable ~1072
+  Why: A Diplomacy-educated daughter with a sterling personality is a
+       valuable alliance asset. The question is who strengthens Bohemia's
+       position most at that stage (likely still a duchy).
+  Surveyed 1066.10.5 — candidates identified:
+
+  POLAND: No candidates. The Piast dynasty (Bolesław II, age 24; Władysław
+       Herman, age 23) has no children of Judita's generation yet. Władysław
+       is not even married. Poland is a dead end for this marriage.
+
+  AUSTRIA — two options:
+  [A] Adalbero of Styria (id 37876, age 10, born 1056.1.2)
+       Son of Otakar, Duke of Styria (d_steyermark)
+       Skills: D3/M3/S3/I4/L5/P1  |  Traits: gluttonous, curious
+       RECOMMENDED: Same birth year as Judita. Styria borders Bohemia's
+       sphere closely via Carinthia. Gluttonous is a personal vice (health
+       + piety drain) but not a relational poison. His natural leans
+       (Learning 5, Intrigue 4) complement Judita's Diplomacy focus.
+       Curiosity is a positive trait in a young husband.
+  [B] Adalbert of Austria (id 38014, age 9, born 1057.1.2)
+       Son of Ernst, Duke of Austria (d_osterreich, Babenberg)
+       Skills: D3/M4/S3/I3/L2/P0  |  Traits: deceitful, curious
+       More prestigious (Austria proper > Styria in HRE standing).
+       CONCERN: Deceitful trait — same concern as Šwiétosława and Čeněk.
+       Against Judita's honest/generous character, this is a friction risk
+       and could influence children. Reserve as backup if political need
+       outweighs character fit.
+
+  BAVARIA (next search tier, if Austrian options decline):
+       — Kuno (id 38298, age 7, charming) — youngest, cleanest slate
+       — Siegfried (id 38157, age 8, bossy) — one trait, early to judge
+       — Heinrich (id 37705, age 11, lazy+cynical+trusting+charming)
+         — forming poorly; not recommended
+
+  Current lean: Adalbero of Styria [A] unless political calculus changes.
+  Betrothal can be arranged now; marriage executes ~1072 when Judita turns 16.
+
+[COURT] Resolve Bořivoj's trajectory early
+  Who: Bořivoj (id 39200)
+  Why: Greedy + trusting left unsupervised will become a faction risk by
+       his 20s. The hook Vratislav holds is the safety valve. Decide by
+       ~1075 (when he is 11): secular path with a generous county bequest
+       to satisfy the greed, or the church to contain it. Do not leave
+       this to chance.
+
+[DOMAIN] Develop Čáslav (priority investment)
+  Source: Initial assessment (1066.10.2) — Čáslav's special economic
+          site is the highest-priority early development investment.
+  Note: Carry forward from strategic assessment; not repeated here in
+        detail, but belongs on the planning horizon.
+
+
+================================================================
+III. LONG-TERM  (~1072–1085)
+================================================================
+
+[FAMILY] Judita's marriage execution (~1072)
+  Who: Judita (id 37766), marriage age ~1072
+  Goal: Execute whichever alliance direction was chosen in short-term
+        planning. A Diplomacy tier 3–4 education makes her a sought-
+        after bride with real political value, not merely a token.
+  Aspiration: If she marries into a German house, her personal
+        relationship skills (charming, humble, calm) mean she will
+        actually navigate that court successfully — not just be present
+        there. A daughter placed well can become an information source
+        and a relationship anchor for decades.
+
+[FAMILY] Břetislav's succession preparation
+  Who: Břetislav (id 38159), the probable heir
+  Goal: By the time Břetislav inherits (whenever that is), he should have:
+       — Diplomacy education tier 3–4
+       — Established reputation as a just, trustworthy future lord
+         (his traits almost guarantee this if the education completes well)
+       — At least one strong marriage alliance
+       — Clarity about the succession law he will inherit under
+  Key risk: Břetislav has no hook from Vratislav (unlike his three
+        half-brothers). If succession politics become contentious —
+        particularly from Šwiétosława's sons making claims — the
+        relationship between father and heir rests on affection and
+        structural position rather than leverage. This is probably fine
+        given Břetislav's character, but watch for pressure from the
+        Boleslav line as the boys grow.
+
+[FAMILY] Ludmila's disposition (decide by ~1074)
+  Who: Ludmila (id 38396)
+  Options:
+       A. Marriage to a Czech vassal — binds a loyal house to the
+          Přemyslids; modest prestige, strong internal value.
+       B. Convent — frees the alliance slot; removes a potential
+          female claimant from the political board.
+       C. Keep at court as a martial figure — if her Martial education
+          completes well and she develops commander traits, she may be
+          genuinely useful as a household military presence.
+  Current lean: Option A or C depending on how her traits develop.
+        If she becomes a genuinely martial personality (more than just
+        rowdy — actual commander traits), keeping her at court has
+        narrative interest. If she stays modest, a vassal marriage.
+
+[FAMILY] Boleslav's inheritance share
+  Who: Boleslav (id 39160), Šwiétosława's eldest son
+  Why: Under Gavelkind (likely for 1066 Bohemia), Boleslav inherits a
+        county. Under primogeniture, he gets nothing by right and must
+        be provided for. Either way, plan an appropriate bequest.
+  Diligent + Stewardship focus → he will likely be a capable
+        administrator. Give him a county he can genuinely run.
+
+[DYNASTIC] Hook management for the younger Přemyslids
+  Who: Boleslav (hook held), Bořivoj (hook held), Vladislav (hook held
+       if he survives)
+  Why: Hooks on the younger sons provide leverage if any of them become
+        ambitious claimants. The asymmetry (no hook on Břetislav) means
+        the heir is managed through relationship, the spares through
+        leverage. Maintain and potentially strengthen these holds as the
+        boys mature.
+
+[FOREIGN] Manage the papal relationship
+  Context: Pope Anselmo had -30 impious opinion of Vratislav at game start.
+  Goal: Recover this to neutral or positive before any religious politics
+        become pressing. Jan of Opava (the devout bishop-friend) may be
+        an asset here — a demonstration of Bohemia's ecclesiastical good
+        faith through Jan's person and position.
+
+
+================================================================
+IV. GRAND AMBITIONS  (generational / beyond Vratislav's lifetime)
+================================================================
+
+[DYNASTIC] Přemyslid Bohemia: Stability Through Character
+  The defining theme of this playtest is narrative over optimization.
+  The dynasty's long-term health depends not just on territory and troops
+  but on the character of the people who inherit it.
+  Břetislav — compassionate, honest, generous, charming — represents the
+  best possible successor: a ruler his people will want to follow. If his
+  education and marriage are well-managed, he sets a high baseline for
+  the next generation. The goal is not just to survive Vratislav's reign
+  but to hand Břetislav a realm in better shape than it began, with a
+  court culture of trust rather than fear.
+
+[DYNASTIC] Royal Elevation
+  Historical note: Vratislav II was elevated to King of Bohemia in 1085
+  (as a personal title, not hereditary). In Playtest 1 this had already
+  occurred by 1083. Achieving the royal title — whether through the Holy
+  Roman Emperor's grant or through pressing a claim — is a long-term
+  ambition that reframes the dynasty's standing in Central Europe.
+  The papal relationship matters here (Imperial politics and papal
+  recognition intertwine). Jan of Opava as a loyal ecclesiastical ally
+  gives Bohemia a voice in church affairs.
+
+[DYNASTIC] The Succession Question — Beyond Gavelkind
+  If Bohemia operates under Gavelkind in 1066, each succession fractures
+  the realm. The long-term ambition is to secure a more stable succession
+  law (primogeniture or at minimum seniority) before Vratislav dies.
+  This is generational work: it requires vassal consent or a period of
+  political dominance that makes resistance futile.
+  Břetislav is the right heir to unite the realm after a consolidation.
+  Boleslav (diligent, capable) can be a pillar under him — a trusted
+  count-cousin rather than a rival.
+  Bořivoj is the variable. Watch him.
+
+[FOREIGN] The Polish Relationship
+  Šwiétosława represents the Piast connection. Her children (Boleslav,
+  Bořivoj, Vladislav) are partly Piast by blood. Whether this is a
+  political asset or a complication depends on how Polish politics
+  develop. If Poland fractures or becomes hostile, Šwiétosława's sons
+  could become vectors of outside influence. If Poland is a stable ally,
+  the connection is a genuine strategic asset.
+  Long-term aspiration: The Přemyslid-Piast relationship as a durable
+  Central European partnership, anchored by Šwiétosława and potentially
+  extended through a second marriage alliance (Judita to a Polish lord,
+  or a future Přemyslid son to a Piast daughter).
+
+[FOREIGN] The German Question
+  Bohemia sits as a vassal of the Holy Roman Empire. The long arc of
+  Přemyslid politics involves managing this relationship — extracting
+  the royal crown, maintaining autonomy, avoiding being absorbed by
+  a dominant German dynasty. Every alliance built westward strengthens
+  the negotiating position. Every marriage into a German house is both
+  a diplomatic bond and a potential future claim.
+  Judita's marriage in ~1072 may be the first deliberate move in this
+  long game.
+
+
+================================================================
+OPEN QUESTIONS
+================================================================
+
+  — What succession law governs Bohemia at game start? (Gavelkind vs.
+    other — affects urgency of Boleslav/Bořivoj planning.)
+
+  — Does Jan of Opava accept guardianship of Judita? (His status as
+    a theocracy vassal and bishop may create friction; if refused, fall
+    back to Časlav of Žatec.)
+
+  — What happens to Vladislav? (Illness at age 1 is the most uncertain
+    variable in the immediate period.)
+
+  — Will Šwiétosława's three sons develop traits that moderate (Boleslav)
+    or deepen (Bořivoj) their early personality signals?
+
+  — Can a better martial guardian be identified for Ludmila from outside
+    the immediate court/vassal pool? (Current best in-realm: Konrád
+    Přemyslid, but his tier 2 education is modest.)
+
+  — Judita's marriage: Adalbero of Styria (age 10, gluttonous+curious,
+    same birth year) vs. Adalbert of Austria (age 9, deceitful+curious,
+    more prestigious)? Can betroth now; Poland has no candidates this gen.

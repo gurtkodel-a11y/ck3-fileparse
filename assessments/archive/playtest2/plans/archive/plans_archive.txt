@@ -1,0 +1,271 @@
+Plans Archive — Playtest 2: Vratislav II Přemyslid
+================================================================
+
+This file holds plans that are no longer on the active planning table.
+Each entry preserves: original plan text, original rationale, and a resolution
+note. Resolution notes distinguish between "achieved as planned," "achieved
+differently," "not achieved," and "superseded." The "not-as-planned" cases are
+especially important — they reveal background assumptions that weren't warranted
+and should inform how we reason about future plans.
+
+Format per entry:
+  [DATE FILED] [CATEGORY] [STATUS]
+  ORIGINAL PLAN: ...
+  ORIGINAL RATIONALE: ...
+  RESOLUTION (dated when closed): ...
+
+================================================================
+RESOLVED FROM: plans/1066-10-05.txt
+================================================================
+
+
+[1066.10.5] [FAMILY] [ACHIEVED AS PLANNED]
+  ORIGINAL PLAN: Change Judita's education focus: Intrigue → Diplomacy
+
+  ORIGINAL RATIONALE: Intrigue focus is wrong for her. Charming gives +5 Diplomacy,
+  lifting effective Diplomacy to 9 while Intrigue sits at 5. Her personality
+  (generous, humble, calm, charming) is made for trust and alliance, not deception.
+  Free change was available.
+
+  RESOLUTION (closed 1071.2.5): Focus is Diplomacy at 1071.2.5. Effective Diplomacy
+  is 9 as projected. The plan was followed.
+  Note: Judita is currently in Regensburg, not Praha. Possible betrothal or foreign
+  court placement, consistent with the long-term alliance-bride trajectory we planned.
+
+
+[1066.10.5] [FAMILY] [ACHIEVED AS PLANNED]
+  ORIGINAL PLAN: Change Břetislav's education focus: Intrigue → Diplomacy
+
+  ORIGINAL RATIONALE: URGENT. Effective Intrigue was -3 — honest + compassionate
+  actively penalize it. He is constitutionally unsuited to scheming. Effective
+  Diplomacy was 11 due to charming (+5) stacking with other ruler-virtue traits.
+  Free change available.
+
+  RESOLUTION (closed 1071.2.5): Focus is Diplomacy at 1071.2.5. Effective Diplomacy
+  has grown to 15 — even stronger than projected. The Intrigue problem (was -3) is
+  now 0 (recovered as the education pressure shifted). Both the mechanical and
+  character outcomes exceeded expectations.
+
+
+[1066.10.5] [FAMILY] [ACHIEVED AS PLANNED]
+  ORIGINAL PLAN: Assign Břetislav as Vratislav's ward (Vratislav as guardian)
+
+  ORIGINAL RATIONALE: No guardian was set. As the probable heir, Břetislav should
+  be raised under Vratislav's direct eye. Paternal guardianship carries narrative
+  weight (father teaching son to rule) and keeps succession preparation in-house.
+  Vratislav's own moderate-high Learning is adequate for a Diplomacy focus.
+
+  RESOLUTION (closed 1071.2.5): Confirmed. Personal relations at 1071.2.5 show
+  guardian ↔ ward bond between Vratislav and Břetislav. Effective Diplomacy at 15
+  suggests the education quality is good. The bond is active.
+  Bonus development: Břetislav is friends with Mutina, son of Časlav Vrsovid —
+  a relationship that formed during this period, possibly through guardian-connected
+  court life.
+
+
+[1066.10.5] [FAMILY] [NOT ACHIEVED / SUPERSEDED]
+  ORIGINAL PLAN: Assign Jan of Opava as Judita's guardian
+
+  ORIGINAL RATIONALE: Jan is Vratislav's friend — warmth already exists between
+  households. His traits (just, zealous, humble, devoted) complement Judita's
+  personality. His Diplomacy (8) and Learning (18) are excellent for a
+  Diplomacy-focus education. Narrative richness: bishop-scholar mentoring the
+  duke's eldest daughter.
+  Alternative if refused: Časlav of Žatec (D=10, Diplomacy tier 4 education).
+
+  RESOLUTION (closed 1071.2.5): No guardian-ward bond appears in Judita's personal
+  relations at 1071.2.5. She has no guardian listed. She is also currently in
+  Regensburg rather than Praha, which suggests she may have been sent abroad
+  (betrothed or placed at a German court) before or instead of the guardianship
+  being arranged.
+  Key assumption violated: We assumed Jan was the natural recipient of a
+  guardianship request. Unknown whether the request was made and refused, never
+  made, or overtaken by Judita's departure. Časlav Vrsovid (the fallback) was
+  fired from the council in this same period, which would have foreclosed that
+  option too.
+  Confirmed finding (post-session): The Jan guardianship was attempted and blocked
+  by a game restriction. Clerical vassals (and/or realm chaplains specifically)
+  cannot be assigned as guardians — the UI did not offer the option, even though
+  non-clerical vassal guardianships were available. This is a mechanical constraint
+  not visible from the save data alone. Narratively unintuitive: a bishop-scholar
+  is exactly who you'd expect a medieval duke to entrust with his daughter's
+  education, but the game disallows it.
+  See ideas/ideas.txt (Guardian restriction catalog, Guardian finder) for the
+  broader implication for tooling.
+  What this reveals: A "find me a current guardian for this child" query would be
+  useful — the plan was based on a snapshot of 1066 availability that aged quickly,
+  and it needs to exclude ineligible characters (clerical, realm chaplain, etc.).
+
+
+[1066.10.5] [FAMILY] [NOT ACHIEVED — OUTCOME ACCEPTABLE]
+  ORIGINAL PLAN: Assign Stewardship focus for Boleslav at age 6 (due ~1069)
+
+  ORIGINAL RATIONALE: Diligent + rowdy — hard worker with restless energy.
+  Diligent naturally boosts Stewardship and Learning. Stewardship focus is the
+  natural alignment.
+
+  RESOLUTION (closed 1071.2.5): Boleslav (age 8 at assessment) has Martial focus,
+  not Stewardship. The plan was not followed.
+  Outcome assessment: In practice, the diligent trait provides +2 to Stewardship
+  and Learning regardless of focus, so his effective Stewardship (6) and Learning (6)
+  are still healthy. The mechanical gap is real but smaller than it would be for
+  a character without diligent. The character outcome is different: Boleslav is
+  developing as a soldier-administrator rather than a pure administrator.
+  Key assumption violated: We assumed the focus would be set at 6 as planned.
+  In practice, Martial focus may have been chosen for gameplay or narrative reasons
+  we don't have visibility into. No guardian listed — this remains an active gap.
+
+
+[1066.10.5] [COURT] [RESOLVED — SURVIVAL]
+  ORIGINAL PLAN: Watch for Vladislav's illness resolution
+
+  ORIGINAL RATIONALE: Ill at age 1. Child mortality at this age is real. His
+  effective Prowess was already -4. No planning committed until he either
+  recovers or does not.
+
+  RESOLUTION (closed 1071.2.5): Vladislav survived. Health is now 4.1 (normal)
+  at age 6. However, the illness appears to have left a mark: he has acquired
+  the possessed_1 trait, a mental health condition with negative social effects.
+  His personality is trusting + rowdy. He is friends with Boleslav.
+  Status: Alive, healthy enough to plan around, but with a complicating trait.
+  The "survive the illness first" gate is cleared; succession and character planning
+  can now proceed. Possessed_1 should inform what role we envision for him
+  (the church is a traditional placement for troubled younger sons; it may be
+  more than usually appropriate here).
+
+
+================================================================
+OPEN QUESTIONS FROM 1066.10.5 — STATUS UPDATE AT 1071.2.5
+================================================================
+
+  — Succession law governing Bohemia: Still unknown. Data not surfaced by evaluators.
+
+  — Jan as Judita's guardian: Not executed. Judita departed Praha (in Regensburg).
+
+  — Vladislav's fate: Resolved — survived, with possessed_1.
+
+  — Šwiétosława's sons' trait development:
+    Boleslav: added no new traits beyond diligent+rowdy (stable)
+    Bořivoj: added charming (mixed — softens the greedy+trusting profile)
+    Vladislav: added rowdy + possessed_1
+
+  — Better martial guardian for Ludmila: Resolved — Ota Přemyslid (Count of
+    Olomouc, Martial tier 3, effective Martial 10) was assigned. Better than
+    any candidate we identified in 1066 planning. The key assumption violated:
+    Ota Přemyslid was not in our identified candidate pool; we looked at Konrád
+    and Vladimír and missed the most qualified option.
+
+  — Judita's marriage: Adalbero of Styria vs. Adalbert of Austria. Unresolved.
+    Judita is in Regensburg; betrothal status unknown. The 1072 marriage window
+    is now immediate (Judita turns 16 in 1072.1.1). See active plans.
+    UPDATE (closed 1077.2.10): Judita died 1075.11.18 at age 19, in Regensburg.
+    No marriage or betrothal record survives in the save. The Regensburg mystery
+    is permanently unresolved.
+
+
+================================================================
+RESOLVED FROM: plans/1071-02-05.txt
+================================================================
+
+
+[1071.2.5] [FOREIGN] [ACHIEVED — AHEAD OF SCHEDULE]
+  ORIGINAL PLAN: Claim title of King of Bohemia (savings goal; medium-to-long term)
+
+  ORIGINAL RATIONALE: Reaching king tier unlocks peer-king alliances. Gold
+  needed to be saved; no specific timeline given. The existing -20 disapproving
+  opinion of Heinrich meant the imperial grant path was blocked; the title-
+  creation path was the primary option.
+
+  RESOLUTION (closed 1077.2.10): k_bohemia created 1072.1.12 — within 11 months
+  of the plan being written. This is dramatically faster than expected. Mechanism
+  likely: direct title creation (gold + prestige) rather than imperial grant,
+  given the speed and the Heinrich relationship. Vratislav was simultaneously
+  elevated from Duke to King and immediately used the new authority to grant
+  d_meissen to Reginar two weeks later. The savings goal was apparently already
+  met or the cost was lower than assumed.
+
+
+[1071.2.5] [COURT] [ACHIEVED AS PLANNED]
+  ORIGINAL PLAN: Grant Duchy of Meissen to Reginar
+
+  ORIGINAL RATIONALE: Reginar (content + trusting) was the safest possible
+  recipient of the d_meissen title. His positive disposition made him unlikely
+  to weaponize a duchy against us. Otto von Weimar (-25) was ineligible.
+  Ludwig's +20 goodwill was temporary (expiring ~1081).
+
+  RESOLUTION (closed 1077.2.10): d_meissen granted to Reginar 1072.1.26, exactly
+  two weeks after becoming King of Bohemia. Reginar's current opinion is +55
+  (received_title_duchy +60, partially offset by a conversion modifier -20).
+  The plan worked exactly as intended. He remains a feudal duke vassal with the
+  highest positive opinion of any notable vassal.
+
+
+[1071.2.5] [COURT] [ACHIEVED — MECHANISM DIFFERENT]
+  ORIGINAL PLAN: Forge marriage alliances with Saxon vassal households
+  (Ludwig Ludowinger's children, Benno's children, Reginar's son Liudolf)
+
+  ORIGINAL RATIONALE: Marriage bonds create inter-household dependencies that
+  make rebellion more costly. Ludwig's +20 modifier expiring ~1081 created
+  timing pressure.
+
+  RESOLUTION (closed 1077.2.10): The alliance goal was achieved at a much higher
+  tier than planned — England (via Břetislav ↔ Agathe), Denmark (via Ludmila ↔
+  Thorgils), Poland (via Šwiétosława) — three ROYAL alliances rather than
+  Saxon county-level ones. Ludwig became Duke of Thuringia (d_thuringia created
+  1072.3.17), which elevated him above the county tier and changed the
+  calculus entirely. Whether specific Saxon-household marriages were also
+  arranged is unknown; the three royal alliances dominate the diplomatic picture.
+  Key assumption violated: we planned for Saxon count-level marriages; the
+  actual trajectory vaulted directly to royal tier, making the Saxon marriages
+  less critical as stabilizers.
+
+
+[1071.2.5] [FAMILY] [TRAGIC — PLAN OVERTAKEN BY DEATH]
+  ORIGINAL PLAN: Execute Judita's marriage (she turns 16 in 1072.1.1)
+
+  ORIGINAL RATIONALE: Judita (Diplomacy focus, effective Dipl 9, charming +
+  humble personality) was the ideal alliance-bride. Adalbero of Styria was
+  the recommended match; Adalbert of Austria was backup. The 1072 window was
+  immediate. She was in Regensburg at last assessment (possible foreign court
+  placement or betrothal in progress).
+
+  RESOLUTION (closed 1077.2.10): Judita died 1075.11.18 at age 19. No marriage
+  or betrothal appears in the 1077 save. The exact cause of death is unknown
+  (no death reason accessible from current tools). The Regensburg placement
+  and the reason for her death remain mysterious.
+  What this reveals: We never confirmed whether a betrothal was in progress.
+  A betrothal_for() query at 1072 would have answered this. Her death closes
+  the question permanently but leaves the question of what she was doing in
+  Regensburg unanswered.
+
+
+[1071.2.5] [FAMILY] [ACHIEVED — PARTIALLY]
+  ORIGINAL PLAN: Assign guardians for Boleslav and Bořivoj
+
+  ORIGINAL RATIONALE: Neither had a guardian at 1071. Boleslav needed a martial-
+  tier-3 candidate; Bořivoj needed a just or temperate guardian to counteract
+  his greedy+trusting profile.
+
+  RESOLUTION (closed 1077.2.10):
+    Boleslav (now 14): Under guardian Petr (id 55287) at Brno (Konrád's court).
+    Martial focus proceeding. Petr's profile unknown — whether he is a good
+    martial educator is not confirmed.
+    Bořivoj (now 13): Under guardian Vratislav directly. Focus CHANGED from
+    Intrigue to Diplomacy. Vratislav took personal guardianship. This addresses
+    the character concern (a just guardian counteracting greedy+trusting) but
+    changed the intended educational trajectory from Intrigue to Diplomacy.
+  Note: The Bořivoj plan had two components — counteract manipulation
+  vulnerability (achieved via Vratislav) AND intended Intrigue education
+  (superseded; Diplomacy was chosen instead).
+
+
+[1071.2.5] [FAMILY] [RESOLVED — ILLNESS CLEARED]
+  ORIGINAL PLAN: Monitor KristYna's illness
+
+  ORIGINAL RATIONALE: She was 2 years old and ill at 1071.2.5. No planning
+  committed until the illness resolved.
+
+  RESOLUTION (closed 1077.2.10): KristYna is now 8, health 5.2 (good). The
+  illness cleared. She is at Praha under Vratislav's guardianship with
+  Stewardship focus and the "bossy" personality trait. Healthy and stable;
+  can now be included in marriage planning (window opens approximately 1084).

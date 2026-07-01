@@ -1,6 +1,5 @@
 __pycache__/
 *.pyc
 snapshots/extracted/
-sample-saves/extracted/
-sample-saves/kkado/
-sample-saves/*.txt
+sample-saves/**
+!sample-saves/README.md

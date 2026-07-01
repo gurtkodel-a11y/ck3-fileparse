@@ -1,0 +1,323 @@
+Strategic Assessment — Vratislav II Přemyslid, Duke of Bohemia (1071.2.5)
+Generated from save: Duke_Vratislav_II_of_Bohemia_1071_02_05.ck3
+Playtest 2 — Four-Year Review
+=========================================================
+
+What this assessment knows: everything visible in evaluator output and character
+profiles at 1071.2.5. What it doesn't know: the sequence of events between October
+1066 and February 1071. Where the data is suggestive but incomplete, this is noted
+explicitly rather than papered over — the gaps are useful information about what
+querying tools would be valuable.
+
+
+I. WHAT HAPPENED (INFERRED FROM DATA)
+--------------------------------------
+
+The gap between 1066.10.5 and 1071.2.5 cannot be narrated with confidence from
+the save alone, but the opinion modifiers and vassal roster are unusually readable.
+
+[Wars] The evidence:
+  — Otto (von Weimar, likely Count of Meissen): -25 (declared_war)
+  — Oda (id 37772, Otto's ward/daughter): -15 (declared_war_on_son_daughter)
+  — Eberhard (Count of Naumburg): +20 (released_from_prison)
+  — Ludwig (Ludowinger, Count of Schmalkalden): +20 (released_from_prison)
+  — Tamar: -30 (imprisoned_me) — identity unknown, still holding a grudge
+
+At least one war was fought, probably more. Eberhard and Ludwig were captured
+and then released — a magnanimous act that converted enemies into qualified vassals.
+Otto was declared against; Oda (almost certainly his daughter, now in Meissen)
+carries the resentment. Tamar was imprisoned and has not forgiven it; Tamar
+doesn't appear in the vassal list, so is either still imprisoned or at another
+court — identity unclear without better lookup tools.
+
+[Vassal expansion] Six new count-tier vassals appear who were not present at
+game start: Benno von Lóningen (Wolkenstein), Ludwig Ludowinger (Schmalkalden),
+Otto von Weimar (Meissen), Reginar (Dresden), Eberhard (Naumburg), Filibert
+(Pula). This is a major expansion — from 4 count-tier feudal vassals to 10.
+The geography is striking: Meissen, Dresden, Schmalkalden, Naumburg, Wolkenstein
+are all in the Saxony/Thuringia corridor. How Bohemia absorbed this territory
+is not fully clear from the data. The most likely mechanism in CK3: the Saxon
+Wars, which were a major HRE internal conflict in this period; Vratislav sided
+with Emperor Heinrich and was rewarded with Saxon counts as vassals after their
+side won. However, the Emperor's current -20 disapproving opinion of Vratislav
+(from Vratislav's direction, not Heinrich's) complicates this narrative —
+something has soured the relationship.
+
+What we would need to know this for certain: an event log or war history query
+tool. The save has enough fingerprints to reconstruct the broad story but not
+the sequence or exact mechanics.
+
+[Judita in Regensburg] Judita is not in Praha. She is in Regensburg — a major
+Bavarian city and imperial seat. This strongly suggests she has been betrothed
+or sent to a German court. No guardian is listed for her, which may mean the
+Jan of Opava guardianship plan was not executed (or was refused), or that she
+left the realm before it could be arranged. Whether this is a betrothal to a
+Bavarian nobleman or something else cannot be determined from the save alone.
+
+[New daughter] KristYna (id 16800260) was born 1068.7.31. She is 2 and currently
+ill. Šwiétosława's fourth child; this was not part of the 1066 planning horizon.
+
+[Časlav Vrsovid fired from council] The Count of Žatec carries a -20
+fired_from_council_opinion. He was in the candidate pool for Judita's guardian
+(Diplomacy tier 4, recommended as fallback if Jan refused). The firing may have
+been provoked or may simply reflect a political reshuffling after the wars.
+
+[No alliances formed] Despite planning to secure Hungary first, Vratislav enters
+1071 with zero formal alliances. This is the most significant strategic gap
+between plan and reality.
+
+
+II. MILITARY SITUATION
+-----------------------
+
+Realm ceiling: 4,438 max (3,612 levy + 826 MaA), up from ~3,287 at game start.
+The increase comes primarily from the new Saxon vassals adding levy.
+
+MaA regiments: unchanged from 1066 (zbrojnosh, light_horsemen, pikemen,
+mangonel). No investment in new regiment types or expansion of existing ones.
+
+Knights (6): Benno (9), Reginar (10), Záviš (10), Boreš (9), Vznata (9), Otto (9).
+Notable: Reginar is now listed as both a knight AND the Count of Dresden (a vassal).
+Benno von Lóningen similarly is a knight AND the Count of Wolkenstein. Two of
+Bohemia's six knights are also county-tier vassals — an unusual overlap that the
+report doesn't currently flag but would be worth tracking.
+
+No active wars. The pagan belt to the north (Pomeranian Slavs, Baltic pagans,
+Finnish pagans) remains intact and unengaged.
+
+Power context: Bohemia at ~4,438 max troops sits in a plausible position relative
+to the newly acquired Saxon vassals (combined ~4,000). The realm is substantially
+larger than in 1066 but the player's personal domain is unchanged — still 7 holdings.
+
+
+III. THE CHARACTER WEB — UPDATES
+---------------------------------
+
+--- Judita (id 37766): The Traveled Daughter ---
+Age 15 | Diplomacy focus ✓ | Eff. Dipl 9 | In Regensburg
+The focus switch was made. Judita is developing well: four years of Diplomacy
+education are showing, and her charming trait continues to carry the stat.
+
+She is not in Praha. Regensburg is an imperial city; her presence there likely
+means she is at a foreign court, possibly betrothed. Her personal relations show
+a friendship with Svatobor (the long-tenured court retainer) — which may have
+formed before she departed. She will be marriageable in approximately 1072.
+
+What we don't know: who she is being considered for, whether a betrothal has been
+arranged, and why there is no guardian listed. An event-log or marriage-query
+tool would answer this.
+
+--- Břetislav (id 38159): The Heir, On Track ---
+Age 13 | Diplomacy focus ✓ | Eff. Dipl 15 | Guardian: Vratislav ✓
+Both plans — focus change and guardian assignment — were executed. The result
+is striking: Effective Diplomacy 15 at age 13. Even his Intrigue (which was a
+liability at -3 in 1066) has recovered to 0 thanks to the trait-skill pressure
+being relieved.
+
+Two new personal relationships are notable:
+  — Friend: Mutina (id 38184), son of Časlav Vrsovid. We had flagged Mutina
+    in the 1066 planning file as a potential future match for Ludmila. That he
+    and Břetislav are now friends is a useful bond — the Vrsovid family is now
+    tied to the heir by personal loyalty even as Časlav himself nurses a council
+    grievance. Whether the son shares his father's resentment is unknown.
+  — Crush: Oda (id 37772), daughter of Otto von Weimar, currently in Meissen.
+    Oda is 15, same birth year as Judita. She is Franconian (not Czech or Polish),
+    is in Intrigue education with effective Prowess 10 and Intrigue 7, and has
+    a difficult personality profile: greedy, patient, sadistic, charming. Her
+    father is Vratislav's vassal — placed there through conquest, now holding
+    a -25 declared_war opinion. The crush is mutual (Oda → Břetislav confirmed).
+    This relationship is narratively rich and politically fraught: the heir of
+    Bohemia is attached to the daughter of a vassal his father conquered.
+
+--- Ludmila (id 38396): The Warrior in Olomouc ---
+Age 11 | Martial focus (kept) | Eff. Prow 6, Dipl 6 | Guardian: Ota (35734)
+Her guardian is Ota Přemyslid, Count of Olomouc — Vratislav's Marshal. This
+was not an option identified in the 1066 planning file (which only considered
+Konrád and Vladimír), and it is a better outcome than either: Ota has Martial
+tier 3 education, effective Martial 10, and honest+just+patient traits — no
+harmful personality to pass on. Ludmila is currently in Olomouc, under his roof.
+
+New personality trait: honest. Combined with rowdy she is now reading as an
+energetic, straightforward girl — someone who means what she says and acts on
+it. The martial path is developing coherently. Her crush is on Arnold (id 38032),
+identity unknown — worth a lookup if her marriage trajectory becomes relevant.
+
+--- Boleslav (id 39160): The Martial Son ---
+Age 8 | Martial focus (plan: Stewardship) | Eff. Stew 6, Mart 5, Lear 6
+The Stewardship focus plan was not followed. Boleslav has Martial instead.
+In practice, his diligent trait is doing much of the work regardless — his
+effective Stewardship (6) and Learning (6) are both boosted by the trait,
+so the mechanical gap from choosing Martial is smaller than it might be.
+But the narrative outcome is different: Boleslav is becoming a soldier, not
+an administrator. Friends with Vladislav (his younger brother — a positive bond).
+
+No guardian listed. This is a gap; the 1066 plans didn't reach a firm
+recommendation for him, but the oversight continues.
+
+--- Bořivoj (id 39200): The Concerning One ---
+Age 7 | Intrigue focus | Eff. Intr 0 | Traits: greedy, trusting, charming
+New trait since 1066: charming. This softens the profile slightly (gregarious
+charm vs. pure greed+naivety). He also speaks Lechitic — he's picked up his
+mother's language, suggesting some connection to the Polish side of the court.
+
+The Intrigue focus is a double-edged choice for a greedy+trusting child. Intrigue
+education makes him a capable schemer, but trusting means he'll be manipulated by
+whoever gets to him first. "A capable schemer who believes what he's told" is a
+dangerous character to have in the succession pool. No guardian listed.
+
+--- Vladislav (id 39372): The Survivor ---
+Age 6 | Martial focus | Survived illness ✓ | New trait: possessed_1
+He survived. This was the key open question. His health is now 4.1 (normal)
+rather than critical, but the recovery came at a cost: possessed_1 is a mental
+health condition with negative effects and stigma in medieval contexts.
+
+The trusting trait persists. Rowdy appeared (active energy, not just illness
+languor). New trait combo: trusting, rowdy, possessed. Friends with Boleslav.
+He is the most vulnerable of the three younger sons — least able to advocate
+for himself in a court with a scheming elder brother (Bořivoj).
+
+--- KristYna (id 16800260): New Addition ---
+Age 2 | Born 1068.7.31 | Currently ill
+Šwiétosława's fourth child. No traits yet beyond the illness. Too young for
+any planning. A note on the succession pool: Vratislav now has seven children
+(one new daughter). The family is larger than initially projected.
+
+--- Jaromír (id 34156): The Rival at the Friendly Court ---
+Age 32 | Unlanded | Court Chaplain for Jan (id 32280) | Rivals: Jan AND Vratislav
+The 1066 plan said "locate Jaromír." He is located: serving as Court Chaplain
+at Jan of Opava's court — the same Jan who is Vratislav's mutual friend. He
+is rivals with both Jan and Vratislav simultaneously.
+
+This is a striking configuration. Jaromír — Vratislav's exiled kinsman-rival —
+is embedded inside the household of Vratislav's closest ecclesiastical ally.
+He is not idle there: with effective Intrigue 8 and Learning 10, and four lifestyle
+perks in the Physician/Learning tree, he has been developing into a scholar-
+schemer. His personal 150 gold and 600 accumulated prestige suggest he is not
+destitute.
+
+Why is Jan hosting his duke's rival? Possibly it was not Jan's choice (court
+chaplains can be assigned by various means). Possibly Jan is playing a subtler
+game. Possibly Jaromír deliberately sought position at a court where his presence
+would be hardest to challenge — an ally of his rival's ally, untouchable precisely
+because the host is the friend.
+
+What does Jaromír want? He holds Learning focus and Scholarship lifestyle, which
+suggests long-term ambition rather than immediate military action. An unlanded
+Přemyslid with high Learning and Intrigue, sitting in a bishop's court, is a man
+building a position slowly. This is not the cavalry charge of a dispossessed heir;
+it is something quieter and potentially more dangerous.
+
+--- Šwiétosława (id 36471) and Záviš (id 63542): A Notable Friendship ---
+Šwiétosława: deceitful, gregarious, lazy | Effective Intrigue 7
+Záviš: arbitrary, compassionate, gregarious | Effective Intrigue 15 | Prowess 10
+
+They are mutual friends. Both are gregarious; both have high intrigue. Záviš
+is the only knight currently on the council section of the relationship report.
+Šwiétosława is on the council as primary spouse. That two of the court's most
+intriguing personalities (by stat and by trait) are close friends is worth
+noting without being certain what it means. It may be entirely unremarkable.
+It may not be.
+
+Záviš, incidentally, has no dynasty head of his own — he is listed as his own
+dynasty head (id 63542, same as himself). This suggests he is either the last of
+his line or from a minor house not in the save's dynasty database. A knight of
+uncertain ancestry with exceptional intrigue and a friendship with the duke's wife.
+
+
+IV. STRATEGIC POSITION
+-----------------------
+
+[Realm size] Substantially larger than 1066 due to the Saxon vassal additions.
+Total vassal levy has grown significantly. The new feudal counts (Meissen, Dresden,
+Naumburg, Schmalkalden, Wolkenstein) are German, Catholic, and culturally distant.
+Their loyalty is conditional: several carry active negative opinions (Otto -25,
+Eberhard and Ludwig just barely +20 thanks to the magnanimous releases).
+
+[Alliances] None. This was the single clearest planning failure of the 1066–1071
+period. Hungary (Salamon Árpád, 3,166 troops) was the stated first-priority alliance
+target. Poland (Bolesław III Piast, 2,322 troops — a succession occurred; the III
+indicates generational change) is the West Slavic neighbor via Šwiétosława.
+No formal external partner exists.
+
+[Papal opinion] Unchanged at -30 impious. Pope Anselmo has not been placated.
+This is a compounding risk: the Investiture conflict is a live thread in the
+1070s HRE, and Bohemia enters that period already in Rome's disfavor.
+
+[Heinrich] Vratislav's opinion of Heinrich is -20 (disapproving_opinion). Something
+the Emperor did generated disapproval. The relationship with the paramount overlord
+is not hostile, but it is not warm.
+
+[Personal domain] Still 7 holdings; no development investment shown (all remain at 8
+except Praha at 12). Čáslav was the stated priority investment — still unactioned.
+
+
+V. PRIORITIES FOR THE NEXT PERIOD (~1071–1076)
+------------------------------------------------
+
+[IMMEDIATE]
+  — Judita's marriage (she turns 16 this year). Whether a betrothal is already
+    arranged (Regensburg presence suggests it may be) needs confirmation in-game.
+    If not yet arranged, the window is closing. The Styrian and Bavarian candidates
+    from 1066 planning remain the reference point.
+  — Boleslav's guardian. He's 8 with no guardian. This was a gap in 1066 that
+    persisted. Assign someone.
+  — Bořivoj's guardian. Age 7, Intrigue focus, greedy+trusting. Whoever shapes
+    him in the next five years matters. A just, temperate guardian is the stated
+    goal; a bad one makes him dangerous.
+  — KristYna: monitor the illness. Too early for action but she needs to survive.
+
+[SHORT-TERM]
+  — Alliances. The Hungary window is still open (Salamon Árpád is alive and
+    Catholic). Form at least one formal alliance before the next war finds Bohemia
+    isolated.
+  — Čáslav development. Four years of inaction on the stated highest-priority
+    investment. Build queue should prioritize Čáslav now.
+  — The Oda situation (Bretislav's crush). He's 13; she's 15. If this develops
+    toward a potential marriage, it needs evaluation: politically she connects
+    Bohemia to the von Weimar line and potentially softens the -25 declared_war
+    opinion, but her sadistic/greedy personality is a real concern for the heir
+    and for the next generation.
+  — Jaromír watch. He's embedded, not dormant. Track whether his Learning focus
+    produces an event (discovery, claim, scholarly reputation) that changes his
+    standing.
+
+[ONGOING CONCERNS]
+  — The Saxon vassals are not loyal. Otto (-25), Eberhard and Ludwig (just barely
+    in the positive column), the others unknown. A vassal faction among the
+    German counts is a plausible near-term risk.
+  — Papal relations. Jan of Opava is still the most natural conduit. What has
+    Jan actually done in these four years? He is still in court, still Fratislav's
+    friend — but his effectiveness as a diplomatic bridge to Rome is unclear.
+
+
+VI. WHAT BETTER TOOLS WOULD TELL US
+-------------------------------------
+
+These are genuine gaps in our picture, noted to inform future tooling priorities:
+
+  — War history / event log: The single most valuable missing query. The vassal
+    expansion, the opinion modifiers, and the Meissen/Saxony situation all scream
+    "something significant happened" but the exact sequence is opaque. A tool
+    that surfaces recent wars (active_wars closed since last save?) or major events
+    would transform the 1066→1071 transition from archaeology into history.
+
+  — Betrothal status: Judita is in Regensburg. Are she betrothed? To whom?
+    The character profile doesn't surface this. A betrothal query tool would
+    answer the single biggest open question about her trajectory.
+
+  — Guardian finder: When writing the 1066 plans, we surveyed Konrád and Vladimír
+    as martial guardians for Ludmila and didn't identify Ota Přemyslid (who turned
+    out to be the obvious right answer — Martial tier 3, excellent personality).
+    A "find best guardian for X focus within this realm" query would have surfaced
+    him immediately.
+
+  — Tamar identity: Someone named Tamar was imprisoned by Vratislav and carries
+    -30 opinion. Not in the vassal list. Unclear whether still imprisoned or at
+    another court. A named-character lookup ("who is Tamar in this save?") is a
+    simple query we don't currently have.
+
+  — Arnold identity: Ludmila has a crush on Arnold (id 38032). Relevant if her
+    marriage trajectory becomes a planning question. Same simple-lookup gap.
+
+  — Succession law: Still unknown from the save data alone. Affects the urgency
+    of the younger sons' inheritance planning.

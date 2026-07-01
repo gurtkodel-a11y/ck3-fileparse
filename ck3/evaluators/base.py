@@ -9,6 +9,7 @@ from __future__ import annotations
 
 # Re-export from gamestate so evaluators have a single import point.
 from ck3.gamestate import _ensure_list  # noqa: F401
+from ck3.names import decode_name
 
 
 # --------------------------------------------------------------------------- #
@@ -57,25 +58,44 @@ def _participants(war: dict, side: str) -> list[int]:
 # --------------------------------------------------------------------------- #
 
 _TIER_LABEL = {"e": "Emperor", "k": "King", "d": "Duke", "c": "Count", "b": "Baron"}
+_TIER_LABEL_F = {"e": "Empress", "k": "Queen", "d": "Duchess", "c": "Countess", "b": "Baroness"}
 
 
-def title_place(key: str) -> str:
-    """Strip the tier prefix from a title key and return the place name.
+def _title_place_name(key: str, title: dict | None) -> str:
+    """
+    Resolve a title's place name, preferring the save's own
+    title_name_data.name (handles procedurally-named/landless titles like
+    "c_nf_kiyohara" → "Kiyohara Family") over guessing from the key.
+    """
+    if isinstance(title, dict):
+        name_data = title.get("title_name_data", {})
+        raw_name = name_data.get("name", "") if isinstance(name_data, dict) else ""
+        if isinstance(raw_name, str) and raw_name:
+            return decode_name(raw_name)
+    name = key[2:] if len(key) > 2 and key[1] == "_" else key
+    return name.replace("_", " ").title()
+
+
+def title_place(key: str, title: dict | None = None) -> str:
+    """Return the place name for a title key.
 
     Examples::
         'c_desmond'  → 'Desmond'
         'k_england'  → 'England'
         'b_prague'   → 'Prague'
 
+    Pass the title's own record as *title* when available — some titles
+    (procedurally-named family/clan-headship titles in particular) have a
+    display name in title_name_data.name that doesn't match the key at all.
+
     Returns '(unknown)' for empty/None keys.
     """
     if not key:
         return "(unknown)"
-    name = key[2:] if len(key) > 2 and key[1] == "_" else key
-    return name.replace("_", " ").title()
+    return _title_place_name(key, title)
 
 
-def title_full_label(key: str) -> str:
+def title_full_label(key: str, title: dict | None = None, female: bool = False) -> str:
     """Build a full title label from a key string.
 
     Examples::
@@ -83,11 +103,16 @@ def title_full_label(key: str) -> str:
         'c_desmond'  → 'Count of Desmond'
         'd_munster'  → 'Duke of Munster'
 
+    Pass the title's own record as *title* when available — see title_place().
+    Pass female=True for the feminine form (Duchess, Countess, Queen, …) —
+    e.g. when labelling a title for its current female holder.
+
     Returns '(no title)' for empty/None keys.
     """
     if not key:
         return "(no title)"
     tier = key[0]
-    label = _TIER_LABEL.get(tier, "Lord")
-    place = key[2:].replace("_", " ").title() if len(key) > 2 else key
+    labels = _TIER_LABEL_F if female else _TIER_LABEL
+    label = labels.get(tier, "Lady" if female else "Lord")
+    place = _title_place_name(key, title)
     return f"{label} of {place}"

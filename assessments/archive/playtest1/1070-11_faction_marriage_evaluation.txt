@@ -1,0 +1,230 @@
+Marriage & Faction Evaluation — Bohemia (1070.11.10)
+======================================================
+Question: Should Břetislav (heir, age 12) be betrothed to Oda von Weimar
+(age 14, Otto's daughter)?  Are there better matches?  Other ways to bring
+Otto in?
+
+This evaluation draws on live gamestate queries of character records.
+
+
+I. KEY FACTS FROM THE SAVE
+---------------------------
+
+Břetislav Přemyslid (id 38159) — heir, age 12:
+  Skills:  diplomacy 4 | martial 6 | stewardship 3 | intrigue 2 | learning 5 | prowess 2
+  Traits:  compassionate, honest, generous, charming  — an unusually virtuous profile
+  Education focus: intrigue (early progress; likely to pick up an intrigue education trait)
+  Not betrothed.
+
+Otto von Weimar (id 31798) — Count of Meissen + Count of Dresden, age 43:
+  Skills:  diplomacy 6 | martial 5 | stewardship 7 | intrigue 5 | learning 6
+  Traits:  calm, deceitful, cynical, education_intrigue_1, schemer
+  Confirmed children from family_data: [37772, 37914, 38058]
+  *** He has THREE daughters and ZERO sons. ***
+
+Otto's daughters:
+  Oda     (id 37772)  age 14  — unbetrothed
+    Skills:  diplomacy 6 | intrigue 6 | learning 7 | prowess 8
+    Traits:  compassionate, deceitful, cynical, curious
+  Adelheid (id 37914) age 13  — unbetrothed
+    Skills:  diplomacy 5 | stewardship 6 | intrigue 3 | learning 5
+    Traits:  impatient, brave, deceitful, ILL, pensive
+    (has a disease trait — not a good bet)
+  Kunigunde (id 38058) age 12 — ALREADY BETROTHED (to id 35282)
+
+Ludwig Ludowinger (id 29729) — the other faction member, age 55:
+  Holds THREE counties: c_schmalkalden, c_orlamunde, c_lobdaburg (1,006 troops)
+  Skills:  diplomacy 7 | martial 8 | stewardship 8 | intrigue 5 | prowess 9
+  Traits:  brave, deceitful, patient, education_intrigue_2, seducer, holy_warrior,
+           FALTERING_HEART
+  (faltering_heart = serious cardiac condition; typical prognosis is a few years)
+  Son and heir: Ludwig jr (id 35157, age 28) — already married, no children yet
+    Skills: diplomacy 7 / martial 8 / stewardship 8 (capable, but gluttonous/lazy/wrathful)
+
+
+II. THE OTTO MARRIAGE PROPOSAL: PROS AND CONS
+----------------------------------------------
+
+The proposed match:  Bretislav (12) betrothed to Oda (14, Otto's eldest daughter).
+
+Pros:
+
+1. Inheritance angle is stronger than it first appears.
+   Otto has NO sons. Oda is his eldest unbetrothed daughter. Adelheid has a disease
+   trait and is a poor hereditary risk. Kunigunde is already spoken for. Under most
+   succession laws, Oda is the heir presumptive to Meissen + Dresden (two counties,
+   five baronies, significant levy). If Oda marries Bretislav and inherits Otto's
+   counties, those titles remain within a Bohemian-allied house and could pass in
+   turn to Bretislav and Oda's children. This is a realistic path to folding Meissen
+   + Dresden into the Přemyslid sphere over one generation.
+
+2. Direct political dividend: immediate.
+   As the faction's co-leader, Otto is the primary target. Betrothal ties his family
+   to Bratislav's succession — he would be investing in the stability of the Přemyslid
+   line rather than undermining it. A betrothal (even before the marriage) typically
+   generates significant goodwill and provides grounds to detach him from the faction.
+
+3. Oda's character is usable.
+   Diplomacy 6, intrigue 6, learning 7 is a solid consort profile. The deceitful +
+   cynical traits echo her father's character and are a legitimate concern for trait
+   inheritance — but compassionate partially offsets them, and 'curious' is a positive.
+   She is not an exceptional match on raw stats, but she is competent.
+
+4. The age gap works in your favor.
+   Oda is 14 now; Bretislav is 12. A betrothal can be arranged immediately. They can
+   marry in ~2 years (when Bretislav turns 14 in 1072). No long waiting period.
+
+Cons:
+
+1. Social tier discrepancy.
+   Bretislav is heir to the Kingdom of Bohemia. Oda is the daughter of a count. In
+   the CK3 prestige economy and in actual 11th-century politics, this is a step down.
+   Marrying the heir of a king to a count's daughter when king-level and duke-level
+   alternatives exist sends a signal about Bohemia's relative standing. This is a real
+   cost even if the pragmatic logic is sound.
+
+2. Deceitful + cynical trait inheritance risk.
+   Both Oda and her father share the same negative pair of traits. Their children have
+   some probability of inheriting them. Bretislav's own trait profile (compassionate,
+   honest, generous, charming) is unusually clean — potentially worth pairing with a
+   partner who brings fewer genetic risks.
+
+3. It only addresses Otto, not Ludwig.
+   The claimant faction has two members. Betrothing Oda to Bretislav solves Otto;
+   Ludwig remains in the faction unless separately handled. See Section IV below for
+   the Ludwig situation, which has its own natural dynamics.
+
+4. Otto's stewardship-7 / intrigue-5 makes him a capable schemer regardless.
+   A betrothal improves his opinion but does not bind him with hooks. He is a schemer
+   by trait and education. Watch for follow-on intrigue activity even after the
+   faction question settles.
+
+
+III. ALTERNATIVE MATCHES FOR BRETISLAV
+---------------------------------------
+
+No Catholic king-level daughters are available in the current gamestate (the only
+king daughters found are Orthodox: Yevpraxia Rurikid of Ruthenia and Zoe Doukas of
+Byzantium). Among viable candidates:
+
+A. Mechthild von Nordheim (id 38614, age 10)
+   Father: Otto von Nordheim, Duke of Bavaria (one of the most powerful HRE duchies)
+   Skills:  diplomacy 5 | intrigue 4 | learning 2 (modest but developing)
+   Traits:  greedy, curious
+   Prestige value: HIGH — Duke of Bavaria is a far better father-in-law than Count of
+   Meissen. Otto von Nordheim is also emerging as a leader of the Saxon opposition to
+   Heinrich IV; in the unfolding Investiture crisis this is a politically significant
+   connection.
+   Downsides: age 10 (two years younger than Bretislav; betrothal now, marriage ~1074
+   vs. Oda's ~1072), 'greedy' is a character flaw, and the marriage provides no
+   immediate faction dividend.
+   Verdict: the better prestige match if your goal is dynastic elevation; the worse
+   tactical match if your goal is stabilising the German counties.
+
+B. Yevpraxia Rurikid (id 38693, age 10)
+   Father: Iziaslav, King of Ruthenia (East Slavic, Orthodox)
+   Skills:  stewardship 4, prowess 4 (otherwise mediocre)
+   Traits:  generous, pensive
+   Faith: Orthodox — a faith mismatch with Catholic Bohemia. Bretislav would need to
+   get a papal dispensation, or the marriage would generate ongoing opinion penalties
+   with the Church (which you can ill afford given the current -30 papal opinion).
+   Only worth considering if a Polish/Ruthenian diplomatic connection is specifically
+   prioritised over all else.
+   Verdict: not recommended given current papal friction.
+
+C. Zoe Doukas (id 38882, age 8)
+   Father: Emperor Konstantinos of Byzantium (enormous prestige, Orthodox)
+   Traits include: consumption (a serious illness trait).
+   Even setting aside the faith mismatch, consumption is a red flag for both life
+   expectancy and trait inheritance. Not recommended.
+
+D. Uta Ludowinger (id 37044, age 19) — Ludwig's daughter
+   Unbetrothed, good intrigue (7) and learning (6), but vengeful + callous + content.
+   A 7-year age gap (19 vs 12) is large; she would need to wait 2 years for Bretislav
+   to reach marriage age, and she might not be available then. However — betrothing
+   Bretislav to Ludwig's daughter would simultaneously address BOTH faction members
+   in a single marriage. The tactical elegance is real.
+   Downsides: 'vengeful' is a very negative trait for a queen; 'callous' compounds it.
+   The character profile is genuinely difficult. Not recommended as the primary option,
+   but worth considering if both factional relationships need to be addressed at once.
+
+Summary of alternatives:
+  Best prestige match: Mechthild von Nordheim (Bavaria)
+  Best tactical/inheritance match: Oda von Weimar (Meissen)
+  Two-birds-one-stone option: Uta Ludowinger (addresses both factions, but poor traits)
+  Avoid: Yevpraxia Rurikid (faith mismatch + papal problem), Zoe Doukas (ill)
+
+
+IV. HANDLING THE FACTION: OTHER TOOLS
+---------------------------------------
+
+The marriage is not the only route to neutralising the claimant faction.
+
+A. The Ludwig problem has a natural expiry date.
+   Ludwig Ludowinger (the elder, id 29729) has the 'faltering_heart' trait — a
+   terminal cardiac condition. He is 55 years old. His prognosis is poor. If he dies
+   before the faction reaches war threshold, his heir is Ludwig jr (age 28, already
+   married), who would inherit the three Schmalkalden counties but presumably without
+   the same grievance or faction standing. The faction likely collapses or resets on
+   succession. This makes Ludwig a lower-priority problem than Otto — and suggests
+   you may only need to resolve one of the two faction members proactively.
+
+B. Sway schemes on Otto.
+   The sway scheme was used twice on Česlav Vrsovid, generating +50 in opinion and
+   a passive faction-deterrent. Otto has intrigue 5, which is moderate but not high;
+   his deceitful trait reduces the success rate somewhat, but two sway attempts is
+   still a realistic path to +40-50 opinion improvement. A council position (Steward
+   — he has stewardship 7) adds another large opinion bonus. Combined with a betrothal
+   these stack efficiently.
+
+C. Crush the faction militarily.
+   Ludwig (1,006 troops) + Otto (857) = 1,863 combined.
+   Bohemia alone: 4,802. Plus Poland (2,981 allied). The math is extremely
+   comfortable. A quick war would remove both members from the game as faction threats
+   and could result in revocation of one or both sets of counties. This is the most
+   permanent solution. Costs: general vassal opinion penalty across the realm (~−15
+   to −20 for "crushed faction"), which may seed future factions. Currently, with most
+   Bohemian vassals at good opinion (Česlav +80, Konrád +30, Ota +30), you have
+   headroom to absorb this cost.
+
+D. Give Otto a council position.
+   Otto's stewardship 7 makes him a natural fit as Steward. A council seat is a
+   direct, substantial opinion boost and costs nothing except the seat itself.
+   Combined with a sway scheme this could detach him from the faction before it
+   reaches war threshold without requiring a betrothal at all.
+
+E. Address the claimant directly.
+   A claimant faction requires a pretender with a claim. Identify who has the claim
+   being pressed (the evaluator shows 'demand: unknown' — worth investigating in-game).
+   If the claimant holds no titles, they can often be neutralised through a hook or
+   imprisoned; without a claimant the faction dissolves. This is the surgical option
+   if the claimant is findable and vulnerable.
+
+
+V. RECOMMENDATION
+------------------
+
+The marriage case for Oda is solid but not decisive. The inheritance angle (no sons,
+Oda as heir presumptive to two counties) is the strongest argument — it converts a
+liability into a long-term asset. The prestige deficit is real but manageable for a
+newly elevated king consolidating a German expansion; the more pressing question is
+whether Bretislav's marriage should be held in reserve for a better offer.
+
+The cleaner two-step approach:
+  1. Neutralise Otto NOW via sway scheme + council seat (Steward). This costs nothing
+     except time and is faster than waiting for a betrothal to move opinion. Use the
+     breathing room to assess whether a better match appears in the next year or two.
+  2. Hold the Oda betrothal as a follow-on once opinion is improved but before Otto
+     stabilises in another faction. The betrothal then cements the relationship rather
+     than rescuing it from crisis.
+  3. For Ludwig: monitor his health. If faltering_heart claims him within the next few
+     years, the faction half-solves itself. If he is still active at the 1073 mark,
+     use a sway scheme or grant him a council position.
+
+If you prefer a single clean move: the Oda betrothal IS that move, and the inheritance
+logic is sound. Just do not expect it to feel like a prestigious match — it is a
+tactical marriage dressed in dynastic clothing. Keep Mechthild von Nordheim (Bavaria)
+in mind for a future Přemyslid son; that connection has longer legs diplomatically.
+
+For the claimant faction specifically: identify the pretender behind the demand. If
+they are neutralisable directly, that is faster than any of the above.

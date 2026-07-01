@@ -47,7 +47,7 @@ class CultureProfile:
     traditions: list[str]      # e.g. ["tradition_hard_working", ...]
     relation_to_player: str    # "same_culture" | "same_heritage" | "same_language" | "other"
     titles_held: int
-    rulers: list[dict]         # [{id, name, highest_title_key}]
+    rulers: list[dict]         # [{id, name, highest_title_key, highest_title}]
     zone: int                  # proximity to player (0=local, 1=nearby, 2=continental, 3=global)
     era: str                   # current culture era, e.g. "high_medieval"
     head_id: int | None
@@ -69,7 +69,7 @@ class FaithProfile:
     tenets: list[str]
     relation_to_player: str       # "same_faith" | "same_religion" | "same_family" | "other"
     titles_held: int              # how many titles (all tiers) are held by chars of this faith
-    rulers_of_faith: list[dict]   # [{id, name, highest_title_key, highest_tier}]
+    rulers_of_faith: list[dict]   # [{id, name, highest_title_key, highest_title, highest_tier}]
     zone: int                     # proximity to player: 0=local, 1=nearby, 2=continental, 3=global
 
 
@@ -158,7 +158,7 @@ class CultureReport:
                 lines.append(f"    Traditions: {', '.join(tradition_label(t) for t in c.traditions[:4])}")
             top_rulers = c.rulers[:4]
             if top_rulers:
-                ruler_strs = [f"{r['name']} ({title_place(r['highest_title_key'])})" for r in top_rulers]
+                ruler_strs = [f"{r['name']} ({title_place(r['highest_title_key'], r.get('highest_title'))})" for r in top_rulers]
                 lines.append(f"    Rulers: {', '.join(ruler_strs)}")
 
         # ── Continental cultures (zone 2) — summary ───────────────────────── #
@@ -221,7 +221,7 @@ class CultureReport:
             top_rulers = f.rulers_of_faith[:5]
             if top_rulers:
                 ruler_strs = [
-                    f"{r['name']} ({title_place(r['highest_title_key'])})" for r in top_rulers
+                    f"{r['name']} ({title_place(r['highest_title_key'], r.get('highest_title'))})" for r in top_rulers
                 ]
                 lines.append(f"    Rulers: {', '.join(ruler_strs)}")
 
@@ -402,6 +402,12 @@ class CultureEvaluator:
         c = self.gs.character(char_id)
         return decode_name(c.get("first_name", str(char_id))) if c else str(char_id)
 
+    def _faith_head_char_id(self, faith_head_title_id: int) -> int | None:
+        """Resolve a faith's `religious_head` field — a title ID — to its current holder."""
+        title = self.gs.title(faith_head_title_id)
+        holder = title.get("holder") if title else None
+        return int(holder) if holder is not None else None
+
     def _player_region(self, char: dict) -> str:
         """
         Determine the player's geographic region from their highest-tier title.
@@ -472,11 +478,13 @@ class CultureEvaluator:
                     "id": holder_id,
                     "name": decode_name(char.get("first_name", str(holder_id))),
                     "highest_title_key": title_key,
+                    "highest_title": title,
                     "highest_tier": tier_prefix,
                     "_tier_order": tier_order,
                 })
             elif tier_order < existing["_tier_order"]:
                 existing["highest_title_key"] = title_key
+                existing["highest_title"] = title
                 existing["highest_tier"] = tier_prefix
                 existing["_tier_order"] = tier_order
 
@@ -586,11 +594,13 @@ class CultureEvaluator:
                     "id": holder_id,
                     "name": decode_name(char.get("first_name", str(holder_id))),
                     "highest_title_key": title_key,
+                    "highest_title": title,
                     "highest_tier": tier_prefix,
                     "_tier_order": tier_order,
                 })
             elif tier_order < existing["_tier_order"]:
                 existing["highest_title_key"] = title_key
+                existing["highest_title"] = title
                 existing["highest_tier"] = tier_prefix
                 existing["_tier_order"] = tier_order
 
@@ -610,10 +620,11 @@ class CultureEvaluator:
             tenets = [d for d in doctrines if d.startswith("tenet_")]
             core_docs = [d for d in doctrines if not d.startswith("tenet_")]
 
-            head_id = faith_data.get("religious_head")
+            head_title_id = faith_data.get("religious_head")
             # 4294967295 is the sentinel for "no head" in Paradox saves
-            if head_id is not None and int(head_id) == 4294967295:
-                head_id = None
+            if head_title_id is not None and int(head_title_id) == 4294967295:
+                head_title_id = None
+            head_id = self._faith_head_char_id(head_title_id) if head_title_id is not None else None
             head_name = self._char_name(head_id) if head_id else None
 
             # Classify relationship to player's faith (four levels of closeness)

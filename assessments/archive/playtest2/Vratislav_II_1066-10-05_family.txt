@@ -1,0 +1,269 @@
+Family Assessment — Přemyslid Children and Šwiétosława (1066.10.5)
+Generated from save: Duke_Vratislav_II_of_Bohemia_1066_10_05.ck3
+Playtest 2 — Character thread: The Succession Question + The Polish Wife
+=========================================================================
+
+A note on lineage: Vratislav has had two wives. Adelaida (id 34683, born 1040,
+died 1062.1.27 — age 22) was the first, and bore him three children before her
+early death. Šwiétosława (id 36471, born 1048, Polish) is the current wife and
+mother of the three youngest. The elder children lost their mother when they were
+6, 4, and 2 years old. Šwiétosława is their stepmother. Keep her "deceitful" trait
+in mind when reading that relationship.
+
+Data: character_profile() run at 1066.10.5 via the character evaluator.
+All effective skill figures exclude perks and artifacts.
+
+
+I. ŠWIÉTOSŁAWA (id 36471) — The Polish Wife
+--------------------------------------------
+Age 18 | Born 1048.1.2 | Catholic | Polish
+Skills (base):  Dipl 5 / Mart 2 / Stew 1 / Intr 4 / Lear 6 / Prow 6
+Skills (eff.):  Dipl 4 / Mart 1 / Stew 6 / Intr 7 / Lear 5 / Prow 6
+Education: Stewardship tier 3
+Council role: Consort (on Vratislav's council)
+Personality: deceitful, gregarious, lazy
+
+A woman of sharp contrasts. Her base Learning (6) and Intrigue (4) hint at genuine
+intelligence; her Stewardship education has boosted that stat to 6 effective; but
+the lazy trait drags on her council contributions. Gregarious makes her socially
+magnetic — she probably runs a lively court and wins people over easily. Deceitful
+means she keeps her own agenda and should not be assumed to be transparent.
+
+As stepmother to Judita, Břetislav, and Ludmila, the deceitful trait is a quiet
+flag. There is no evidence of active hostility, but the children of Adelaida are
+not her children, and a deceitful steward of her own interests will not
+automatically be a champion of theirs.
+
+Her cultural identity (Polish) is part of Vratislav's strategic tether to the
+Piast dynasty. She is an instrument of that connection, and also a person with her
+own designs. Both are true simultaneously.
+
+Children by Šwiétosława: Boleslav, Bořivoj, Vladislav
+
+
+II. JUDITA (id 37766) — Adelaida's Eldest Daughter
+---------------------------------------------------
+Age 10 | Born 1056.1.1 | Catholic | Czech
+Skills (base):  Dipl 4 / Mart 3 / Stew 3 / Intr 3 / Lear 6 / Prow 6
+Skills (eff.):  Dipl 9 / Mart 3 / Stew 3 / Intr 5 / Lear 6 / Prow 6
+Current education focus: Intrigue (set 1066.9.15, 0 changes used)
+Guardian: none assigned
+Personality: generous, humble, calm, charming
+
+Judita is being trained as a schemer. This is the wrong path.
+
+Her charming trait alone contributes +5 to Diplomacy, lifting it to an effective 9
+while her Intrigue sits at a modest 5. Her personality profile — generous, humble,
+calm, charming — reads as someone made for trust and alliance, not deception and
+manipulation. Every trait points toward a woman people will instinctively like.
+
+She will be marriageable around 1072 (age 16), which gives six years to shape her
+education. A Diplomacy tier 3–4 education makes her a sought-after bride: high-
+diplomacy characters are more effective at managing a foreign court and maintaining
+alliance bonds. An Intrigue education makes her a middling schemer at best.
+
+IMMEDIATE ACTION: Switch focus from Intrigue to Diplomacy. The change has not yet
+been used (0 changes logged). Do this before the next time advancement.
+
+GUARDIAN: No guardian has been assigned. The guardian's own skill in the education
+category significantly influences outcome tier. Assign Vratislav himself (high
+Learning, moderate Diplomacy) or find a court ally with high Diplomacy.
+
+Long-term role: Alliance bride, targeted at a dynasty that strengthens Bohemia's
+external position. The most natural candidate pool in ~1072 is a German noble
+house (building westward relationships) or a Polish branch (reinforcing the Piast
+connection established through Šwiétosława). Her personality will travel well.
+
+
+III. BŘETISLAV (id 38159) — Adelaida's Eldest Son, Probable Heir
+-----------------------------------------------------------------
+Age 8 | Born 1058.1.13 | Catholic | Czech
+Skills (base):  Dipl 3 / Mart 3 / Stew 3 / Intr 2 / Lear 3 / Prow 2
+Skills (eff.):  Dipl 11 / Mart 3 / Stew 3 / Intr -3 / Lear 3 / Prow 2
+Current education focus: Intrigue (set 1066.9.15, 0 changes used)
+Guardian: none assigned
+Personality: compassionate, honest, generous, charming
+
+The most important character in this assessment. Břetislav's education needs to
+change today.
+
+His effective Intrigue is -3. The "honest" trait carries an intrigue penalty that
+compounds with the compassionate disposition; he is, by nature, constitutionally
+unsuited to scheming. He is in an Intrigue education that is actively working
+against his grain, in a skill where his baseline is negative.
+
+Meanwhile his effective Diplomacy stands at 11 — built from charming (+5),
+compassionate, honest, and generous stacking in the same direction. Four personality
+traits, and every single one is a ruler virtue. This is exceptional. Vassals will
+respect a compassionate lord. An honest ruler creates a court culture of trust.
+Generosity buys loyalty in lean years. Charm works in council chambers and at
+foreign courts alike.
+
+Břetislav is, right now, being groomed into a skill he cannot use, while the skills
+that make him remarkable go untrained.
+
+IMMEDIATE ACTION: Switch focus from Intrigue to Diplomacy. Urgently. The free
+change is available.
+
+GUARDIAN: Same situation as Judita — no guardian. For a future duke, guardian
+quality matters enormously. A high-Diplomacy guardian (a seasoned chancellor, a
+bishop with high Learning, or Vratislav himself) is worth actively seeking. The
+court at Praha likely has candidates.
+
+Succession note: Břetislav is the eldest son by Vratislav's first wife, making him
+the likely primary heir under most succession arrangements available in 1066.
+Critically, Vratislav does NOT hold a hook on Břetislav — he does hold hooks on
+his three half-brothers (Boleslav, Bořivoj, Vladislav). This asymmetry is worth
+noting. Břetislav's alignment with Vratislav rests on natural affection and
+structural position, not leverage. Given his exceptional moral character, that is
+probably sufficient — but it is a different kind of security than a hook provides.
+
+Long-term role: Heir. Raise him to be a beloved duke who his vassals *want* to
+follow. His trait profile is already halfway there. Diplomacy tier 3–4 education
+completes the picture. When he takes the duchy, the political friction from a
+succession transition should be lower than average.
+
+
+IV. LUDMILA (id 38396) — Adelaida's Youngest Daughter
+------------------------------------------------------
+Age 6 | Born 1060.1.1 | Catholic | Czech
+Skills (base):  Dipl 3 / Mart 1 / Stew 2 / Intr 3 / Lear 2 / Prow 3
+Skills (eff.):  Dipl 3 / Mart 2 / Stew 2 / Intr 4 / Lear 2 / Prow 3
+Current education focus: Martial (set 1066.9.15, progress 0)
+Guardian: none assigned
+Personality: rowdy
+
+Too early to read with confidence. One personality trait at age 6 leaves a lot of
+character still forming. Rowdy suggests restless physical energy; it pairs naturally
+enough with Martial focus. Her effective Intrigue (4) is currently her highest stat,
+but the margin is narrow and entirely trait-driven — it may not hold as more traits
+emerge.
+
+The Martial focus is not hurting her yet. A Czech princess with warrior instincts
+is at least interesting from a narrative standpoint. If you want to optimize, a
+switch to Intrigue is defensible on the current numbers. If you want to play the
+character that's forming naturally, Martial has its own logic.
+
+IMMEDIATE ACTION: Optional. Consider switching to Intrigue given current effective
+stats, but this is a judgment call rather than the urgent correction Judita and
+Břetislav need.
+
+Long-term role: Depends on what she becomes. Younger daughter with no alliance
+imperative yet. Marriage to a loyal Czech count as a goodwill gesture, or a
+convent if no suitable secular role emerges. Could also be interesting to keep in
+court as a martial presence if she develops commander traits.
+
+
+V. BOLESLAV (id 39160) — Šwiétosława's Eldest Son
+--------------------------------------------------
+Age 3 | Born 1063.1.15 | Catholic | Czech
+Skills (eff.):  Dipl 3 / Mart 2 / Stew 4 / Intr 2 / Lear 4 / Prow 1
+No education focus yet (eligible at age 6)
+Guardian: none assigned
+Personality: diligent, rowdy
+Hook: Vratislav holds a hook on Boleslav
+
+Promising. Diligent is a strong ruler trait — it boosts Stewardship and Learning
+both, and the effective skills at age 3 already reflect this (+3 to each). Rowdy
+provides kinetic energy. When he turns 6, Stewardship focus is the natural call:
+it aligns with his trait-driven effective skills and gives him the administrative
+foundation a landed lord needs.
+
+Vratislav's hook on him is useful succession insurance. If Gavelkind rules,
+Boleslav inherits a county and needs administrative skills to run it. If
+primogeniture rules, he needs a generous bequest (a county to rule) and a
+marriage to give him standing outside the line of succession.
+
+Long-term role: Steward. The second generation of Přemyslid Bohemia, governing
+a county under Břetislav's duchy. The diligent trait suggests he will apply himself.
+
+
+VI. BOŘIVOJ (id 39200) — Šwiétosława's Second Son
+--------------------------------------------------
+Age 2 | Born 1064.1.1 | Catholic | Czech
+Skills (eff.):  Dipl 1 / Mart 0 / Stew 0 / Intr -1 / Lear 0 / Prow 1
+No education focus yet
+Guardian: none assigned
+Personality: greedy, trusting
+Hook: Vratislav holds a hook on Bořivoj
+
+Greedy and trusting is a difficult combination. Greedy means he will always feel
+he deserves more — more land, more gold, more recognition. Trusting makes him easy
+to manipulate by whoever gets to him first. Put together: an ambitious man who will
+be led by whoever whispers the right things in his ear.
+
+The hook is the right handle on him. Keep it. If he develops ambition or shows
+faction risk as he grows, the hook is the corrective. If he develops no compelling
+secular skills, the church is the right placement — a greedy priest is manageable;
+a greedy count with a claim is not.
+
+Long-term role: Uncertain. Watch him. Decide around age 12 whether he gets a
+county to settle into or a bishop's miter to contain him. Do not give him
+unsupervised secular power without a plan.
+
+
+VII. VLADISLAV (id 39372) — Šwiétosława's Youngest Son
+-------------------------------------------------------
+Age 1 | Born 1065.1.1 | Catholic | Czech
+Skills (eff.):  Dipl 2 / Mart 0 / Stew 1 / Intr -2 / Lear 1 / Prow -4
+No education focus yet
+Guardian: none assigned
+Personality: trusting
+Health condition: ill
+Hook: Vratislav holds a hook on Vladislav
+
+Vladislav is ill at age 1. The -4 effective Prowess at this age suggests the illness
+is already depressing his physical stats. Child mortality at this age is a real
+possibility. No planning is warranted until he recovers — or does not.
+
+If he survives: trusting makes him easy to manage. The hook is already set.
+He will likely be the most compliant of the three younger sons, for better and worse.
+
+
+VIII. SUMMARY TABLE
+-------------------
+
+Name         Age  Sex  Eff.Dipl  Focus (current)        Priority action
+-----------  ---  ---  --------  ---------------------  --------------------------
+Šwiétosława   18   F      4     Consort council         —
+Judita        10   F      9     Intrigue (wrong)        SWITCH TO DIPLOMACY
+Břetislav      8   M     11     Intrigue (wrong/hurtful) SWITCH TO DIPLOMACY
+Ludmila        6   F      3     Martial                 Optional: consider Intrigue
+Boleslav       3   M      3     —(too young)            Set focus at 6: Stewardship
+Bořivoj        2   M      1     —(too young)            Watch; church is fallback
+Vladislav      1   M      2     —(too young)            Survive the illness first
+
+Guardian status: NONE SET for any child. Assigning guardians is meaningful — do
+this alongside the focus changes. Candidates from court: the marshal or chancellor
+for sons; a high-diplomacy noblewoman or bishop for daughters.
+
+
+IX. NARRATIVE THREADS THIS OPENS
+---------------------------------
+
+The Heir's Virtue: Břetislav is compassionate, honest, generous, and charming —
+all at once, in a world that rarely rewards that combination. If he survives to
+inherit a duchy, he will be a different kind of Přemyslid lord than his father.
+Whether that is a triumph or a vulnerability depends on what Bohemia faces when
+he takes power.
+
+The Stepchildren: Judita, Břetislav, and Ludmila lost their mother at ages 6, 4,
+and 2. They have grown up under Šwiétosława, who is deceitful and has her own
+three sons in the succession pool. The game does not simulate maternal warmth or
+its absence, but the character math is suggestive. Whether Šwiétosława has been
+a fair steward of the elder children's interests is a question the player can
+interpret as they like.
+
+The Brothers' Problem: Boleslav (diligent), Bořivoj (greedy+trusting), and
+Vladislav (trusting+ill) are three very different younger sons from the same
+mother. They will grow up in Břetislav's shadow. Bolt of ambition in the wrong
+direction is the main risk — especially from Bořivoj. The hooks Vratislav holds
+are the right instrument for managing this, but they will need to be deployed
+thoughtfully as the boys mature.
+
+The Alliance Calendar: Judita is 10, and she becomes a marriage asset in ~1072.
+That is early in Vratislav's reign — he will likely still be a duke, not yet the
+king he becomes in the 1083 playtest. The right marriage for her probably targets
+a neighbor whose goodwill is worth purchasing now: a German count on the western
+border, a Polish lord who reinforces the Šwiétosława connection, or a Bohemian
+vassal whose loyalty benefits from a dynastic tie.

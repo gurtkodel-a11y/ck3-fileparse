@@ -1,0 +1,144 @@
+Strategic Assessment — Takenori Kiyohara, Duke of Mutsu (1066.9.15)
+Generated from save: Toryo_Kiyohara_Takenori_of_the_Kiyohara_Ichizoku_1066_09_15.txt
+==========================================================================
+
+
+I. THE REALM: HOLDINGS, VASSALS, AND INTERNAL BALANCE OF POWER
+---------------------------------------------------------------
+
+Takenori holds the Duchy of Mutsu in name across six titles — the duchy seat,
+two real counties (Isawa, Taga), the two baronies that anchor them, and a
+sixth title, "the Kiyohara Family," which is not a landholding at all but an
+honorary clan-headship title (it carries no barony and isn't counted among
+his domain holdings). His actual physical domain is just two castle holdings:
+Isawa (development 8, hills, fort 7, a noted martial site) and Taga
+(development 7, hills, fort 8, a noted economic site, also his capital and
+current location). Combined development is a modest 15, average 7.5 — by the
+Steward's own assessment, low, with three whole building categories absent
+(military, religious, urban). This is a duke who governs lightly: two
+holdings, one direct vassal.
+
+That one vassal, Arimitsu Ishikawa, Count of Iwaki, fields 296 levy / 449
+total troops under a "Japan Feudal Vassal" contract and is currently neutral
+— no factions, no recorded hostility. Iwaki's own domain (1 holding, dev 9,
+hills) is in fact slightly better developed than either of Takenori's own
+holdings, a small but real asymmetry worth watching even though nothing
+about it looks urgent today.
+
+The real structure of Takenori's power isn't vassal count — it's family.
+As dynasty head of House Kiyohara (founded 735.1.1, prestige 926), he holds
+house-head hooks on twelve people: Mitsuyori, Mitsuko, two different
+Takemichis, Takesada, Takehira, Yoshiko 2, Yoritó, Sanehira 3, Noriko 3,
+Sadako, and Iehira. That is, functionally, his entire extended clan under
+direct personal leverage. The Spymaster's brief calls this "a strong
+position for coercion and compliance," and it shows in the numbers: no
+active factions, broadly strong vassal loyalty, and a court that is itself
+mostly family — his wife Kiyoko and two of his sons (Takehira, Takemichi)
+sit on his council alongside two non-family retainers (Koreyori, Yoritó).
+This is a clan government in the literal sense, not just the cultural one.
+
+Military quality is mixed. The knight roster (7 total) splits sharply: three
+high-prowess fighters (Yoritó and Arimitsu at 10, Mitsuyori at 9) alongside
+two more at 8 (both named Takemichi/Takehira — likely his own sons) and two
+at prowess 0 (Koreyori, and a second Takemichi) who are probably either very
+young or simply unbloodied. Average prowess (6.4) is, per the Marshal,
+below par. The four men-at-arms regiments are conventional for the region —
+horse archers, heavy footmen, a skirmisher block, and a siege unit — with no
+glaring gaps, but capacity (467 MaA cap, 731 levy, 1,198 total max) is small
+in absolute terms.
+
+
+II. THE EXTERNAL SITUATION
+---------------------------
+
+Takenori is a sworn vassal of Yorimichi, Emperor of Japan (4,505 troops,
+117,520 power) — Takenori's own strength is about 27% of his liege's, a
+proportionate, unremarkable position for a ducal vassal, not a red flag on
+its own. His faith, pundarika (a Buddhist tradition, Eastern/Dharmic family,
+83 titles held), has no recognized religious head at this date — the
+Councilor's brief flags this directly as a loss of doctrinal authority and
+piety generation, worth keeping an eye on as a long-run lever (sponsoring or
+backing a head claimant, if that becomes available, would be a real gain).
+
+Diplomatically, Takenori has exactly one alliance: Hidetake Kimiko, Count of
+Dewa, bonded through the marriage of Takenori's daughter Yoshiko 2 to
+Hidetake. One bond is a thin diplomatic base — both the Marshal and
+Chancellor independently flag this as the central external vulnerability:
+a single alliance breaking, or Hidetake simply dying without the bond being
+renewed through the next generation, would leave Takenori isolated.
+
+A genuine and important caveat on "nearby" rulers: the tool's geographic
+zone classification returned over 1,500 rulers as "local/nearby" to
+Takenori, including the Emperor of Great Liao, the King of Maghreb (North
+Africa), the Emperor of Cumania (Caspian steppe), and the King of Tamilakam
+(southern India). These are not realistic threats or contacts for a Duke of
+Mutsu in northern Honshu in 1066 — this is almost certainly an artifact of
+how the tool's region/zone heuristic (`ck3/geography.py`) handles an island
+nation in a save built on the much larger All Under Heaven map; it likely
+hasn't been tuned for Japan's actual sea-route isolation. Treat the
+"Geographic Neighbors" list as "notable world powers," not "people who can
+march on you." The two entries on that list that ARE plausibly real
+neighbors — close enough across the Sea of Japan/Korea Strait to matter —
+are:
+  - Chala Yelú, Emperor of Great Liao (8,649 troops, 347,699 power) — by far
+    the largest nearby power, controlling Manchuria/the Liao Empire.
+  - Hwi, Emperor of Goryeo (4,724 troops, 110,959 power) — Korea, directly
+    across the strait.
+Both are unallied with Takenori. The Marshal's top priority — closing the
+power gap with Liao via levies, MaA, or alliance — is sound advice even
+discounting the zone-classification noise; Liao really is the dominant nearby
+empire, war or no war.
+
+
+III. THREATS, ASSETS, AND PRIORITIES
+--------------------------------------
+
+Internal:
+  1. Health is poor (2.9) at age 62. This isn't an immediate crisis, but it
+     puts succession planning on the near-term clock rather than the
+     long-term one. Worth digging into directly next — Takenori's heir,
+     Takesada, already rules his own separate realm (Duke of Nushiro)
+     rather than living in Takenori's court, which raises a real question
+     about how succession and domain unification are meant to play out.
+     Flagging for the family-situation conversation we're about to have.
+  2. Domain underdevelopment — avg dev 7.5, three building categories
+     (military, religious, urban) entirely absent. The Steward's recommended
+     first move is developing Taga toward 15 before expanding further.
+  3. Thin vassal base — one direct vassal is a small support structure for
+     a duke. Not unstable today (no factions, vassal loyalty solid), but it
+     means almost all of Takenori's military weight is his own to carry.
+
+External:
+  4. Diplomatic isolation — one alliance, fragile by construction (a single
+     marriage bond to one family). Both Marshal and Chancellor flag this
+     independently; an alliance with a real, geographically plausible power
+     (Goryeo is the more reachable target; Liao the more consequential one)
+     would do more for Takenori's position than almost anything else
+     available right now.
+  5. No recognized faith head for pundarika — a slow-burn loss of piety and
+     doctrinal standing rather than an urgent problem.
+  6. Knight quality is uneven — two knights at prowess 0 drag the average
+     down; replacing or training them up is a cheap, concrete improvement.
+
+Assets:
+  - Total command of the extended Kiyohara clan via twelve house-head hooks
+    — a genuinely strong internal-control position most rulers don't have
+    this early.
+  - Defensible terrain: both domain holdings are hills, with solid
+    fortification levels (7 and 8).
+  - No active factions, no recorded rivals or hostile relations of any kind
+    — a calm internal picture to build from.
+
+Bottom line:
+  Takenori opens as a small, well-controlled duchy riding on the strength of
+  family loyalty rather than raw material power. The clan is firmly his —
+  twelve hooks, a family-staffed council, zero factions — but the duchy
+  itself is thin: two holdings, one vassal, one alliance, middling troops,
+  and a heir who currently rules elsewhere. None of this is a crisis. It's
+  a foundation that rewards careful building: develop the domain, find a
+  second alliance (Goryeo is the realistic near-term target), and get
+  ahead of the succession question with Takesada before age and health force
+  the issue. The Liao Empire is the one external power worth genuinely
+  respecting on the regional chessboard; everything else flagged as "nearby"
+  by the tool should be read with real skepticism until the zone-heuristic
+  gap for island nations gets fixed.

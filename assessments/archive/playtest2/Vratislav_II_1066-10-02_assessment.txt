@@ -1,0 +1,278 @@
+Strategic Assessment — Vratislav II Přemyslid, Duke of Bohemia (1066.10.2)
+Generated from save: Duke_Vratislav_II_of_Bohemia_1066_10_02.ck3
+Playtest 2 — Initial Assessment
+=========================================================
+
+Focus for this playtest: narrative tools for character interaction.
+This assessment therefore gives extra attention to the character web
+around Vratislav — who these people are, what tensions exist between
+them, and where the richest narrative material lives.
+
+
+I. THE OPENING POSITION
+-----------------------
+
+Bohemia opens in the same structural shape as Playtest 1 (1066.9.15):
+seven personal holdings in peacetime with full control, a familiar MaA
+composition (zbrojnosh Heavy Infantry, Light Horsemen, Pikemen, Mangonel),
+and the same Czech cultural traditions (Mountaineer Ruralism, Hard Working,
+Castle Keepers, Life Is Just A Joke). The realm ceiling — 3,287 maximum
+troops — is nearly identical. Praha leads at development 12; the six
+remaining holdings sit at 8. Čáslav's special economic site remains the
+highest-priority early development investment.
+
+The vassal ledger, likewise, follows the same shape: Konrád Přemyslid
+(Count of Brno, 1,391 troops, three Moravian holdings) anchors the east as
+the dominant feudal vassal; Ota Přemyslid (Count of Olomouc, 869 troops)
+flanks him; Česlav Vrsovic (Count of Žatec) is the only non-Přemyslid
+feudal count; and a ring of republic and theocracy barons fills the margins.
+
+One thing has visibly shifted from 1066.9.15 to 1066.10.2: the theocracy
+count of Opava is no longer Jaromír, and Jaromír is no longer a vassal at
+all. The implications of that shift run through most of this assessment.
+
+
+II. THE CHARACTER WEB
+---------------------
+
+This is where Playtest 2 diverges sharply from Playtest 1 in character,
+and where the narrative richest material lies.
+
+--- Jaromír (id 34156): The Rival in Exile ---
+
+In Playtest 1, Jaromír Přemyslid held Opava as a theocracy count —
+Vratislav's declared rival sitting inside the realm, impossible to revoke,
+generating a continuous opinion drain. That situation was poisonous but
+contained.
+
+In Playtest 2, Jaromír is unlanded and at another court. The mutual rival
+relationship persists — both sides have declared enmity — but the locus of
+danger has shifted. An unlanded rival inside your realm is a political
+irritant. An unlanded rival at a foreign court is a different shape of
+threat: mobile, potentially sponsored, and accumulating grievances without
+the moderating responsibilities of holding land. He has every incentive to
+seek a patron, a claim, or a faction; he has no territory to lose if he
+gambles.
+
+From a narrative standpoint, Jaromír is the most compelling character in
+the opening position. He is almost certainly Přemyslid — a kinsman, perhaps
+a brother or cousin, cast out or never given land in this timeline. The
+classic exile arc applies: Where is he? Who has taken him in? What does
+he want? The answers to those questions will eventually come back to
+Bohemia's door.
+
+The practical concern: an unlanded rival at a foreign court is much easier
+to invite back, marry off to neutralize, or eventually destroy than an
+entrenched theocracy bishop — but he is also capable of suddenly becoming
+the figurehead for someone else's ambitions. Keep track of his location.
+
+--- Jan (id 32280): The Friend in the Counting House ---
+
+Jan holds Opava as its theocracy count — the county Jaromír no longer holds.
+He contributes zero levy (as expected for a Church vassal) but returns
+ecclesiastical income. More unusually: he is Vratislav's declared mutual
+friend. A bishop who is both your vassal and your personal friend is a
+combination that appears rarely and matters more than the numbers suggest.
+
+The Pope has a −30 impious opinion of Vratislav as of this date. That is
+a significant deficit for a Catholic ruler, and it will compound if
+Vratislav draws censure from Rome or is caught in the Investiture conflict
+on the wrong side. Jan — a friendly theocracy vassal — is a potential
+narrative counterweight: a churchman inside Bohemia who can vouch for his
+duke, carry messages to the Curia, or quietly absorb some of the friction
+between Vratislav and the institutional Church. His friendship is worth
+tending precisely because the Pope is not impressed.
+
+Narratively, Jan is the archetype of the loyal bishop-counselor: a learned
+man without military ambition, embedded in the court's life, connected to
+the Church hierarchy, and personally bound to the duke by friendship rather
+than mere obligation. That is a character worth developing.
+
+--- Šwiétosława (id 36471): The Polish Duchess ---
+
+Vratislav's current wife carries a Polish-heritage name (Šwiétosława) and
+sits on the council as primary spouse. His former wife Adelaida died in
+January 1062; this marriage is likely from the early 1060s or the game
+start. She is unlanded and currently in Vratislav's court.
+
+Poland (Bolesław Piast, 2,725 troops, local zone, same heritage) is the
+most significant secular neighbor of comparable tier. A Polish-born wife
+creates an implicit personal connection to the Piast dynasty that no formal
+alliance yet formalizes. Whether that connection is a diplomatic asset
+(leverage toward a negotiated coexistence) or a liability (pressure from
+Bolesław to favor Polish interests) depends on the eventual trajectory of
+Czech-Polish relations.
+
+Narratively, Šwiétosława is the most under-examined character in the opening
+court. She is present, educated enough to hold a council role, and culturally
+distinct from Bohemia's Czech core. A Polish duchess in a Czech court is
+a woman navigating two worlds; her perspective on the court's internal
+politics — particularly the Přemyslid family dynamics — would be a rich
+first-person narrative thread.
+
+--- The Přemyslid Children (Court) ---
+
+All six of Vratislav's children are in court: Judita, Břetislav, Ludmila,
+Boleslav, Bořivoj, and Vladislav. Their parentage divides the court subtly
+— some are Adelaida's, some Šwiétosława's — though the save does not
+distinguish this directly.
+
+House-head hooks attach to three of the six: Boleslav, Bořivoj, and
+Vladislav — but not to Judita, Břetislav, or Ludmila. This asymmetry is
+worth examining. Bretislav as an un-hooked son is a potential succession
+tension point: if he is the eldest male heir, the absence of a hook means
+Vratislav cannot leverage him as readily. The three hooked sons (Boleslav,
+Bořivoj, Vladislav) may be younger and their hooks reflect Vratislav's
+position as house head rather than deliberate political strategy — but the
+question of which son is favored, and why, is inherently narrative.
+
+Judita as the eldest named daughter carries the most immediate marriage
+value. She is an untouched diplomatic asset at game start.
+
+--- The Knights: A More Capable Pool ---
+
+Playtest 2 opens with six knights rather than Playtest 1's five, and the
+composition is stronger across the board: Záviš (prowess 10), Boreš (9),
+Vznata (9), Veliš (9), Ota (6), Cçaslav (7). The middle tier is
+noticeably deeper — three prowess-9 knights is unusual at game start.
+
+Knights in CK3 are not just mechanical units; they are named characters
+with relationships, ambitions, and dynastic weight of their own. Záviš
+and Vznata are also listed as courtiers (not just military retainers),
+which means they are embedded in court life, potentially holding council
+roles later, and generating the ordinary drama of feudal household
+politics. A prowess-10 knight named Záviš who also sits at court is a
+character waiting for a story.
+
+--- Konrád and Ota (Moravia): The Family Bloc ---
+
+Konrád Přemyslid (Brno, 1,391 troops) and Ota Přemyslid (Olomouc, 869
+troops) are the structural fact of Bohemia's internal politics: the
+Moravian Přemyslids hold more combined military weight than Vratislav
+himself. They are family — which provides cultural loyalty glue — but
+family loyalty in the Přemyslid tradition has historically been a
+contingent rather than a guaranteed quantity.
+
+Konrád in particular is the character to watch. He is the most powerful
+individual in the realm after Vratislav. His relationship with Jaromír
+(the exiled rival) is unrecorded in the data; they may be allies by blood,
+or Konrád may be entirely neutral to Jaromír's fate. Either way, if Jaromír
+returns and seeks Přemyslid family support, Konrád is the pivot point.
+
+--- The Anonymous Court: OjíŘ, Cčenéek, Zbyslav, Svatobor ---
+
+Four non-family, non-knight courtiers fill the household: OjíŘ (id 63538),
+Cčenéek (id 63539), Zbyslav (id 63540), and Svatobor (id 37565). Svatobor
+has a noticeably older save-file ID than the others, suggesting he has been
+at court — or in the save file's history — longer than the rest.
+
+These are the minor characters who give texture to court life: the secretary,
+the steward's assistant, the aging retainer, the ambitious young man. In
+Playtest 1, the court had a different composition at this date. In Playtest 2,
+these specific four are the fabric of Vratislav's household. Their individual
+traits, education, and claims are worth surfacing as the narrative layer
+develops — each is a potential scene partner for any advisor-level character
+interaction tool.
+
+
+III. THE EXTERNAL SITUATION
+---------------------------
+
+The strategic environment is unchanged from the Playtest 1 opening assessment
+and summarized briefly here:
+
+  The HRE (Heinrich III Salian, 5,531 troops, 152,120 power) is Bohemia's
+  overlord and the dominant regional frame. Heinrich is on the eve of the
+  Saxon War and Investiture conflict — opportunities for choosing sides
+  advantageously, obligations to be managed.
+
+  Poland (Bolesław Piast, 2,725 troops, same heritage, local zone) is the
+  most significant Catholic secular neighbor and the primary external
+  uncertainty. No alliance, no conflict — a relationship in suspension.
+  Šwiétosława is the personal bridge.
+
+  Hungary (Salamon Árpád, 2,674 troops, nearby, Catholic) is the natural
+  first formal alliance target: same faith, adjacent, no competing interests.
+
+  The pagan belt (Pomerania, Luticia, Veletia, Baltic pagans) sits to the
+  north and northwest — combined strength exceeding the whole Bohemian realm,
+  but fragmented and not presently mobilized against Bohemia.
+
+  Byzantium (Konstantinos Doukas, 6,551 troops, orthodox) is the strongest
+  power in the geographic frame but separated from Bohemia by Hungary and
+  several Catholic kingdoms.
+
+  William of Normandy (6,803 troops) is weeks from Hastings. His conquest
+  of England reorders western Europe's attention. Neutral for Bohemia.
+
+Bohemia holds zero formal alliances at this date — a significant diplomatic
+gap given the vassal-weight ratio internally. The first priority after
+stabilizing the character web is securing at least one meaningful external
+partner before the HRE's internal crises demand choices.
+
+
+IV. THE PAPAL PROBLEM
+---------------------
+
+Anselmo, as Pope, holds a −30 impious opinion of Vratislav. This is a
+named-character relationship worth noting separately because it intersects
+the narrative layer directly: piety in CK3 is not just a number but a
+reputation with the Church as an institution, and the Pope is both a
+mechanical actor (excommunication, crusades) and a character.
+
+The −30 is steep for an opening position. It may reflect a lifestyle trait,
+a prior event, or a heresy suspicion — the save does not record the opinion
+source directly. Whatever its origin, it means the Pope's goodwill toward
+Bohemia is already depleted before the Investiture conflict begins.
+
+Jan of Opava (the friendly bishop-vassal) is the most obvious in-realm
+counterweight. Investing in a pilgrimage, a church building program, or
+simply keeping Bohemia clearly inside the Latin Christian fold during the
+coming schism are the mechanical levers; the narrative expression of those
+choices — a duke seeking to repair his reputation with Rome while managing
+a rival exile and an underdeveloped domain — is precisely the kind of
+first-person tension that character interaction tools should surface.
+
+
+V. PRIORITIES AND NARRATIVE THREADS FOR PLAYTEST 2
+---------------------------------------------------
+
+Strategic priorities (carry forward from Playtest 1 logic):
+  1. Locate Jaromír — where is he, who is hosting him, can he be neutralized,
+     married off, brought home on terms, or safely ignored?
+  2. Repair the Papal opinion — the −30 impious deficit is a liability as the
+     Investiture conflict approaches; early investment in piety costs little.
+  3. Secure a formal alliance — Hungary is the clearest first move; Poland
+     may be reachable via the Šwiétosława connection.
+  4. Develop Čáslav — the special economic site returns above-average yields
+     on development investment; prioritize it in the building queue.
+  5. Monitor Konrád of Brno — not hostile, but structurally dominant in
+     Moravia; favorable marriages into his family are worth arranging early.
+
+Narrative threads for character interaction development:
+  A. The Exile — Jaromír's story (where he went, what he wants, what
+     Vratislav owes or fears) is the central character-level tension of
+     this opening.
+  B. The Bishop-Friend — Jan of Opava as confidant and Church liaison;
+     a duke's relationship with a loyal bishop is one of the oldest
+     narrative forms in the medieval repertoire.
+  C. The Polish Wife — Šwiétosława's perspective: a foreign noblewoman
+     in a Czech court navigating family politics, faith, and a husband
+     whose rival is an exiled Přemyslid kinsman.
+  D. The Knight — Záviš (prowess 10, courtier) as the archetypal sworn
+     sword and household companion; his relationships with the other
+     knights, the children, and the court shape the texture of daily life.
+  E. The Succession Question — which son inherits? The hooked three
+     (Boleslav, Bořivoj, Vladislav) versus the un-hooked Břetislav; the
+     daughters' marriage trajectories; a family with six children and one
+     title is inherently a story about who gets what and at what cost.
+
+Bottom line:
+  Playtest 2 opens in a materially similar position to Playtest 1 but with
+  a character web that is immediately more narratively interesting: the rival
+  is in exile rather than entrenched, the theocracy seat is held by a friend
+  rather than an enemy, and the Pope is already displeased. Mechanically
+  this is a slightly easier position than Playtest 1 (no un-revokable rival
+  vassal in the realm); narratively it is richer, because the danger is
+  mobile and the stakes are personal. The Jaromír question is the thread
+  to pull first.

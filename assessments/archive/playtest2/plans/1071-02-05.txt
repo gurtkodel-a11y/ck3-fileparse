@@ -1,0 +1,298 @@
+Plans — Vratislav II Přemyslid, Duke of Bohemia
+Date: 1071.2.5  |  Playtest 2
+================================================================
+
+Living planning document. See plans/archive/plans_archive.txt for resolved
+items from the 1066.10.5 plan set.
+
+Temporal categories: IMMEDIATE (next session), SHORT-TERM (1-5 years),
+LONG-TERM (5-20 years), GRAND AMBITIONS (generational).
+
+Within each: Family | Court | Domain | Dynastic | Foreign Affairs
+
+
+================================================================
+I. IMMEDIATE
+================================================================
+
+[FAMILY] Confirm/execute Judita's marriage (she turns 16 in 1072.1.1)
+  Who: Judita (id 37766), currently in Regensburg
+  Status: Unknown — she is in Regensburg, possible betrothal in progress.
+  Action: Verify in-game whether a betrothal is already arranged. If not,
+    the window is immediate. Candidates from 1066 planning:
+      — Adalbero of Styria (RECOMMENDED): same birth year, Styria borders
+        Bohemia's sphere, gluttonous+curious, natural Learning lean
+      — Adalbert of Austria (backup): more prestigious, but deceitful trait
+    Check whether Bavarian options have aged into relevance (Kuno was 7
+    in 1066, now ~11; Siegfried was 8, now ~13).
+  Note: If a betrothal is already arranged, document who and why.
+
+[FAMILY] Assign guardians for Boleslav and Bořivoj (immediate gap)
+  Who: Boleslav (id 39160, age 8, Martial focus), Bořivoj (id 39200, age 7,
+       Intrigue focus)
+  Status: Neither has a guardian. This persisted from 1066 unaddressed.
+  Boleslav: Martial focus — Ota Přemyslid is already busy as Ludmila's
+    guardian. Look for a second martial-tier-3 candidate or a senior
+    household knight. Benno von Lóningen (Martial skills unknown) is a new
+    vassal who might qualify; worth checking.
+  Bořivoj: greedy + trusting + charming, Intrigue focus. The guardian's
+    personality matters more here than their education tier. A just or
+    temperate guardian counteracts the manipulation vulnerability. Avoid
+    guardians with greedy or arbitrary traits.
+
+[FAMILY] Decide Vladislav's trajectory (possessed_1 changes the equation)
+  Who: Vladislav (id 39372), age 6, trusting + rowdy + possessed_1
+  Context: He survived the illness but acquired possessed_1. This changes
+    the baseline plan (hook + compliant successor reserve) because the trait
+    has social consequences and possible event chains.
+  Options:
+    A. Church path: a bishop's miter removes the succession question and is
+       historically appropriate for a possessed younger son; possession as
+       divine visitation or test of faith is a medieval narrative the Church
+       knows well. Jan of Opava as eventual sponsor is the natural connection.
+    B. Keep in lay succession, monitor the trait. Possessed_1 may have event
+       resolution. If the trait resolves, reassess.
+  Current lean: Option B with a watch — do not foreclose the church path,
+    but don't act on it until a possessed-trait event fires or it becomes clear
+    the trait is permanent.
+  Note: Vladislav is friends with Boleslav. The bond between the two younger
+    brothers is a useful social anchor regardless of trajectory.
+
+[COURT] Monitor KristYna's illness
+  Who: KristYna (id 16800260), age 2, born 1068.7.31, currently ill
+  Action: Monitor. No planning until the illness resolves.
+
+
+================================================================
+II. SHORT-TERM (~1071–1077)
+================================================================
+
+[FOREIGN] Form the Hungary alliance (overdue)
+  Context: No alliances exist. This was the first-priority short-term foreign
+    plan from 1066, and it was not executed. Hungary (Salamon Árpád, 3,166
+    troops, Catholic) remains the clearest alliance target.
+  Why still valid: A formal Hungarian alliance is the most natural external
+    partner given faith, adjacency, and no competing interests. The Polish
+    connection via Šwiétosława is a potential second lever but is less
+    tractable (Bolesław III Piast succession may have changed the relationship).
+  Mechanism: Judita's marriage could be directed at a Hungarian-adjacent target
+    if no Styrian/Austrian option materializes. Otherwise, seek a standard
+    alliance via council diplomacy or marriage between secondary lines.
+
+[FAMILY] Assess the Oda-Břetislav situation by ~1073
+  Who: Oda (id 37772, age 15, Franconian, daughter of Otto von Weimar)
+  Context: Oda and Břetislav share a mutual crush. She's greedy, patient,
+    sadistic, charming with effective Prowess 10 and Intrigue 7. Her father
+    Otto holds -25 declared_war opinion of Vratislav.
+  Decision to make by ~1073: Is this a marriage to encourage or redirect?
+    PRO: Ties the von Weimar line more closely to Bohemia; could reduce Otto's
+    residual hostility through a family bond; the crush is mutual (lower
+    resistance than an arranged match).
+    CON: Sadistic trait is a concern for the heir's spouse and the next
+    generation. Franconian culture adds integration friction. The connection
+    is to a recently conquered vassal, which sends a particular signal about
+    Bohemia's relationship to its new Saxon subjects.
+  If redirecting: Břetislav will need an alternative match identified. His
+    profile (age 13 in 1071, heir, effective Dipl 15) will attract interest
+    from larger dynasties. A Hungarian or Polish match is geopolitically
+    stronger; a Saxon match sends a consolidation signal.
+
+[FAMILY] Ludmila's marriage planning (window opens ~1074)
+  Who: Ludmila (id 38396), age 11, Martial focus, honest + rowdy
+  Context: Now developing coherently as a martial character under Ota Přemyslid's
+    guardianship. Honest + rowdy is a cleaner profile than we expected.
+    Her crush is on Arnold (id 38032 — identity unknown; worth a lookup).
+    Mutina (id 38184, son of Časlav Vrsovid, age ~12) was flagged in 1066 as
+    a potential match. He and Břetislav are now friends — the Vrsovid-Přemyslid
+    bond already exists through that friendship. A Ludmila-Mutina match would
+    consolidate it but would also be an internal (not external) alliance.
+  Decision framework: Is the priority an external alliance or internal
+    vassal-binding? Ludmila's martial character travels less elegantly to a
+    foreign court than Judita's diplomatic one. Internal match may suit her better.
+
+[DOMAIN] Develop Čáslav — begin the investment
+  Context: Stated as the highest-priority development investment since the
+    initial assessment (1066.10.2). Four years of inaction. Still development 8.
+    The special economic site (poi_special_buildings_economic) is still there.
+  Action: Put Čáslav in the building queue. Do not wait for another session.
+
+[COURT] Grant Duchy of Meissen to Reginar (decided)
+  Decision: Grant d_meissen to Reginar von Dresden (Count of Dresden).
+  Rationale: Reginar is the most tractable of the Saxon bloc — content + trusting,
+    the disposition least likely to weaponize a duchy against us. The von Weimar
+    line (-25 opinion) is ineligible for obvious reasons. Ludwig (Ludowinger) and
+    Eberhard have aging +20 modifiers that expire ~1081; relying on temporary
+    goodwill for a permanent grant is the wrong foundation. Benno von Lóningen
+    is a vassal-knight with an unknown personal profile.
+  Execution note: The grant makes Reginar a duke-tier vassal. His former peers
+    (Ludwig, Eberhard, Benno, Otto — all county-tier) become his de jure subjects
+    where their counties fall inside d_meissen. This is the point: placing a
+    content+trusting character atop a potentially restive bloc is stabilizing.
+  Possible follow-up: Renegotiate Reginar's vassal contract after the grant —
+    reducing his levy contribution (if feasible under Feudal contract terms) gives
+    him more standing troops relative to his new subjects, improving his ability
+    to actually hold the duchy. Worth checking whether levy renegotiation is
+    available and at what gold/prestige cost.
+
+[FOREIGN] Forge marriage alliances with Saxon vassal households (decided)
+  Decision: Pursue marriages between Přemyslid court members and children of
+    the new Saxon vassal households. Target families: Ludwig Ludowinger (children
+    include Uta, Adalheid, Berengar — roughly Judita's generation), Benno von
+    Lóningen (children Geilana, Liutswind, Adalgar), Reginar's son Liudolf.
+  Rationale: Marriage bonds don't change opinions directly, but they create
+    inter-household dependencies that make rebellion more costly to the noble
+    family as a whole. Marriages into the von Weimar line (Otto) are lower
+    priority given the -25 declared_war wound, but Oda↔Břetislav is already
+    being evaluated separately.
+  Timing note: Ludwig's +20 goodwill expires ~1081. Approaching his household
+    while the modifier is active is more likely to succeed. If negotiations are
+    started within 1–2 years, the favorable context exists.
+  Children available from our side: Ludmila (age 11, opens ~1074), Boleslav
+    (age 8, opens ~1079), Bořivoj (age 7, opens ~1080). Boleslav and Bořivoj
+    may be too young for the immediate window; Ludmila is the most relevant
+    piece. See [FAMILY] Ludmila's marriage planning above for the tension between
+    external alliance and internal (Vrsovid) match.
+
+[COURT] Manage the Saxon vassal bloc
+  Context: Six new count-tier German vassals carry uncertain loyalty. Otto von
+    Weimar (-25), Eberhard (+20 post-prison), Ludwig (+20 post-prison), others
+    unknown. These are men who were recently conquered or captured.
+  Risk: A German-vassal faction targeting independence or reduced obligations
+    is plausible within 5 years.
+  Mitigation options (in priority order given above decisions):
+    — Grant d_meissen to Reginar (see above — structural solution)
+    — Saxon marriage alliances (see above — generational binding)
+    — Oda marriage (see [FAMILY] Břetislav/Oda) — softens von Weimar specifically
+    — Raise armies to demonstrate cost of rebellion if faction forms despite above
+
+[FAMILY] Bořivoj's trajectory decision (~1075)
+  Who: Bořivoj (id 39200), greedy + trusting + charming
+  Context: Carried forward from 1066. The "decide secular or church by ~1075"
+    window is approaching. An Intrigue education adds capability to the greedy-
+    trusting profile. He speaks Lechitic (his mother's language), which suggests
+    a Polish connection could be used as a placement vector if the church path
+    is chosen (a clerical career with Polish connections may find patrons).
+  Lean: still the church as default unless secular skills develop exceptionally.
+    Keep the hook — it remains the safety valve.
+
+[FOREIGN] The Papal problem
+  Context: Anselmo has -30 impious opinion of Vratislav. Unchanged from game
+    start. Four years of no progress on this.
+  Jan of Opava is still the most obvious in-realm counterweight, but he is also
+    now hosting Jaromír as Court Chaplain — which complicates his position.
+  Short-term action: Identify what specific modifier drives the -30. Is it a
+    lifestyle trait (permanent background penalty)? A specific event decision?
+    A sin? Knowing the source is the first step to addressing it.
+
+
+================================================================
+III. LONG-TERM (~1077–1090)
+================================================================
+
+[DYNASTIC] Břetislav's succession readiness
+  Target state when Vratislav dies (whenever that is):
+    — Diplomacy education tier 3–4 (on track given current trajectory)
+    — Clear heir status, no serious contention from half-brothers
+    — At least one strong marriage alliance
+    — Familiarity with governing: ideally a county to manage before inheriting
+      the duchy
+  Current risk: No hook on Břetislav; the relationship is affection-based.
+    Given his character (compassionate, honest, generous, charming), this is
+    probably sufficient — but the three hooked half-brothers create a
+    structural asymmetry. If Šwiétosława or any of her sons develop ambitions,
+    the hook leverage could be turned against Břetislav's interests.
+
+[DYNASTIC] Přemyslid realm integration (Saxon bloc)
+  The six new Saxon vassals are a net asset in troops but a net liability in
+  loyalty. Long-term, their integration into the Přemyslid orbit requires:
+    — Marriages between their children and Přemyslid court members (over 1-2 gen.)
+    — A stable succession (Gavelkind would fracture the realm on Vratislav's death;
+      the Saxon counts would pull apart cleanly along cultural lines)
+    — No further military humiliations from Bohemia's side (the -25 on Otto is a
+      long-standing wound; don't reopen it)
+
+[DYNASTIC] Claim title of King of Bohemia (decided — saving toward this)
+  Decision: Save gold to claim the Kingdom of Bohemia title. This is not the
+    same as the historical imperial-grant path — it is the CK3 mechanic of
+    spending gold/prestige to create (or claim) a kingdom-tier title that we
+    already have de jure grounds for.
+  Strategic rationale: King-tier status unlocks peer-king alliances. As Duke of
+    Bohemia, our alliance pool is limited to other dukes and below; as King,
+    neighboring kings (Hungary, Poland, Denmark) become eligible alliance partners.
+    Given that we currently have zero alliances and are absorbing a potentially
+    unstable Saxon bloc, access to peer-king alliances is a significant upgrade.
+  Historical context: Vratislav II was elevated to King of Bohemia in 1085
+    (historically, via imperial grant). Playtest 1 achieved this by 1083.
+    The two paths — imperial grant vs. title creation — have different prerequisites:
+      — Imperial grant: requires sustained good standing with Heinrich (blocked
+        by current -20 disapproving opinion; fixing this is the prerequisite path)
+      — Title creation: requires gold and prestige; check exact cost in-game
+  Current obstacle (shared by both paths): The -20 disapproving opinion of
+    Heinrich is a relationship debt with unclear origin. Resolving it unblocks
+    the imperial route; if the title-creation route is cheaper/faster, it may
+    be independent of the Emperor relationship (verify in-game).
+  Papal consideration: Jan of Opava hosting Jaromír complicates papal channels.
+    A bishop hosting the duke's rival is an awkward intermediary to Rome for
+    either path that involves papal recognition.
+  Active obligation: Begin accumulating gold now; do not spend reserves on
+    non-critical expenditures when the kingdom claim is on the horizon.
+
+[DYNASTIC] Succession law reform
+  Still the generational question: escape Gavelkind before Vratislav dies.
+  The Saxon vassal bloc complicates this — their consent becomes necessary,
+  and their loyalty is the weakest in the realm. Timing this right (when the
+  bloc is sufficiently integrated) is critical.
+
+
+================================================================
+IV. GRAND AMBITIONS
+================================================================
+
+[DYNASTIC] Přemyslid Bohemia: Stability Through Character
+  Unchanged from 1066 statement: the goal is to hand Břetislav a realm in
+  better shape than it began, with a court culture of trust rather than fear.
+  Břetislav's trait profile (compassionate, honest, generous, charming) makes
+  him the best possible custodian of this goal if his education completes well.
+  The counterweight is the court's current intrigue layer: Záviš (Intrigue 15,
+  friend of Šwiétosława), Jaromír (Intrigue 8, embedded in Jan's court),
+  Bořivoj (Intrigue focus, greedy+trusting). A reign of virtue requires that
+  these currents not overwhelm the heir before he is old enough to navigate them.
+
+[DYNASTIC] The Polish Relationship
+  Šwiétosława's children carry Polish blood. A succession to Bolesław III Piast
+  has occurred; the relationship with Poland needs re-evaluation under the new
+  ruler. The Lechitic language Bořivoj speaks could be an unexpected asset or
+  liability depending on how Polish politics develop.
+
+[FOREIGN] The German Question
+  Bohemia has made a large bet on the Saxon corridor. If it holds, Bohemia is
+  a significant Central European power by the 1080s. If it fractures, the realm
+  loses more vassal strength than it started with. Managing the Saxon bloc while
+  maintaining HRE good standing is the defining foreign policy question of the
+  next decade.
+
+
+================================================================
+OPEN QUESTIONS AT 1071.2.5
+================================================================
+
+  — Is Judita betrothed? To whom? (She is in Regensburg — this needs in-game
+    confirmation before the 1072 marriage window closes.)
+
+  — What caused the -20 disapproving_opinion of Heinrich (from Vratislav)?
+    (Understanding this is prerequisite to repairing the Emperor relationship.)
+
+  — Who is Tamar? (-30 imprisoned_me, not in vassal list — imprisoned? at
+    another court? a foreign noble?)
+
+  — What succession law governs Bohemia? (Affects urgency of the entire dynastic
+    succession planning strand.)
+
+  — What caused the Saxon counts to become Bohemia's vassals? (War? Imperial
+    grant? Event chain?) The exact mechanism affects how we understand their
+    loyalty and what would trigger a rebellion.
+
+  — Arnold (id 38032): Ludmila has a crush on him. Who is he?
+
+  — Jaromír's endgame: Why is he Court Chaplain at Jan's court? Was this
+    voluntary, arranged, or imposed? What does he want out of the position?

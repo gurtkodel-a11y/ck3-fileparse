@@ -249,10 +249,24 @@ def pillar_label(key: str) -> str:
     return key.replace("_", " ").title()
 
 
+# Internal DLC/patch codenames used as a second-level infix on some tradition
+# keys (e.g. "tradition_tgp_imperial_peace" — "tgp" was the Japan content
+# patch's dev codename). These carry no display meaning, so strip them too.
+_TRADITION_DLC_INFIXES = ("tgp_", "mpo_", "ep1_", "ep2_", "ep3_", "ep4_",
+                          "fp1_", "fp2_", "fp3_", "fp4_", "fp5_", "ce1_")
+
+
 def tradition_label(key: str) -> str:
     """
-    Humanise a tradition key by stripping 'tradition_' prefix.
+    Humanise a tradition key by stripping 'tradition_' prefix (and any
+    internal DLC codename infix immediately after it).
 
     Example: "tradition_chivalry" → "Chivalry"
+    Example: "tradition_tgp_imperial_peace" → "Imperial Peace"
     """
-    return key.removeprefix("tradition_").replace("_", " ").title()
+    rest = key.removeprefix("tradition_")
+    for infix in _TRADITION_DLC_INFIXES:
+        if rest.startswith(infix):
+            rest = rest[len(infix):]
+            break
+    return rest.replace("_", " ").title()

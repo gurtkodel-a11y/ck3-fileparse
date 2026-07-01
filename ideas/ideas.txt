@@ -1,0 +1,332 @@
+Project Ideas — CK3 Fileparse
+================================================================
+
+A brainstorming cupboard. Not a roadmap or a to-do list — a place to capture
+ideas, observations, and design notes before they're forgotten. Some of these
+will get built; others will inform future decisions even if never implemented.
+
+Entries are grouped by theme. Within a theme, each idea has a short pitch and
+any relevant notes on feasibility, data availability, or caveats.
+
+
+================================================================
+I. QUERYING / TOOLING GAPS (surfaced by actual use)
+================================================================
+
+These are gaps that came up during real assessment work — places where the
+save data clearly contains the answer but we couldn't surface it cleanly.
+
+--- War history / event log ---
+The single highest-value missing tool. The save almost certainly contains
+closed-war records (CK3 tracks war history). A query that surfaces "wars
+resolved since date X" — with combatants, outcome, and territorial change —
+would transform post-session archaeology into actual history. The 1066→1071
+transition has clear fingerprints (opinion modifiers, new vassals) but the
+sequence is opaque.
+Data source to explore: raw["war"] or similar top-level key; war records may
+include end-date, warscore, attacker/defender/target.
+
+--- Betrothal status ---
+character_profile() doesn't surface betrothals. Judita being in Regensburg
+is strongly suggestive but unconfirmable without a separate query. CK3 tracks
+betrothals as a relation type in the save. A betrothal_for(char_id) query
+returning (partner_id, arranged_date, marriage_date) would be a small addition
+to character_profile() or a standalone helper.
+Data source: relations.active_relations, probably relation_type="betrothal".
+
+--- Guardian finder ---
+"Find the best available guardian for a child with focus X, within realm Y"
+was a recurring need in Playtest 2. We wrote the 1066 plan based on a manual
+survey of two candidates and missed Ota Přemyslid entirely (who turned out
+to be the obvious right answer). A query: guardian_candidates(gs, char_id,
+focus) → ranked list of in-realm characters by education tier + personality
+fit for that focus, excluding characters already serving as guardians, would
+make this trivially fast.
+Note on Jan restriction: In CK3, clerical characters (and likely realm chaplains)
+cannot be assigned as guardians even when they are vassals. This is unintuitive
+from a narrative perspective (a bishop-scholar is exactly who you'd want
+educating a child) but mechanically blocked. Worth flagging in the tool output:
+"Jan of Opava (D=8, L=18) — INELIGIBLE: clerical vassal."
+
+--- Character lookup by name or partial profile ---
+"Who is Tamar?" and "Who is Arnold?" came up in the 1071 assessment.
+Both are characters referenced by opinion modifiers or personal relations but
+not further identified. A find_character(gs, name) → list[CharacterProfile]
+function would answer these in seconds. Could be a lightweight scan of gs.chars
+by decoded first_name.
+
+--- Succession law query ---
+The succession law governing the player's realm has been "unknown" across all
+Playtest 2 assessments. It affects urgency calculations for inheritance planning
+but isn't surfaced by any current evaluator. Should be readable from
+landed_data or realm law records.
+Data source: probably raw["laws"] or title.succession_law on the primary title.
+
+--- Opinion modifier detail ---
+The relationships evaluator surfaces top notable opinions but doesn't decode
+the source modifier (only the label). "Tamar: -30 (imprisoned_me)" is useful;
+"Tamar: -30 (imprisoned_me — imprisoned 1068.4.1, expires never)" would be
+better. Opinion modifier objects likely include timestamp and duration.
+
+--- Knight-who-is-also-vassal flag ---
+At 1071.2.5, Benno von Lóningen (Count of Wolkenstein) and Reginar (Count of
+Dresden) are both listed as Vratislav's knights AND as county-tier vassals.
+This is an unusual dual role that has military and political implications —
+a knight who is also a powerful vassal has divided loyalty in a different way
+than a household knight. Worth flagging in the military report when it occurs.
+
+
+================================================================
+II. EVALUATOR ENHANCEMENTS
+================================================================
+
+--- Economy evaluator ---
+Noted as a major gap in CLAUDE.md. Gold income, building yields, development
+return — the third CK3 pillar alongside military and diplomacy. The terrain
+evaluator has building data; an economy evaluator would need income calculations
+from landed titles and buildings.
+
+--- Opinion scores (vassal loyalty) ---
+raw["opinions"] is unexplored. Surfacing which vassals like/dislike the player
+and why — especially the new Saxon bloc with uncertain loyalty — would add real
+value to the relationships report. The faction risk section is currently
+qualitative; with opinion scores it becomes quantitative.
+
+--- Sub-vassal / realm tree ---
+Current relationships report shows only direct vassals. A realm-tree view —
+direct vassals, their direct vassals, total indirect levy — would give a fuller
+picture of the political structure. Especially relevant for larger realms.
+
+--- Faction tracker ---
+Factions are surfaced by the relationships evaluator but haven't been validated
+for Playtest 2 (Murchad had none at the test date). When the Saxon vassal bloc
+starts forming opinions, faction tracking will matter. Should surface: faction
+type, members, leader, demand, player's ability to satisfy it.
+
+--- Active-war detail ---
+MarshalAdvisor note from CLAUDE.md: doesn't yet reference own_armies/enemy_armies
+during active wars. Extending this would make the military report much more
+useful when a war is actually happening.
+
+--- War-retargeting flag (surfaced by playtest5, Meissen/Lausitz) ---
+Documented as a caveat in ck3/evaluators/military.py for now (module docstring
++ ActiveWar dataclass), not yet built as a feature: when you take a title via
+conquest, a third party's separate war over that SAME title (e.g. another
+claimant who was already fighting the previous holder) doesn't resolve — it
+retargets to you as the new holder. Player went from "won the Meissen war" to
+"defending against Dedo over Meissen" in one transition with no warning. A
+real enhancement would have the Marshal brief proactively flag this: after a
+conquest, check active_wars for any war whose targeted_titles overlaps a
+title that just changed hands, and call out "this looks like an inherited
+war, not one you declared." Needs the title-history-as-war-log approach
+(section IV) to know "just changed hands" in the first place. Revisit when
+war frequency picks up enough to make this worth automating rather than
+catching by hand.
+
+--- Geography zone heuristic breaks down for island nations (found in Playtest 4) ---
+ck3/geography.py's region/zone classification returned 1,500+ rulers as
+"local/nearby" to Takenori (Duke of Mutsu, Japan), including the Emperor of
+Great Liao, the King of Maghreb (North Africa), the Emperor of Cumania
+(Caspian steppe), and the King of Tamilakam (southern India). The heuristic
+leans on the de jure/kingdom-tier proximity network, which apparently treats
+Japan's island position as "close" to a huge swath of the Eurasian landmass
+once All Under Heaven's bigger map is in play — sea isolation isn't being
+modeled. Realistic neighbors (Goryeo across the strait, Liao via Korea/
+Manchuria) get buried in noise alongside genuinely irrelevant continental
+rulers. Worth a targeted fix: either model sea-route distance explicitly, or
+at minimum cap "local" zone membership by a real proximity check rather than
+de jure network reachability alone. Flagged as a DLC-coverage-adjacent gap —
+not unique to a specific DLC, but only surfaced because All Under Heaven's
+map expansion made the region table's blind spots visible.
+
+
+================================================================
+III. CHARACTER / NARRATIVE TOOLS
+================================================================
+
+--- Naming convention: "narrative" is the broader concept, not character-only ---
+Course-corrected during playtest5: "narrative" should refer to the full
+multi-scale concept below, not be used as a synonym for character-level
+events. ck3/evaluators/narrative.py was renamed to character_narrative.py
+(run_narrative.py -> run_character_narrative.py) to make this explicit —
+it covers the Personal (and some Family) rung specifically, not "narrative"
+in general. Keep this distinction in any future module naming.
+
+--- Full narrative evaluator (multi-scale, NOT YET BUILT) ---
+The long-term goal: a narrative layer that surfaces events of note at
+several nested scales, each wider than the last. Working list of rungs
+(player's framing, possibly too fine-grained but captures the gist):
+  Personal      — one character's own life beats (built: character_narrative.py)
+  Family        — births/deaths/marriages/feuds across a dynasty/house,
+                   not just one person's memory of them
+  Court         — intrigue, factions, council drama, guardian/ward dynamics
+                   within a single ruler's court
+  Holdings      — development, building completions, sieges, local unrest
+                   at the barony/county level
+  Domain        — the player's own realm as a whole: vassal politics,
+                   succession, realm laws changing
+  Local         — the immediate geographic neighborhood (the zone-0/1
+                   rulers Marshal/Chancellor already track) — wars,
+                   successions, alliances among neighbors
+  Continental   — broader regional shifts: kingdoms rising/falling,
+                   religious-fervor swings, large coalition wars
+  Global        — empire-tier and world-historical events
+Each rung likely wants its own data sources (character_memory_manager for
+Personal/Family; landed_titles history + faction_manager for Court/Domain;
+the title-history-as-war-log approach from section IV below for Local/
+Continental). Not clear yet whether this becomes one evaluator with scale
+as a parameter, or a family of small evaluators under a shared narrative/
+package the way advisors share Council. Revisit once Court or Domain-scale
+data needs come up organically in a playtest, the way Personal did with
+Ludmila's death — don't design the other six rungs speculatively in advance
+of an actual need.
+
+--- Character narrative (Personal scale) memory-decay workaround (BUILT, follow-up needed) ---
+ck3/evaluators/character_narrative.py (life_story()) is built and working — walks
+character_memory_manager and renders a character's life as a chronological
+narrative (births, deaths, marriages, rivalries, battles, etc.), with a
+fallback for dead characters: their own alive_data.memories pointer is gone
+once they move to dead_unprunable, so we cross-reference other living
+characters' memory lists for entries naming the dead character as a
+participant (e.g. a parent's "relative_died" memory) and tag them "(per
+{owner}'s memory)". This is how Ludmila's death shows up in her own story
+at all — she can't remember it, but her family can.
+
+Known limitation, not yet addressed: CK3 memories carry an end_date and
+appear to decay — observed end_dates run ~130 years past creation_date.
+That's fine within a living character's own lifetime, but two real gaps:
+  1. Once a memory expires, it's presumably removed from the save entirely
+     (not yet confirmed — would need a save where an old enough memory has
+     actually crossed its end_date to verify). If so, very old events on
+     long-lived dynasties/ancestors could quietly vanish from the record.
+  2. The dead-character fallback only works as long as at least one living
+     character still holds the cross-referencing memory. Once Vratislav,
+     Judita, Břetislav, etc. are *also* dead and their own memories expire
+     or they're pruned, Ludmila's death becomes unrecoverable from the
+     memory system — there'd be no path back to it at all (dead_data still
+     has the bare cause-of-death fact, but loses the relational/emotional
+     framing the narrative tool adds).
+Possible directions to explore later: snapshot life_story() output to a
+persistent file per character at the point of death (so the narrative is
+captured before memories start decaying), or treat the memory system as a
+"hot cache" and maintain our own append-only narrative log across saves
+instead of re-deriving it fresh from each save's memory state. Not urgent —
+parking here per playtest5 discussion, revisit if/when a save is old enough
+for decay to actually start biting.
+
+--- Character arc tracking ---
+The most interesting stories in Playtest 2 are about how characters change
+over time: Jaromír drifting from "exiled rival" to "embedded schemer at the
+friendly bishop's court"; Břetislav developing from a 13-year-old with a crush
+into (eventually) a duke; Bořivoj's greedy+trusting trajectory. A tool that
+generates a "character arc" by comparing profiles across multiple saves would
+make this explicit rather than reconstructed.
+Design: character_arc(char_id, [save_path1, save_path2, ...]) → delta-summary
+of skills, traits, relationships, titles over time.
+
+--- First-person narrative voice ---
+The long-term project vision is an LLM that can engage with the game from
+a first-person perspective (Vratislav's point of view, not the strategic
+overview). The character_profile() evaluator is the right foundation — it
+surfaces everything intrinsic and extrinsic. The next step is a prompt template
+that feeds a character profile + relationship context into Claude and asks for
+first-person internal monologue or dialogue.
+Note: assessments/playtest2/ documents are good seed material for tone and
+narrative style. They model the balance between mechanical fact and story.
+
+--- Council scene generator ---
+Each council advisor (marshal, chancellor, etc.) produces a brief. A "council
+scene" would frame these as in-character dialogue — the Marshal reporting on
+a military threat, the Chancellor advising on a vassal problem, the Spymaster
+warning about Bořivoj. The advisor layer already exists; this is a rendering
+question, not a data question.
+
+--- Relationship web visualization ---
+The character web descriptions in assessments are written manually. A tool
+that generates a DOT/graphviz relationship diagram from CharacterProfile data
+(connecting characters by marriage, friendship, rivalry, guardian/ward,
+liege/vassal bonds) would make the structure visible at a glance. Text-mode
+approximation possible; proper rendering requires a graphviz step.
+
+
+================================================================
+IV. WORKFLOW / INFRASTRUCTURE
+================================================================
+
+--- Title history as war log (KEY FINDING) ---
+CK3 confirmed behavior: `wars.active_wars` contains ONLY currently active wars.
+No end_date or result field exists. triggered_event is a future queue. Character
+records have no history field. Completed wars do NOT persist as war records.
+
+BUT: `landed_titles[id].history` is a `{date: holder_id_or_{type,holder}}` dict
+on every title that ever changed hands. When a title is taken by conquest, the
+entry is `{type: 'conquest_claim', holder: char_id}` with the exact date.
+
+Verified: d_meissen (title 3453) shows `1070.12.29: {type: conquest_claim, holder: 32778}`.
+This directly records that Vratislav took the Duchy of Meissen on 29 Dec 1070 via
+a conquest claim. The counties (Meissen, Naumburg, Dresden, etc.) became Bohemian
+vassals automatically as de jure subjects of the duchy — no separate conquest needed.
+
+Implication: a "session history" tool can be built from a SINGLE save (no diff needed)
+by scanning all titles for history entries since the last-played date:
+  — filter landed_titles for history entries where date >= session_start_date
+  — group by date: multiple title changes on the same day = likely one war
+  — decode transfer type (conquest_claim, usurpation, inheritance, etc.)
+  — resolve holder IDs to character names
+  — output: "1070.12.29: Vratislav (Bohemia) took d_meissen from Otto (Meissen)
+    via conquest claim. De jure vassals affected: [list]"
+
+This is the primary war-history tool. Other signals (opinion modifiers, vassal
+roster) are detective-work fallbacks for cases not captured by title changes
+(e.g., wars that resulted in gold/prestige rather than title transfer).
+
+Priority: HIGH — data is confirmed available, tool design is clear.
+
+--- Autosave mid-session monitoring ---
+Complementary to the title-history approach above: parsing autosaves while a war
+is active would capture it in active_wars before it resolves, giving combatant
+detail and battle results that title history doesn't store.
+CK3 keeps 2-3 autosave rotation files. Limitation: a war that starts and ends
+between two autosave points is still invisible to this method (but would appear
+in title history). Full parsing is slow (~3 min per 96MB save); mitigate by
+parsing only the wars section.
+Best use: "what war is Bratislav currently fighting and how is it going?" —
+a mid-session check rather than retrospective reconstruction.
+
+--- Playtest assessment template ---
+The assessments in assessments/playtest2/ evolved organically. A template
+(with standard sections for position / character web / open questions / tooling
+gaps) would make them faster to write and more consistent to compare across
+save dates. Could be a Markdown template file.
+
+--- Guardian restriction catalog ---
+Following the Jan of Opava finding: CK3 has a number of non-obvious restrictions
+on who can serve as a guardian (clerical characters, realm chaplains, possibly
+imprisoned characters, possibly characters at foreign courts). Building a catalog
+of these restrictions — derived from game files or from empirical testing —
+would improve the guardian_candidates() tool and prevent planning on ineligible
+candidates.
+
+--- Save file comparison infrastructure ---
+We have 16+ extracted saves across Playtest 1 and Playtest 2. Most are too large
+to keep in memory simultaneously. A lightweight index (date, char_id, realm size,
+key stats) built from each save without loading the full parse would enable
+cross-save queries without the 2-minute parse overhead.
+
+--- Git-backed save history per playtest (META) ---
+Idea: keep each playtest's unpacked saves in their own little git repo (one per
+playtest, gitignored from the main repo) so the sequence of snapshots becomes a
+real commit history — git log as a timeline, git diff between two dates as a
+free "what changed" query, and git branches as a way to fork off "what if"
+experiments from a given snapshot.
+Appeal: snapshots are already timestamped and sequential, which is exactly
+the shape git wants; git diff between two snapshots is a more direct version
+of the "save file comparison infrastructure" idea above.
+Caveats: extracted saves run 60-160MB of text each, and CK3's save layout
+(shuffled IDs, reordered blocks between snapshots) may not delta-compress or
+diff as cleanly as source code does — a playtest's worth of snapshots could
+balloon a nested repo into multi-GB territory with noisy diffs. Worth a small
+experiment (one playtest, a few real snapshots, an actual git diff) before
+committing to it as a convention.
+Status: parked — interesting, but we're deliberately not chasing it mid-playtest.
+Revisit when we want a "historical record" tool and have a slow afternoon.

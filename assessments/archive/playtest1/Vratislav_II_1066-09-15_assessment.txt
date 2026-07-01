@@ -1,0 +1,213 @@
+Strategic Assessment — Vratislav II, Duke of Bohemia (1066.9.15)
+Generated from save: Duke_Vratislav_II_of_Bohemia_1066_09_15.ck3
+================================================================
+
+This is the opening day of the game. No moves have yet been made. The assessment
+below describes Vratislav's starting position in full.
+
+
+I. THE REALM: HOLDINGS, VASSALS, AND INTERNAL BALANCE OF POWER
+---------------------------------------------------------------
+
+Bohemia opens in peacetime with complete domain control and a coherent
+territorial core. Vratislav's seven personal holdings — Praha (development 12,
+the realm's highest), and six further holdings each at development 8 — sit on a
+defensible terrain mix: three hills counties form the backbone of the interior,
+one farmlands county (Litomeřice) provides agricultural wealth, one mountains
+county (Hradec) anchors the northeast, and two plains counties (Boleslav,
+Plzeň) round out the west. The special economic site at Čáslav (poi_special
+economic building) is a development asset to lean on early. Full control
+everywhere and an average development of 8.6 per holding puts Bohemia in a
+healthy economic position for a starting duchy.
+
+The vassal picture divides cleanly into three tiers:
+
+Tier 1 — The Přemyslid cousins (Moravia):
+  Konrád Přemyslid (Count of Brno) is by far the most powerful vassal, with
+  three holdings (forest/hills/farmland), 25 total development, 1,000 levy, and
+  1,402 combined troops. His combat power is 34,500 — roughly a third of
+  Vratislav's own 91,580. Ota Přemyslid (Count of Olomouc) adds another 825
+  troops across two holdings. The two Přemyslids together control a contiguous
+  Moravian block in the east that represents the dominant internal power
+  concentration, and as family members they have the dynastic standing to act
+  on it if relations sour.
+
+Tier 2 — The problematic vassals:
+  Jaromír Přemyslid (Count of Opava, theocracy vassal) is Vratislav's declared
+  mutual rival. He holds 641 levy and 1,152 total troops in a forested border
+  county pointing northeast toward Silesia. As a theocracy vassal he cannot be
+  revoked through normal channels, and as a sitting rival he generates a steady
+  opinion drain. He is politically isolated — a bishop with no secular faction
+  base — but his rivalry is a live wound.
+
+  Česlav Vrsovid (Count of Žatec) is the only non-Přemyslid feudal count,
+  holding a single farmlands county in the fertile northwest. The Vrsovids are
+  a rival dynasty historically; his 260 levy is negligible today but his
+  independence from the Přemyslid house makes him a potential faction nucleus
+  long-term.
+
+Tier 3 — The minor barons:
+  Eight republic-type baron vassals (Beroun, Bílina, Bechyně, Děčín, Domažlice,
+  Jaroměř, Milevsko, Vraclav, Vyšehrad) contribute minimal individual levy
+  (~70–72 each) and are politically negligible. They represent the commercial
+  and ecclesiastical fabric of Bohemia rather than military weight.
+
+House-head position: Vratislav holds house-head hooks on Boleslav, Bořivoj,
+and Vladislav — three of his six children. These are succession insurance, not
+today's tools.
+
+Overall internal assessment: stable, controlled, and carrying one live
+diplomatic wound (Jaromír) and one medium-term structural risk (Konrád's
+relative weight in Moravia).
+
+
+II. MILITARY POSTURE AND CULTURAL SYNERGY
+------------------------------------------
+
+Realm strength at opening is 3,292 maximum (2,467 levy + 825 men-at-arms),
+all currently unraised. The MaA composition is well-suited to Bohemia's terrain:
+
+  zbrojnosh (Heavy Infantry, size 500) — the Czech national unit, with bonuses
+    of +8 damage on hills and +6 on both mountains and forest. Praha, Čáslav,
+    and Doudleby are all hills counties; the northeastern border runs through
+    mountains and forest. This regiment will fight at its best on home ground.
+  Light Horsemen (size 200) — effective on plains and drylands; useful for
+    offensive projection onto Poland or Hungary's flatter terrain, but penalized
+    on the mountainous borders.
+  Pikemen (size 100) — steady heavy-footline support, no terrain penalties.
+  Mangonel (size 20) — siege capacity; small but present from day one.
+
+The cultural traditions compound the terrain advantage:
+  Mountaineer Ruralism: defensive bonuses in hills and mountains — exactly the
+    terrain of Bohemia's interior and northern borders.
+  Castle Keepers: improved castle defenses across the domain.
+  Hard Working: development growth bonus, amplifying the existing dev base.
+
+Five knights (Kunrát prowess 10, Petr 10, Lanź 9, Ota 8, Česlav 6) give a
+moderate heavy-cavalry pool. Prowess 10 is strong but the bench is thin; Lanź
+and Ota fill out the list decently.
+
+The net military picture: Bohemia punches above its levy numbers in defensive
+engagements thanks to terrain, traditions, and the zbrojnosh. For offense —
+particularly any campaign toward the pagan north — the force composition is
+solid but unspectacular. The siege train is minimal; no sustained campaign
+against fortified opponents is advisable without expansion.
+
+
+III. THE EXTERNAL SITUATION: BOHEMIA'S PLACE IN EUROPE
+-------------------------------------------------------
+
+The frame above:
+  Vratislav is a feudal vassal of Emperor Heinrich Salian (HRE), who fields
+  5,529 troops and 151,500 combat power. The HRE is Bohemia's security blanket
+  and its primary constraint simultaneously. In 1066 Heinrich is on the eve of
+  his long conflict with the Saxon princes and the Investiture Controversy; the
+  empire will become internally turbulent, which creates both risk (calls to
+  arms, demands) and opportunity (choosing sides advantageously, expanding
+  into the chaos).
+
+Local neighbors (immediate zone):
+  Bolesław Piast, King of Poland (3,009 troops, 72,160 power, Catholic) is the
+  most significant local secular power to the northeast. Poland has historical
+  interest in Silesia and Pomerania, and is stronger than any single Bohemian
+  vassal. No current conflict; no alliance. This is the most important
+  relationship to either secure or prepare to contest.
+
+  Salamon Árpád, King of Hungary (2,649 troops, Catholic) sits southeast.
+  Hungary and Bohemia share faith, share a border, and currently share peace.
+  The Árpáds are the natural marriage-alliance target from Bohemia's opening
+  position.
+
+  Géza Árpád, Duke of Nyitra (1,945 troops) and László Árpád, Duke of
+  Transylvania (1,747 troops) are Hungarian noble cadets — potential marriage
+  partners below the royal tier, worth noting as the Árpád family is large.
+
+  Pagan belt to the north and northwest:
+    Siemomysl of Pomerania (2,735, slavic pagan) — coastal duchy northwest
+    Kasper Lutici of Luticia / Ostmark (1,984, slavic pagan)
+    Krutoj Wizlawid of Veletia / Nordmark (1,840, slavic pagan)
+    Šventaragis of Lithuania (2,269, pagan) — further northeast
+  Combined, these four exceed 8,800 troops. They are fragmented and mutually
+  independent, which prevents immediate coalition, but their slavic-pagan
+  solidarity and proximity to Bohemia's northwestern border (through Poland)
+  makes the northern frontier a persistent background threat. Catholic holy war
+  mechanics are available here once Bohemia is strong enough.
+
+  Dedo Wettin, Duke of Lausitz (2,625, Catholic) is a neighboring HRE vassal to
+  the northwest — shared overlord, shared faith, potential lateral alliance.
+
+The broader picture:
+  William de Normandie (Duke of Normandy, 6,922 total, Catholic) is five days
+  from Hastings; his conquest of England will shift western European attention
+  permanently. This is neutral-to-positive for Bohemia — it draws the most
+  powerful Catholic lord in the system away from central Europe.
+
+  Konstantinos Doukas, Emperor of Byzantium (5,593 troops, Orthodox) looms to
+  the southeast but is separated from Bohemia by Hungary and Croatia. Orthodox
+  and Catholic are same-religion in the Abrahamic family but different faiths —
+  no holy war between them, but no strong alliance incentive either.
+
+
+IV. THREATS, OPPORTUNITIES, AND PRIORITIES
+-------------------------------------------
+
+Immediate threats (internal):
+  1. Jaromír Přemyslid (rival, Count of Opava) — the single most damaging
+     relationship in the realm. He cannot be revoked, he cannot be liked, and
+     his border county creates a northeastern salient that is both strategically
+     exposed and an opinion drain. Near-term handling options: imprison on a
+     pretext, seek a hook to neutralize him, or simply endure and plan for the
+     long game as he ages.
+
+  2. Konrád of Brno — not hostile, but the levy ratio (~40% of Vratislav's own)
+     is approaching the threshold where faction leadership becomes plausible as
+     opinions fluctuate or succession becomes uncertain. Keeping him well-treated
+     and cross-married into Vratislav's children is the best insurance.
+
+Medium-term external threats:
+  3. Poland — Bolesław Piast has a real army, no current alliance with Bohemia,
+     and historical interest in territories that overlap with Bohemia's zone.
+     This is the primary external uncertainty at game start.
+
+  4. HRE obligations — as the empire heads toward Investiture turbulence,
+     Vratislav will face choices about which side to support. The Papal alliance
+     is implicit given Czech Catholic traditions (Armed Pilgrimages, strong
+     Church doctrines), but playing both sides has historically generated large
+     rewards in this era.
+
+  5. Pagan northern neighbors — not immediately threatening, but the combined
+     strength of the northern pagan belt exceeds Bohemia's realm total. The
+     window for preemptive engagement (before any pagan consolidation) is the
+     next few decades.
+
+Opportunities:
+  1. Alliance with Hungary — the most natural first diplomatic move. The Árpáds
+     are Catholic, adjacent, and currently at peace. A marriage of a Přemyslid
+     child to an Árpád minor would cost nothing and gain a significant military
+     partner.
+
+  2. Holy war northward — Slavic pagans along the northern border are legitimate
+     targets under Catholicism's armed pilgrimages tenet. The Pomeranian and
+     Lutician duchies represent territorial upside; timing depends on when the
+     HRE's distraction with Saxony creates political cover.
+
+  3. Čáslav special economic site — development investment here returns above
+     average income relative to flat-development counties. A strong early
+     building choice.
+
+  4. The zbrojnosh advantage — once Bohemia is in a defensive war on home
+     terrain, the zbrojnosh + Mountaineer Ruralism + Castle Keepers combination
+     creates a materially favorable defensive engagement profile. Playing for
+     defensive wars (letting enemies come to the hills) is a legitimate early
+     strategy.
+
+Bottom line:
+  Day one of a solid starting position. No crises, full control, viable military
+  for the region, and cultural traditions well-aligned with the terrain. The
+  vulnerabilities are diplomatic: zero alliances and one live internal rival.
+  First priorities are clear — resolve the Jaromír problem by whatever means
+  presents itself, and open alliance negotiations with Hungary before Poland or
+  a pagan neighbor creates a more complicated situation. The Investiture era
+  begins immediately and will demand attention; staying in Heinrich's good graces
+  while the empire is strong is cheap insurance that quickly becomes expensive
+  to purchase later.

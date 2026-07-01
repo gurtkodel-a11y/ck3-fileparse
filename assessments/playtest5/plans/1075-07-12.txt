@@ -1,0 +1,121 @@
+Plans — Vratislav II Přemyslid, King of Bohemia
+Date: 1075.7.12  |  Playtest 5 (DLC-overhaul re-run)
+================================================================
+
+Builds on assessments/playtest5/plans/1068-04-10.txt. The Meissen/Kingdom
+plan from that session played out in full between 1070.11.5 and now.
+
+
+================================================================
+0. WHAT HAPPENED — Meissen, the Crown, and Lausitz
+================================================================
+
+Confirmed via the new character_narrative tool (life_story on 32778) and
+direct save queries:
+
+  1072.1.9   Title creation: Kingdom of Bohemia. Vratislav is now King.
+  1072.2.12  Second ascended_throne_memory entry — likely the formal
+             title-tier transition completing.
+  1072.8.31  Otto (demoted ex-Duke of Meissen, by then just Count of
+             Meissen under Vratislav) died in battle, killed by a knight
+             named Yoshiah. Unrelated incident, not a succession problem —
+             Benno was already the granted Duke of Meissen by this point.
+  1074.9.25  War: Dedo (attacker) vs. Vratislav (defender), white peace.
+             See section 1 below — this was Dedo's own separate war for
+             Meissen retargeting onto Vratislav after the conquest, not a
+             new Lausitz aggression.
+  1075.4.6   Became rivals with BOTH Otakar (Duke of Steyermark) and
+             Ordulf (Duke of Angria/Westfalen/Ostfalen) on the same day —
+             per the player, this was a coronation activity interaction:
+             two nobles approached Vratislav during the coronation, and
+             his choices in that interaction made them rivals. Flavor/
+             contingency by design, not a sign of an emerging plot. Worth
+             keeping on the radar (Ordulf in particular — he's a major
+             neighboring power we've tracked across several saves) but not
+             an active concern.
+  1075.6.27  Formal Coronation activity (Coronations DLC) — Adelheid
+             (Count of Frankfurt, a friend) served as coronator.
+
+Benno von Lóningen is confirmed Duke of Meissen — the recommended pick from
+the 1068 plan. Worked out clean: no faction, no flagged loyalty issue.
+
+[BUG FOUND + FIXED] Otakar and Ordulf were showing up in the relationships
+  report as "own realm" rivals — which would mean they're Vratislav's own
+  vassals. They're not; both are fully independent/foreign dukes. Root
+  cause: RelationshipsEvaluator._char_location() (ck3/evaluators/
+  relationships.py) treated "holds any title" as equivalent to "is in the
+  player's realm," with no actual liege-chain check. Fixed: now walks the
+  real vassal-contract chain back to the player; added a proper
+  "foreign_ruler" category distinct from "own_realm". Verified against
+  this save and the 1070.11.5 save with no regressions.
+
+[RULED OUT] Spymaster's brief showed a "Siegfried -55 (hate_opinion)" in
+  Notable Opinions, which would be alarming if it were Judita's husband.
+  Checked directly: no opinion record exists at all between Vratislav and
+  Siegfried von Nordheim (id 38157, now Duke of Augsburg). It's a different,
+  unrelated Siegfried — name collision in a large world, same class of
+  ambiguity as the long-standing "Tamar/Arnold" gap (see ideas.txt). The
+  Judita/Siegfried alliance is intact and healthy — Augsburg is now a
+  dynastic ally, and Siegfried's elevation to Duke (presumably succeeding
+  Otto von Nordheim) adds real weight to that bond.
+
+
+================================================================
+1. WAR-RETARGETING — new mechanical knowledge, documented
+================================================================
+
+Player's explanation, confirmed and now written into the codebase: Dedo
+was independently fighting Otto for the Margravate of Meissen — the same
+title Vratislav was also pursuing. When Vratislav's own war concluded and
+he took the title, Dedo's still-active war didn't resolve — it retargeted,
+with Vratislav inheriting the defender role. Result: "I just won my war for
+Meissen" became "I am now being attacked over Meissen" in a single
+transition, with no warning beyond a new entry in active_wars.
+
+Documented in ck3/evaluators/military.py (module docstring + ActiveWar
+dataclass comment) so this isn't re-discovered the hard way next time.
+Noted in ideas.txt as a candidate for an actual Marshal-brief feature later
+(proactively flag "this looks like an inherited war") — not built yet,
+needs the title-history-as-war-log infrastructure first.
+
+Strategic implication going forward: winning a contested title doesn't
+necessarily end the contest. Worth checking, before declaring on Lausitz,
+whether any third party is independently pressing a claim on d_lausitz
+right now — winning that war could hand Vratislav a second, unplanned
+war the same way Meissen did.
+
+
+================================================================
+2. CURRENT POSITION (quick read)
+================================================================
+
+  Military:   6,172 max troops, 159,763 combat power — "strong advantage
+              vs. local field." First clean Marshal brief this playtest
+              (no priorities flagged).
+  Alliances:  3 (was 1) — Ota (own vassal, negotiated), Ludwig Ludowinger
+              (new, via Břetislav ↔ Hildegard marriage), Siegfried
+              (Augsburg, via Judita). Isolation problem meaningfully
+              addressed, though Chancellor hasn't flagged any new priority
+              this round either.
+  Lausitz:    Claim still held and still pressed (confirmed via
+              claims_held_by). Dedo just spent a war for nothing (white
+              peace) — arguably a better moment to press this claim than a
+              worse one, once the third-party-claimant check above is done.
+  Family:     New child, Záštita (b. 1073.11.3). Břetislav married
+              Hildegard (the Schmalkalden alliance). Judita married and
+              relocated to Siegfried's court in Augsburg.
+  Anselmo:    Opinion continuing to worsen (-60, was -55, was -30) — mostly
+              stacking from the ongoing rival-supporter dynamic rather than
+              a new development. Still the standing Spymaster priority.
+
+
+================================================================
+OPEN QUESTIONS AT 1075.7.12
+================================================================
+
+  — Is anyone else currently pressing a claim on d_lausitz? Check before
+    declaring, given what just happened with Meissen.
+  — Otakar and Ordulf: flavor rivalries for now, but Ordulf in particular
+    is a major power. Worth a periodic check rather than active planning.
+  — Guardian assignments for the younger children (Boleslav, Bořivoj,
+    Vladislav, Záštita) — still not confirmed resolved; revisit.

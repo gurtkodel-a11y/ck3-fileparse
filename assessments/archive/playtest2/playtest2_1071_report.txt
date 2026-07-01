@@ -1,0 +1,610 @@
+
+========================================================================
+
+Military Report — Vratislav II Přemyslid, Duke of Bohemia (id 32778)  [1071.2.5]
+======================================================================
+
+--- Realm Strength ---
+  Levy capacity:      3,612
+  Men-at-arms cap:      826
+  ─────────────────────────
+  Total max:          4,438
+  Currently raised:       0  (levy + MaA combined)
+  Combat power:      88,380  (game internal metric)
+
+--- Men-at-Arms Regiments (4) ---
+  zbrojnosh                     Heavy Infantry      size  500  dmg  34  tough  20  hills:+8dmg, mountains:+6dmg, forest:+6dmg, wetlands:-10dmg
+  light_horsemen                Light Cavalry       size  200  dmg  22  tough  15  plains:+15dmg, drylands:+15dmg, hills:-5dmg, mountains:-10dmg, desert_mountains:-15dmg, wetlands:-15dmg
+  pikemen_unit                  Pikemen             size  100  dmg  22  tough  24
+  mangonel                      Siege Weapons       size   20  dmg   0  tough  12
+
+--- Knights (6) ---
+    Benno                     prowess 9  power 900
+    Reginar                   prowess 10  power 1000
+    Záviš                     prowess 10  power 1000
+    Boreš                     prowess 9  power 900
+    Vznata                    prowess 9  power 900
+    Otto                      prowess 9  power 900
+
+--- Own Armies (0) ---
+
+--- Allied Armies (0) ---
+
+--- Enemy Armies (0) ---
+
+--- Active Wars (0) ---
+
+--- Nearby Rulers — Political & Geographic Context (343) ---
+  [Liege]
+    Heinrich III Salian, Emperor of Holy Roman Empire  Emperor of Hre                levy 3,829  total 6,354  power 182,797  [nearby]  catholic
+  [Direct Vassals]
+    Konrád Přemyslid, Count of Brno   Count of Brno                 levy 1,005  total 1,408  power 35,200  [local]  
+    Benno von Lóningen, Count of Wolkenstein  Count of Wolkenstein          levy   707  total 1,008  power 29,340  [nearby]  catholic
+    Ota Přemyslid, Count of Olomouc   Count of Olomouc              levy   590  total 1,003  power 29,720  [local]  
+    Ludwig Ludowinger, Count of Schmalkalden  Count of Schmalkalden         levy   650  total   954  power 30,800  [nearby]  catholic
+    Otto von Weimar, Count of Meissen  Count of Meissen              levy   399  total   800  power 12,120  [nearby]  catholic
+    Jan, Count of Opava               Count of Opava                levy   426  total   527  power 14,520  [local]  catholic
+    Časlav Vrsovid, Count of Žatec    Count of Zatec                levy   262  total   463  power 16,640  [local]  catholic
+    Reginar, Count of Dresden         Count of Dresden              levy   348  total   450  power  8,120  [nearby]  catholic
+    Eberhard, Count of Naumburg       Count of Naumburg             levy   319  total   420  power 12,380  [nearby]  catholic
+    Ondřej z Boskovic, Baron of Beroun  Baron of Beroun               levy   340  total   340  power  6,800  [local]  catholic
+    Albrecht z Ronova, Baron of Bílina  Baron of Bilina               levy   253  total   253  power  5,060  [local]  catholic
+    Filibert, Count of Pula           Count of Pula                 levy   158  total   159  power  3,640  [nearby]  catholic
+    Markvart, Baron of Vyšehrad       Baron of Vysehrad             levy    72  total    72  power  1,440  [local]  catholic
+    Mikuláš, Baron of Milevsko        Baron of Milevsko             levy    72  total    72  power  1,440  [local]  catholic
+    Boreš, Baron of Děčín             Baron of Decin                levy    70  total    70  power  1,400  [local]  catholic
+    Diviš, Baron of Vraclav           Baron of Vraclav              levy    70  total    70  power  1,400  [local]  catholic
+    Vladimír, Baron of Bechyně        Baron of Bechyne              levy    70  total    70  power  1,400  [local]  catholic
+    Vznata, Baron of Domažlice        Baron of Domazlice            levy    70  total    70  power  1,400  [local]  catholic
+    Častolov, Baron of Jaroměř        Baron of Jaromer              levy    70  total    70  power  1,400  [local]  catholic
+  [Geographic Neighbors (local/nearby)]
+    Philippe Capet, King of France    King of France                levy 3,508  total 3,827  power 109,780  [nearby]  catholic
+    Dedo II Wettin, Duke of Lausitz   Duke of Lausitz               levy 2,790  total 3,616  power 98,744  [nearby]  catholic
+    Salamon Árpád, King of Hungary    King of Hungary               levy 2,225  total 3,166  power 72,893  [nearby]  catholic
+    Svend Estrid, King of Denmark     King of Denmark               levy 1,636  total 2,998  power 85,480  [nearby]  catholic
+    Haraldr IV Yngling, King of Norway  King of Norway                levy 1,517  total 2,937  power 80,907  [nearby]  catholic
+    Ordulf Billung, Duke of Angria    Duke of Angria                levy 1,832  total 2,547  power 72,155  [nearby]  catholic
+    Konstantinos III Doukas, Emperor of Byzantine Empire  Emperor of Byzantium          levy 1,645  total 2,528  power 59,640  [nearby]  orthodox
+    Selim Kolyn Dulo, King of Volga Bulgaria  King of Volga Bulgaria        levy 1,926  total 2,339  power 58,260  [nearby]  ashari
+    Bolesław III Piast, King of Poland  King of Poland                levy 1,905  total 2,322  power 57,720  [local]  catholic
+    Isleifur af Haukadalur, Duke of Ísland  Duke of Iceland               levy 1,707  total 2,321  power 57,730  [nearby]  catholic
+    Kalevi Karjalainen, Duke of Karelia  Duke of Karelia               levy   972  total 2,320  power 66,658  [nearby]  finnish_pagan
+    Mielus III Savolainen, Duke of Savo  Duke of Savo                  levy 1,050  total 2,274  power 73,800  [nearby]  finnish_pagan
+    Géza II Árpád, Duke of Nyitra     Duke of Nyitra                levy 1,743  total 2,256  power 54,204  [nearby]  
+    Manvydas Suvalkija, Count of Yatvyagi  Count of Yatvyagi             levy 1,494  total 2,206  power 56,276  [nearby]  baltic_pagan
+    Matilda Canossa, Duchess of Tuscany  Duke of Toscana               levy   717  total 2,164  power 52,941  [nearby]  catholic
+    Thibault de Blois, Duke of Champagne  Duke of Champagne             levy   573  total 2,135  power 71,790  [nearby]  catholic
+    Mielus III Hámáláinen, Count of Nyland  Count of Nyland               levy 1,815  total 2,127  power 50,820  [nearby]  finnish_pagan
+    Sabe Kurs, Duke of Curonia        Duke of Courland              levy   935  total 2,114  power 58,769  [nearby]  baltic_pagan
+    Gwienomir z Pomorza, Duke of Pomerelia  Duke of Pomerelia             levy 1,748  total 2,051  power 47,360  [local]  
+    Kresimir IV Trpimiroviç, King of Croatia  King of Croatia               levy 1,692  total 1,997  power 48,840  [nearby]  catholic
+    Voitto Kukkonen, Count of Pietarsaari  Count of Pedersore            levy 1,275  total 1,988  power 58,220  [nearby]  finnish_pagan
+    Erik Stenkiling, King of Sweden   King of Sweden                levy 1,662  total 1,969  power 55,589  [nearby]  catholic
+    Gerhard VII Chatenois, Duke of Upper Lotharingia  Duke of Upper Lorraine        levy 1,520  total 1,837  power 48,520  [nearby]  catholic
+    Swietibor z Pomorza, Duke of Pomerania  Duke of Pommerania            levy 1,104  total 1,817  power 49,040  [local]  slavic_pagan
+    Kaleva IV Kemiláinen, Count of Oulu  Count of Oulu                 levy 1,365  total 1,776  power 45,620  [nearby]  finnish_pagan
+    Otso III Virtanen, Duke of Finland  Duke of Finland               levy 1,310  total 1,623  power 41,200  [nearby]  finnish_pagan
+    William Evreux, Count of Rouen    Count of Rouen                levy 1,165  total 1,582  power 41,320  [nearby]  catholic
+    Kurlemuše Goštautas, Count of Zemgale  Count of Zemigalians          levy 1,059  total 1,572  power 45,100  [nearby]  baltic_pagan
+    Sotvaras of Palenke, Count of Kernave  Count of Kernave              levy 1,056  total 1,568  power 44,440  [nearby]  
+    Kasper Lutici, Duke of Luticia    Duke of Ostmark               levy 1,041  total 1,555  power 42,444  [local]  slavic_pagan
+    … and 293 more (county+ tier, zone 0–1)
+
+========================================================================
+
+Culture Report — Vratislav (id 32778)  [1071.2.5]
+======================================================================
+
+--- Culture ---
+Your culture:  Czech  (era: High Medieval)
+Language:      Czech Slovak
+Heritage:      West Slavic
+Ethos:         Bureaucratic
+Traditions:    Mountaineer Ruralism, Hard Working, Castle Keepers, Life Is Just A Joke
+
+--- Cultures in Your Region & Neighbours (38) ---
+  culture                       titles  zone    relation
+  Czech                             42  local   same_culture ◄ YOUR CULTURE
+    Traditions: Mountaineer Ruralism, Hard Working, Castle Keepers, Life Is Just A Joke
+    Rulers: Vratislav (Bohemia), Markvart (Vysehrad), Ondřej (Beroun), Mikuláš (Milevsko)
+  Greek                            356  nearby  other
+    heritage: Byzantine | language: Greek
+    Traditions: Roman Legacy, Byzantine Succession, Formation Fighting, Legalistic
+    Rulers: Ioannes (Orthodox), Konstantinos (Byzantium), Theodosios (Kalliopolis), Neophytos (Raidestos)
+  French                           186  nearby  other
+    heritage: Frankish | language: French
+    Traditions: Chanson De Geste, Hereditary Hierarchy, Chivalry
+    Rulers: Albert (Namur), Hamelin (Charleroi), Louis (Sundgau), Thiébaut (Mulhouse)
+  Franconian                       157  nearby  other
+    heritage: Central Germanic | language: High German
+    Traditions: Hereditary Hierarchy, Astute Diplomats, Castle Keepers
+    Rulers: Heinrich (Hre), Konrad (Luxembourg), Markward (Bastogne), Júrgen (Vianden)
+  Norman                           123  nearby  other
+    heritage: Frankish | language: French
+    Traditions: Ruling Caste, Stand And Fight, Chanson De Geste
+    Rulers: William (England), Gérard (Southwark), Roger (Ampthill), Norman (Hertford)
+  Saxon                            121  nearby  other
+    heritage: Central Germanic | language: Saxon
+    Traditions: Stand And Fight, Ruling Caste, Religious Patronage
+    Rulers: Ordulf (Angria), Witikind (Schwalenberg), Adalbert (Bremen), Adolf (Verden)
+  Hungarian                        115  nearby  other
+    heritage: Magyar | language: Magyar
+    Traditions: Agrarian, Hussar, Zealous People
+    Rulers: Salamon (Hungary), Gyórgy (Visegrad), Lampert (Cegled), Géza (Batorkeszi)
+  Occitan                          114  nearby  other
+    heritage: Frankish | language: Occitano Romance
+    Traditions: Equal Inheritance, Chivalry, Chanson De Geste, Parochialism
+    Rulers: Guilhém (Gascogne), Gilbért (Bordeaux), Bermond (Blaye), Centolh (Labourd)
+  Russian                          106  local   other
+    heritage: East Slavic | language: East Slavic
+    Traditions: Druzhina, Mendicant Mystics, Welcoming
+    Rulers: Volodar (Volhynia), Ruslan (Lutsk), Viacheslav (Berestye), Roman (Bielsk)
+  Bavarian                         104  nearby  other
+    heritage: Central Germanic | language: High German
+    Traditions: Zealous People, Stand And Fight, Hereditary Hierarchy
+    Rulers: Dietrich (Hildesheim), Dietmar (Wolfratshausen), Otto (Rothenburg), Rasso (Freising)
+  Italian                           90  nearby  other
+    heritage: Latin | language: Italian
+    Traditions: Formation Fighting, Republican Legacy, Poetry
+    Rulers: Anselmo (Papal State), Cresenzio (Liebnitz), Tedice (Pisa), Ravenger (Aquileia)
+  Swedish                           79  nearby  other
+    heritage: North Germanic | language: Norse
+    Traditions: Zealous People, Runestones, Things, Hird
+    Rulers: Erik (Sweden), Erik (Svealand), Knut (Gastrikland), Tolir (Nykopung)
+  Norwegian                         74  nearby  other
+    heritage: North Germanic | language: Norse
+    Traditions: Storytellers, Runestones, Things, Maritime Mercantilism
+    Rulers: GudrOEd (Western Isles), Geirr (Arran), Rógnvaldr (Ormond), Halfdán (Clonmel)
+  Cisalpine                         72  nearby  other
+    heritage: Latin | language: Italian
+    Traditions: Republican Legacy, Mountain Homes, Maritime Mercantilism
+    Rulers: Tedisio (Erbach), Anselmo (Seligenstadt), Folco (Grisons), Domenico (Vhrbosna)
+  Irish                             54  nearby  other
+    heritage: Goidelic | language: Goidelic
+    Traditions: Pastoralists, Poetry, Polygamous, Maritime Mercantilism
+    Rulers: Murchad (Dublin), Dálach (Wicklow), Dubhghall (Drogheda), Conchobar (Athlone)
+  Swabian                           53  nearby  other
+    heritage: Central Germanic | language: High German
+    Traditions: Mountain Homes, Parochialism, Hard Working
+    Rulers: Berthold (Carinthia), Emelrich (Ljubljana), Hupold (Nordlingen), Humbert (Crailsheim)
+  Dutch                             51  nearby  other
+    heritage: Central Germanic | language: Dutch
+    Traditions: Agrarian, Parochialism, Maritime Mercantilism, Polders
+    Rulers: Dirk (Holland), Gerulf (Rotterdam), Daevit (Aalkmar), Filips (Nijmegen)
+  Bolghar                           50  nearby  other
+    heritage: Turkic | language: Oghur
+    Traditions: Ruling Caste, Astute Diplomats, Horse Lords
+    Rulers: Timéreç (Pecheneg), Selim Kolyn (Volga Bulgaria), Goleda (Bilyar), Onegavon (Cukataw)
+  Vlach                             49  local   other
+    heritage: Vlach | language: Wallachian
+    Traditions: Pastoralists, Zealous People, Hussar, Xenophilic
+    Rulers: Victor (Campulung), Grigore (Campulung), Florin (Polovragi), Ioan (Giurgiu)
+  Pecheneg                          41  local   other
+    heritage: Turkic | language: Turkic
+    Traditions: Swords For Hire, Quarrelsome, Warrior Culture, Horse Lords
+    Rulers: Tatus (Pechenegs), Balgor (Yedisan), Ipa (Ladyzyn), Karaca (Uman)
+  Croatian                          41  nearby  other
+    heritage: South Slavic | language: South Slavic
+    Traditions: Hussar, Astute Diplomats, Hereditary Hierarchy
+    Rulers: Kresimir (Croatia), Jadranka (Nin), Budec (Knin), Ioan (Bribir)
+  Serbian                           41  nearby  other
+    heritage: South Slavic | language: South Slavic
+    Traditions: Hussar, Religious Patronage, Stalwart Defenders
+    Rulers: Mihajlo (Ragusa), Ratomir (Drijeva), Marko (Mostar), Tihomir (Duvno)
+  Mordvin                           39  nearby  other
+    heritage: Volga Finnic | language: Volga Finnic
+    Traditions: Music Theory, Festivities, Religion Blending
+    Rulers: Pinyas (Romen), Biyar (Sarysyn), Tyueykezhut (Martyuba), Chuga (Lachyk-Uba)
+  Danish                            38  nearby  other
+    heritage: North Germanic | language: Norse
+    Traditions: Things, Eye For An Eye, Hereditary Hierarchy, Runestones
+    Rulers: Rune (Itzehoe), Svend (Denmark), Sámund (Hafn), Thorvald (Slagelse)
+  Komi                              29  nearby  other
+    heritage: Ugro Permian | language: Ugro Permian
+    Traditions: Forest Wardens, Frugal Armorsmiths
+    Rulers: Dergun (Elabuga), Pyera (Perm), Spira (Lysva), Rateg (Ural)
+  Finnish                           28  nearby  other
+    heritage: Balto Finnic | language: Finnic
+    Traditions: Forest Wardens, Isolationist, Fishermen
+    Rulers: Otso (Finland), Satajalka (Finland), Mielus (Nyland), Mielus (Savo)
+  Estonian                          28  nearby  other
+    heritage: Balto Finnic | language: Finnic
+    Traditions: Music Theory, Hird
+    Rulers: Tasulemb (Latgalians), Hoovatóiv (Talava), Kaljuvald (Kokenois), Vililemb (Aluksne)
+  Karelian                          21  nearby  other
+    heritage: Balto Finnic | language: Finnic
+    Traditions: Stalwart Defenders, Forest Wardens, Swords For Hire
+    Rulers: Kostja (Koutajoki), Kalevi (Karelia), Susi (Kakisalmi), Kostja (Sortavala)
+  Lithuanian                        20  nearby  other
+    heritage: Baltic | language: Baltic
+    Traditions: Sacred Groves, Hit And Run, Zealous People, Forest Wardens
+    Rulers: Manvydas (Yatvyagi), Daugvilas (Bartenstein), Kukovaitis (Samogitia), Aras (Memel)
+  Prussian                          18  nearby  other
+    heritage: Baltic | language: Baltic
+    Traditions: Sacred Groves, Equitable, Forest Wardens, Welcoming
+    Rulers: Milzas (Prussia), Glande (Wormditt), Budo (Natangia), Prusas (Torun)
+  Norse                             13  nearby  other
+    heritage: North Germanic | language: Norse
+    Traditions: Things, Hird, Poetry, Runestones
+    Rulers: Isleifur (Iceland), Sigfus (Vestisland), Helgi (Mc 327), T orbrandr (Mc 328)
+  Bosnian                           12  nearby  other
+    heritage: South Slavic | language: South Slavic
+    Traditions: Mendicant Mystics, Monastic Communities, Isolationist
+    Rulers: Petar (Rama), Ivaniš (Travnik), Dobroslav (Zavrsje), Dabiša (Mc 369)
+  Latgalian                         12  nearby  other
+    heritage: Baltic | language: Baltic
+    Traditions: Forest Wardens, Sacred Groves
+    Rulers: Sabe (Courland), Kurlemuše (Zemigalians), Butovit (Jersika), Jaunule (Mc 21)
+  Bulgarian                         10  nearby  other
+    heritage: South Slavic | language: Slavonic
+    Traditions: Ruling Caste, Stand And Fight, Hussar, Merciful Blindings
+    Rulers: Alusian (Vidin), Grgur (Zajecar), Kocelj (Tutrakan), Momchil (Mc 374)
+  Mari                               8  nearby  other
+    heritage: Volga Finnic | language: Volga Finnic
+    Traditions: Music Theory, Festivities
+    Rulers: Simeon (Nizhny Novgorod), Ayplat (Manturovo), Izi (Cykma), Tyushten (Mc 479)
+  Polish                            93  local   same_heritage
+    heritage: West Slavic | language: Lechitic
+    Traditions: Hussar, Xenophilic
+    Rulers: Bolesław (Poland), Mieszko (Wislica), Lambert (Sacz), Tatomir (Sandomierska)
+  Pommeranian                       28  local   same_heritage
+    heritage: West Slavic | language: Lechitic
+    Traditions: Maritime Mercantilism, Hussar
+    Rulers: Swietibor (Pommerania), Wacław (Ucramund), Kolman (Kolobrzeg), Patryk (Dramberg)
+  Polabian                          26  local   same_heritage
+    heritage: West Slavic | language: Lechitic
+    Traditions: Hereditary Hierarchy, Hussar, Stalwart Defenders
+    Rulers: Krutoj (Mecklenburg), Grzegorz (Schwerin), Przybyslaw (Rugen), Kasper (Ostmark)
+
+--- Continental Cultures (28) ---
+  culture                       titles  heritage                  relation
+  Turkish                          244  Turkic                    other
+  Bedouin                          173  Arabic                    other
+  Levantine                        166  Arabic                    other
+  Baranis                          115  Berber                    other
+  Kurdish                           90  Iranian                   other
+  Ethiopian                         74  East African              other
+  Persian                           65  Iranian                   other
+  Egyptian                          60  Arabic                    other
+  Armenian                          58  Caucasian                 other
+  Yemeni                            58  Arabic                    other
+  Andalusian                        55  Iberian                   other
+  Anglo Saxon                       54  West Germanic             other
+  Welsh                             34  Brythonic                 other
+  Gaelic                            34  Goidelic                  other
+  Castilian                         30  Iberian                   other
+  Georgian                          29  Caucasian                 other
+  Maghrebi                          28  Arabic                    other
+  Alan                              27  Iranian                   other
+  Catalan                           26  Iberian                   other
+  Breton                            23  Brythonic                 other
+  Kashmiri                          20  Indo Aryan                other
+  Scottish                          19  West Germanic             other
+  Sardinian                         15  Latin                     other
+  Aragonese                         14  Iberian                   other
+  Basque                            14  Iberian                   other
+  Lombard                           11  Latin                     other
+  Asturleonese                       9  Iberian                   other
+  Cumbrian                           5  Brythonic                 other
+
+--- Major Cultures Beyond the Horizon (83 shown, 60 minor omitted) ---
+  culture                       titles  heritage
+  Han                             1124  Chinese
+  Bodpa                            299  Tibetan
+  Goryeo                           138  Korean
+  Tangut                           123  Qiangic
+  Hindustani                       118  Indo Aryan
+  Mongol                           110  Mongolic
+  Japanese                         108  Japonic
+  Butr                              98  Berber
+  Jurchen                           95  Tungusic
+  Karluk                            91  Turkic
+  Kimek                             85  Turkic
+  Bengali                           82  Indo Aryan
+  Kannada                           81  Dravidian
+  Malay                             80  Austronesian
+  Khanty                            79  Ugro Permian
+  Khmer                             79  Mon Khmer
+  Soninke                           75  Sahelian
+  Buryat                            68  Mongolic
+  Punjabi                           68  Indo Aryan
+  Kipchak                           67  Turkic
+  Tamil                             64  Dravidian
+  Burmese                           63  Burman
+  Uyghur                            62  Turkic
+  Telugu                            62  Dravidian
+  Bai                               61  Chinese
+  Mon                               59  Mon Khmer
+  Rajput                            57  Indo Aryan
+  Kirghiz                           55  Turkic
+  Somali                            55  Somalian
+  Naiman                            54  Mongolic
+  Cuman                             53  Turkic
+  Lhomon                            51  Tibetan
+  Gujarati                          49  Indo Aryan
+  Nepali                            49  Indo Aryan
+  Dayak                             48  Austronesian
+  Tajik                             47  Iranian
+  Nubian                            47  East African
+  Sami                              45  Balto Finnic
+  Marathi                           44  Indo Aryan
+  Javanese                          44  Austronesian
+  Bisayan                           43  Austronesian
+  Hmong                             42  Hmongic
+  Gond                              41  Dravidian
+  Oriya                             41  Indo Aryan
+  Daylamite                         38  Iranian
+  Gur                               38  West African
+  Malvi                             38  Indo Aryan
+  Zhangzhung                        38  Tibetan
+  Shiwei                            38  Mongolic
+  Khitan                            36  Mongolic
+  Bashkir                           35  Turkic
+  Sao                               35  Central African
+  Malinke                           35  West African
+  Tai                               34  Tai
+  Mel                               33  West African
+  Assamese                          32  Indo Aryan
+  Welayta                           31  East African
+  Uriankhai                         30  Turkic
+  Zaghawa                           29  Berber
+  Kru                               29  Akan
+  Viet                              29  Viet
+  Galician                          28  Iberian
+  Beja                              27  East African
+  Sinhala                           27  Indo Aryan
+  Sumpa                             27  Tibetan
+  Yi                                27  Chinese
+  Maluku                            27  Austronesian
+  Hausa                             26  Central African
+  Sindhi                            26  Indo Aryan
+  Kerait                            25  Mongolic
+  Bobo                              25  West African
+  Swahili                           24  Bantu
+  Mohe                              24  Tungusic
+  Pulaar                            23  Senegambian
+  Akan                              23  Akan
+  Cham                              23  Austronesian
+  Bugis                             23  Austronesian
+  Tsangpa                           22  Tibetan
+  Vepsian                           22  Balto Finnic
+  Wolof                             22  Senegambian
+  Baloch                            20  Iranian
+  Nivkh                             20  Nivkh
+  Ainu                              20  Ainuic
+
+--- Religion ---
+Your faith:    catholic  (fervor 41.3)
+Your religion: christianity_religion
+Your family:   Abrahamic
+Titles held by your faith: 1877
+Tenets:    Armed Pilgrimages, Communion, Monasticism
+Doctrines: Abrahamic Hostility Doctrine, Monogamy, Divorce Approval, Bastardry Legitimization, Homosexuality Shunned, Deviancy Crime...
+Religious head: 4 (id 4)
+
+--- Faiths in Your Region & Neighbours (9) ---
+  faith                         fervor  titles  zone    relation     
+  catholic                        41.3    1877  local   same_faith    ◄ YOUR FAITH
+    Religion: christianity_religion  (rf_abrahamic)
+    Tenets: Armed Pilgrimages, Communion, Monasticism
+    Head: 4
+    Rulers: Anselmo (Papal State), Heinrich (Hre), William (England), Gérard (Southwark), Roger (Ampthill)
+  tengri_pagan                    53.4     553  local   other        
+    Religion: tengrism_religion  (rf_pagan)
+    Tenets: Esotericism, Ancestor Worship, Warmonger
+    Rulers: Tatus (Pechenegs), Saru (Caspian-Pontic Steppe), Balgor (Yedisan), Ipa (Ladyzyn), Karaca (Uman)
+  finnish_pagan                   55.8     211  nearby  other        
+    Religion: finno_ugric_religion  (rf_pagan)
+    Tenets: Communal Identity, Ancestor Worship, Sanctity Of Nature
+    Rulers: Baeivi (Pite), Uksáhkká (Biton), Ruigi (Julevadno), Henes (Kittila), Orddot (Siggevara)
+  siberian_pagan                  57.1     154  nearby  other        
+    Religion: siberian_religion  (rf_pagan)
+    Tenets: Ancestor Worship, Ritual Celebrations, Sanctity Of Nature
+    Rulers: Dergun (Elabuga), Pyera (Perm), Spira (Lysva), Rateg (Ural), Nuyanza (Votkinsk)
+  slavic_pagan                    60.1      53  local   other        
+    Religion: slavic_religion  (rf_pagan)
+    Tenets: Communal Identity, Ritual Celebrations, Sanctity Of Nature
+    Rulers: Swietibor (Pommerania), Wacław (Ucramund), Kolman (Kolobrzeg), Patryk (Dramberg), Leszek (Szczecinek)
+  baltic_pagan                    62.4      50  nearby  other        
+    Religion: baltic_religion  (rf_pagan)
+    Tenets: Ancestor Worship, Sacred Childbirth, Sanctity Of Nature
+    Rulers: Manvydas (Yatvyagi), Milzas (Prussia), Glande (Wormditt), Budo (Natangia), Daugvilas (Bartenstein)
+  norse_pagan                     70.5      13  nearby  other        
+    Religion: germanic_religion  (rf_pagan)
+    Tenets: Ancestor Worship, Human Sacrifice, Warmonger
+    Rulers: Knut (Gastrikland), Alf (Jomala), Klas (Kinnevald), Odd (Jonkoping), Rodulvard (Liongby)
+  ashari                          43.4     819  nearby  same_family  
+    Religion: islam_religion  (rf_abrahamic)
+    Tenets: Legalism, Religious Legal Pronouncements, Struggle Submission
+    Head: 16
+    Rulers: Al-Qa im (Sunni), Eskander (Khachen), Feramez (Shamkur), Aram (Gandzasar), Píroz (Naxcivan)
+  orthodox                        44.8     623  local   same_religion
+    Religion: christianity_religion  (rf_abrahamic)
+    Tenets: Communion, Monasticism, Pentarchy
+    Head: 5
+    Rulers: Ioannes (Orthodox), Konstantinos (Byzantium), Theodosios (Kalliopolis), Neophytos (Raidestos), Leontios (Arkadiopolis)
+
+--- Continental Faiths (broader Europe / Med / Near East) (11) ---
+  faith                         fervor  titles  relation     
+  maturidi                        52.8     362  same_family    head: 16
+  vaishnavism                     70.1     164  other        
+  ismaili                         80.4     157  same_family    head: 17
+  muwalladi                       68.8     136  same_family  
+  nestorian                       49.8     101  same_religion  head: 8
+  armenian_apostolic              72.4      58  same_religion  head: 10
+  ibadi                           56.1      43  same_family  
+  insular_celtic                  77.5      41  same_religion  head: 4
+  zayidi                          67.5      13  same_family    head: 21
+  nizari                          67.5      10  same_family    head: 20
+  druze                           67.5       4  same_family  
+
+--- Major Faiths Beyond the Horizon (22 shown, 45 minor omitted) ---
+  faith                         fervor  titles
+  daoxue                          72.4    1006
+  shaivism                        45.2     659
+  lamaism                         66.6     322
+  dhyana                          45.5     192
+  mahayana                        66.6     187
+  shamanism                       57.1     155
+  avatamsaka                      67.1     138
+  west_african_bori_pagan         57.8     118
+  coptic                          66.8     116
+  west_african_pagan              58.8     103
+  vajrayana                       50.1     101
+  old_bon                         67.5      89
+  west_african_bidu_pagan         62.4      84
+  waaqism_pagan                   60.1      79
+  theravada                       68.8      78
+  zhengyi                         77.5      75
+  akom_pagan                      60.1      68
+  srikula_shaktism                77.5      66
+  west_african_orisha_pagan       60.1      63
+  acharya                         57.5      60
+  mantrayana                      52.4      58
+  smartism                        77.5      54
+
+--- Holy Wars (0) ---
+
+========================================================================
+
+Relationships Report — Vratislav II Přemyslid, Duke of Bohemia (id 32778)  [1071.2.5]
+======================================================================
+
+--- Hierarchical Position ---
+  ↑ Heinrich  [Emperor of Holy Roman Empire]  (feudal_vassal)  [sovereign]
+
+--- Direct Vassals (19) ---
+  [Feudal vassals]
+    Benno von Lóningen            Count of Wolkenstein        levy   707  total 1,008
+    Filibert                      Count of Pula               levy   158  total   159
+    Konrád Přemyslid              Count of Brno               levy 1,005  total 1,408
+    Ludwig Ludowinger             Count of Schmalkalden       levy   650  total   954
+    Ota Přemyslid                 Count of Olomouc            levy   590  total 1,003
+    Otto von Weimar               Count of Meissen            levy   399  total   800
+    Reginar                       Count of Dresden            levy   348  total   450
+    Časlav Vrsovid                Count of Zatec              levy   262  total   463
+    Albrecht z Ronova             Baron of Bilina             levy   253  total   253
+    Ondřej z Boskovic             Baron of Beroun             levy   340  total   340
+  [Republic vassals]
+    Boreš                         Baron of Decin              levy    70  total    70
+    Diviš                         Baron of Vraclav            levy    70  total    70
+    Markvart                      Baron of Vysehrad           levy    72  total    72
+    Mikuláš                       Baron of Milevsko           levy    72  total    72
+    Vladimír                      Baron of Bechyne            levy    70  total    70
+    Vznata                        Baron of Domazlice          levy    70  total    70
+    Častolov                      Baron of Jaromer            levy    70  total    70
+  [Theocracy Vassal]
+    Eberhard                      Count of Naumburg           levy   319  total   420
+    Jan                           Count of Opava              levy   426  total   527
+
+--- Alliances (0) ---
+
+--- Hooks You Hold on Others (7) ---
+  house_head_hook               on Boleslav
+  house_head_hook               on Bořivoj
+  house_head_hook               on Vladislav
+  house_head_hook               on Guta
+  house_head_hook               on Tas
+  house_head_hook               on KristY na
+  house_head_hook               on Dorota
+
+--- Family ---
+  House: Přemyslid  founded 694.1.1  prestige 3157  (you are head)
+  Primary Spouse      Šwiétosława             (id 36471)  [unlanded]  your court
+  Former Spouse       Adelaida                (id 34683)  [deceased 1062.1.27]
+  Child               Judita                  (id 37766)  [unlanded]  your court
+  Child               Břetislav               (id 38159)  [unlanded]  your court
+  Child               Ludmila                 (id 38396)  [unlanded]  your court
+  Child               Boleslav                (id 39160)  [unlanded]  your court
+  Child               Bořivoj                 (id 39200)  [unlanded]  your court
+  Child               Vladislav               (id 39372)  [unlanded]  your court
+  Child               KristY na               (id 16800260)  [unlanded]  your court
+
+--- Your Court (13) ---
+  [Council]
+    Šwiétosława             (id 36471)  (primary_spouse)
+  [Knights]
+    Záviš                   (id 63542)
+  [Court Positions]
+    Dimi                    (id 40499)  — court_physician_court_position
+  [Courtiers]
+    Boleslav                (id 39160)  (child)
+    Bořivoj                 (id 39200)  (child)
+    Břetislav               (id 38159)  (child)
+    Judita                  (id 37766)  (child)
+    KristY na               (id 16800260)  (child)
+    Ludmila                 (id 38396)  (child)
+    Ojíř                    (id 63538)
+    Svatobor                (id 37565)
+    Veliš                   (id 63541)
+    Vladislav               (id 39372)  (child)
+
+--- Personal Relations (6) ---
+  friend               →  Jan                     (id 32280)  [Count of Opava]  own realm
+  friend               ←  Jan                     (id 32280)  [Count of Opava]  own realm
+  guardian             ←  Břetislav               (id 38159)  [unlanded]  your court
+  rival                →  Jaromír                 (id 34156)  [unlanded]  other court
+  rival                ←  Jaromír                 (id 34156)  [unlanded]  other court
+  ward                 →  Břetislav               (id 38159)  [unlanded]  your court
+
+--- Notable Opinions (10) ---
+  [Others → You]
+    Anselmo                   -30  (impious_opinion -30)
+    Tamar                     -30  (imprisoned_me -30)
+    Otto                      -25  (declared_war -25)
+    Časlav                    -20  (fired_from_council_opinion -20)
+    Oda                       -15  (declared_war_on_son_daughter -15)
+    Šwiétosława               +10  (respect_opinion +10)
+    Eberhard                  +20  (released_from_prison +20)
+    Ludwig                    +20  (released_from_prison +20)
+    Dimi                      +30  (hired_me_opinion +30)
+  [You → Others]
+    Heinrich                  -20  (disapproving_opinion -20)
+
+========================================================================
+
+Terrain Report — Vratislav II Přemyslid, Duke of Bohemia (id 32778)  [1071.2.5]
+======================================================================
+
+--- Domain Overview ---
+  Holdings:        7  (6 castle  1 unknown)
+  Development:     60 total  (8.6 avg per holding)
+  Terrain:         hills×3  plains×2  mountains×1  farmlands×1
+  Buildings:       fortification 9  agriculture 1  commerce 9
+
+--- Domain Holdings (7) ---
+  Barony                        County                Type     Dev  Ctrl  Fort  Terrain / Notable
+  ------------------------------------------------------------------------------------------
+  Praha                         Praha                 castle    12   100%     8  hills
+  Boleslav                      Boleslav              castle     8   100%     6  plains
+  Čáslav                        Caslav                castle     8   100%     8  hills  [poi_special_buildings_economic]
+  Doudleby                      Doudleby              castle     8   100%     6  hills
+  Hradec                        Hradec                unknown    8   100%     —  mountains
+  Litoměřice                    Litomerice            castle     8   100%     6  farmlands
+  Plzeň                         Plzen                 castle     8   100%     7  plains
+
+--- Vassal Territories (19) ---
+  Name                          Title                     Hold  Dev  AvgDev  LowCtrl  Terrain
+  ------------------------------------------------------------------------------------------
+  Konrád Přemyslid              Count of Brno                3   26     8.7        0  forest×1  hills×1  farmlands×1
+  Ludwig Ludowinger             Count of Schmalkalden        3   24     8.0        0  plains×2  mountains×1
+  Ota Přemyslid                 Count of Olomouc             2   20    10.0        0  plains×1  hills×1
+  Benno von Lóningen            Count of Wolkenstein         2   15     7.5        1  hills×2
+  Mikuláš                       Baron of Milevsko            1   12    12.0        0  forest×1
+  Ondřej z Boskovic             Baron of Beroun              1   12    12.0        0  forest×1
+  Markvart                      Baron of Vyšehrad            1   12    12.0        0  farmlands×1
+  Časlav Vrsovid                Count of Žatec               1   11    11.0        0  farmlands×1
+  Reginar                       Count of Dresden             1    9     9.0        0  forest×1
+  Jan                           Count of Opava               1    8     8.0        0  forest×1
+  Eberhard                      Count of Naumburg            1    8     8.0        1  plains×1
+  Diviš                         Baron of Vraclav             1    8     8.0        0  hills×1
+  Častolov                      Baron of Jaroměř             1    8     8.0        0  forest×1
+  Vladimír                      Baron of Bechyně             1    8     8.0        0  forest×1
+  Vznata                        Baron of Domažlice           1    8     8.0        0  mountains×1
+  Boreš                         Baron of Děčín               1    8     8.0        0  mountains×1
+  Albrecht z Ronova             Baron of Bílina              1    8     8.0        0  mountains×1
+  Otto von Weimar               Count of Meissen             1    7     7.0        1  forest×1
+  Filibert                      Count of Pula                1    6     6.0        1  plains×1
+
+========================================================================
+

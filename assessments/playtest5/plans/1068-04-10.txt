@@ -1,0 +1,251 @@
+Plans — Vratislav II Přemyslid, Duke of Bohemia
+Date: 1068.4.10  |  Playtest 5 (DLC-overhaul re-run)
+================================================================
+
+Builds on assessments/playtest5/plans/1066-11-11.txt. Strategic posture is
+stable (no wars, no factions, all 13 vassals neutral) — this plan set is
+about two specific opportunities: the claims on Meissen and Lausitz, and
+the piety-generation push the player is starting.
+
+
+================================================================
+0. CLAIM PROVENANCE — what the save does and doesn't record
+================================================================
+
+Confirmed via the new gs.claims_held_by() helper (reads alive_data.claim
+directly off the character, rather than scanning every title's claim list):
+
+  c_zatec    — claim, NOT pressed. Zatec is already held by Vratislav's own
+               vassal Časlav Vrsovid — this claim is inert/inherited, no
+               action implied.
+  d_meissen  — claim, PRESSED.
+  d_lausitz  — claim, PRESSED.
+
+"Pressed" means Vratislav has already formally pressed both claims —
+they're primed to use, not just sitting dormant.
+
+On provenance: there is no recoverable record of *how* these claims were
+acquired. Checked title history (landed_titles), character_memory_manager
+(12,110 memory entries, 61 types — none of them claim-grant-related), and
+title_and_vassal_change_manager (empty, just a counter). CK3 does not log
+"liege granted you a claim" as a persistent event anywhere in the save —
+it's presumably a liege/council interaction effect that leaves no trail
+beyond the resulting claim entry itself. Flagging this clearly rather than
+guessing: the player's own account ("granted by my liege") is the only
+record we have, and that's fine.
+
+
+================================================================
+I. SHORT-TERM — Meissen
+================================================================
+
+[CONTEXT] Timing constraint: Vratislav is currently in Vaticano (Rome)
+  attending Heinrich's coronation (intent: bear witness — passive
+  attendance, no scheme). His travel plan has him returning to Praha with
+  an ETA of 1068.9.11 — about 5 months out. Otto, Duke of Meissen, is
+  *also* at the same coronation right now, equally away from his own
+  capital. Functionally: neither side is positioned to fight immediately;
+  realistic war timing is after Vratislav is home, not before.
+
+[CAMPAIGN ASSESSMENT]
+  Target: Otto, Duke of Meissen (id 31798), age 41. Calm, deceitful, brave.
+    Intrigue-focused (tier 1, "Skulduggery" perks: Truth Is Relative,
+    Digging For Dirt, Kidnapper, Court Of Shadows, Prepared For Anything,
+    Twice Schemed). Personal prowess strong (eff. 11) but his investment is
+    in scheming, not field command — the realistic risk from Otto is a
+    counter-scheme (assassination/kidnap attempt) during the war, not a
+    battlefield surprise.
+  Power comparison: Otto — 1,730 levy, 43,140 power. Vratislav — 3,981
+    troops, 106,020 power. We hold roughly 2.45x his power before any ally
+    intervenes — a clearly favorable matchup.
+  Otto's ally: Bertrand, Duke of Provence (852 levy, 25,940 power).
+    Geographically distant (southern France) — even fully honored, the
+    combined opposing force (43,140 + 25,940 = 69,080) stays well under
+    our 106,020. Low risk either way; the alliance is real but not
+    decisive at this size advantage.
+  Casus belli: the pressed claim on d_meissen is ready to use — no
+    additional diplomatic prep needed to unlock the war itself.
+  Imperial risk: Heinrich's crown authority is at the lowest tier
+    (crown_authority_0) and he is currently uncrowned (the coronation
+    Vratislav is attending resolves that). At CA0, intra-empire vassal wars
+    are essentially unconstrained — low risk of imperial interference for
+    a vassal-vs-vassal conquest war.
+  Mechanical correction (player caught this): the claim is on the DUCHY
+    title (d_meissen) itself, not on any of its counties. Winning the war
+    transfers d_meissen — the Margravate — to Vratislav; Otto, Benno, and
+    Eberhard keep their county-tier holdings exactly as they are now. Otto
+    is demoted from independent Duke to Count of Meissen (+ Dresden) and
+    becomes Vratislav's vassal, same as Benno and Eberhard. This is much
+    cleaner than a land-grab: no domain_limit issue at all, since no new
+    counties enter Vratislav's personal domain.
+  Scope clarification (resolves the earlier open question): Dedo's
+    Osterland/Cottbus and Friedrich's Görlitz are NOT part of this war's
+    footprint. A character can only have one liege at a time — Dedo's
+    liege is Heinrich (he holds those counties as his own personal domain,
+    as independent Duke of Lausitz), not Otto. They're de jure Meissen but
+    de facto Lausitz, and a Conquest CB can't seize land from a party not
+    in the war. The real Meissen footprint is just Otto + Benno + Eberhard.
+
+[KINGDOM OF BOHEMIA — sequencing, corrected]
+  Two independent requirements to create a kingdom-tier title (per CK3's
+  actual rule, confirmed via wiki after an earlier back-and-forth on this):
+    1. Control ≥51% of the title's de jure counties (legitimacy lowers this).
+    2. Hold either two titles of lower rank (two duchies), or one title of
+       equal/higher rank (already holding a kingdom/empire title).
+  Checked #1 directly against the save: Vratislav already controls 14/14
+    (100%) of Kingdom of Bohemia's de jure counties (own domain: Praha,
+    Litoměřice, Plzeň, Doudleby, Boleslav, Hradec; vassals: Žatec/Časlav,
+    Olomouc+Přerov/Ota, Opava/Jan, Brno+Jihlava+Znojmo/Konrád). Comfortably
+    clears #1 on its own, no Meissen needed for the percentage.
+  #2 is the actual gate: Vratislav currently holds exactly one duchy
+    (d_bohemia). Meissen would be the second — this is what conquering it
+    actually unlocks, not new land. Confirms the player's original plan.
+  Sequencing: win Meissen → hold 2 duchies → create Kingdom of Bohemia →
+    grant Meissen back out (see below). Title creation appears to be a
+    one-time eligibility check, not an ongoing requirement, so there's no
+    obstacle to granting Meissen away immediately after using it to qualify.
+  Strategic upside worth weighing in: King-tier status unlocks peer-king
+    alliances (Hungary, Poland, Denmark all appeared in the nearby-rulers
+    list) — this is the most direct fix available for the standing "zero
+    alliances" problem the Marshal/Chancellor briefs keep flagging, and
+    that alliance gap is also the hard prerequisite for the Lausitz war
+    (see below). Claiming the Crown isn't just a status upgrade — it's on
+    the critical path for Lausitz too.
+
+[WHO TO PROMOTE — granting Meissen back out]
+  Once King, Meissen can be granted to a vassal so they (not Vratislav)
+  deal directly with day-to-day Saxon-bloc management — the player's
+  proposed move. Three real candidates, since Osterland/Cottbus/Görlitz
+  aren't part of this war's footprint (see above):
+    — Otto himself, reinstated as Duke under Vratislav instead of
+      independent. Zero local disruption — Benno and Eberhard already
+      answer to him, nothing changes for them. Risk: Otto is a dedicated
+      schemer (Intrigue/Skulduggery — Court Of Shadows, Kidnapper, Digging
+      For Dirt, Twice Schemed) who'd be taking this demotion personally. A
+      capable, humiliated schemer as your own duke needs active management
+      — a hook, a hostage (a fostered child, mirroring the Judita/Siegfried
+      arrangement in reverse), or a marriage tie, not just trust.
+    — Benno (id 30715), elevated from count to duke. Trusting + just, weak
+      personal military, least likely of the three to ever scheme against
+      Vratislav, and a big promotion like this likely buys real gratitude.
+      Open question: can he actually hold authority over Otto, now his
+      nominal subordinate despite Otto's stronger personality and prior
+      seniority? Scholar build, not a natural enforcer.
+    — A trusted Bohemian/Přemyslid figure instead of any local. Maximum
+      loyalty assurance, but doesn't remove Otto from the picture (he's
+      still there, just under a different, more culturally distant
+      overlord), and pulls someone away from Bohemia's own core vassal
+      network.
+  Lean: Benno, on personality fit, but this is a judgment call the player
+    should make directly — it hinges on a read of Otto/Benno dynamics that
+    isn't fully visible from the save data.
+  Bigger-picture integration note: this would be Bohemia's first Saxon/
+    Franconian-culture vassal bloc. Same faith (Catholic), so no religious
+    friction, but a culture gap exists either way. Judita's pending
+    betrothal to Siegfried von Nordheim (Bavaria) already starts a German-
+    marriage pattern; extending that logic to whichever Meissen vassals end
+    up in Vratislav's orbit is worth a deliberate pass.
+
+
+================================================================
+II. LONG-TERM — Lausitz
+================================================================
+
+[CAMPAIGN CONTEXT]
+  Target: Dedo, Duke of Lausitz (id 29180), age 58. Cynical, vengeful,
+    wrathful — three vice traits, Dread 14.7, "aggressive_attacker"
+    commander trait, perk investment entirely in authority/war (Serve The
+    Crown, Hard Rule, Absolute Control, Bellum Justum, Engineered For
+    Destruction). Effective Martial 16 — a genuinely dangerous personal
+    commander, not just a strong realm. He currently also serves as
+    Heinrich's Imperial Spymaster — standing access to the Emperor that
+    Otto doesn't have, and worth weighing if this war ever needs imperial
+    goodwill on our side.
+  Power comparison: Dedo — 2,605 levy, 72,120 power, vs. our 106,020 — a
+    ~1.47x edge for us alone, noticeably thinner than the Meissen matchup.
+  Dedo's ally: Ernst, Duke of Austria (d_osterreich) — 2,176 levy, 53,860
+    power. This one is not a paper alliance: combined Lausitz+Austria
+    (72,120 + 53,860 = 125,980) would outweigh us (106,020). This is the
+    determining factor for why Lausitz is the long-term project, not the
+    short-term one — either our own power needs to grow past that combined
+    threshold, or the Austria alliance needs to be neutralized/divorced
+    first, or we need an ally of our own to offset it.
+  Connective tissue with Meissen: Dedo's vassal Friedrich already holds
+    Görlitz, de jure part of Meissen, and Dedo personally holds Osterland
+    and Cottbus inside de jure Meissen as Otto's vassal. A Meissen war
+    likely touches Dedo's interests indirectly before we ever declare on
+    him directly — worth watching how he reacts to the Meissen war as an
+    early read on his posture, and worth noting his current activity at
+    the coronation: his stated intent there is "Disrupt Loyalists" — he is
+    actively scheming against Heinrich's loyalists right now, consistent
+    with his profile. Worth finding out (next save) whether that scheme
+    succeeded and what it cost him.
+
+[STANDING WORK]
+  Establish at least one alliance before committing to Lausitz — this is
+    already the Marshal/Chancellor's #1 generic priority (isolation), and
+    it's a hard prerequisite here specifically: an ally large enough to
+    offset or deter Austria's 53,860 power changes this from "risky" to
+    "favorable." Re-evaluate Lausitz seriously only after that's in place,
+    or after our own power has grown enough that 125,980 is no longer a
+    threatening number.
+
+
+================================================================
+III. DOMESTIC — Piety
+================================================================
+
+[CONTEXT] Player is deliberately building piety now, anticipating it will
+  matter against the pagan neighbors to the north (Councilor's brief
+  independently flags tengri_pagan and slavic_pagan in the local zone,
+  600 titles combined — piety is the resource that unlocks holy war /
+  missionary pressure against exactly that target set). No action needed
+  from this tool beyond noting the rationale lines up with what the
+  Councilor brief already surfaced independently — worth revisiting holy
+  war feasibility against the northern pagans once piety/fervor are
+  further along.
+
+
+================================================================
+IV. TOOLING (built this session)
+================================================================
+
+[TOOL] Claims — GameState.claims_held_by(char_id) (ck3/gamestate.py)
+  Reads alive_data.claim directly (list of {title, pressed?}) rather than
+  scanning every title's claim list. Returns title_id/title_key/title/
+  pressed for each. No provenance data exists in the save (see section 0).
+
+[TOOL] Carmen Sandiego — ck3/evaluators/carmen_sandiego.py +
+  run_carmen_sandiego.py
+  "Where in the world is...?" — resolves a character's current location,
+  imprisonment status, activity (hosting/attending, with intent and host),
+  and travel plan (destination + ETA), pulling from alive_data.location,
+  alive_data.involved_activity_data, gs.activities, and gs.travel_plans
+  (the latter two newly wired into GameState.__init__).
+  CLI: python run_carmen_sandiego.py --char <id> [<id> ...]
+  This is how the Rome/coronation picture above was put together — confirms
+  Vratislav, Otto, and Dedo are all at the same event right now, and
+  surfaced Dedo's scheme intent ("Disrupt Loyalists") as a side effect of
+  just checking his location.
+
+
+================================================================
+OPEN QUESTIONS AT 1068.4.10
+================================================================
+
+  — Resolved this session: Gorlitz/Osterland/Cottbus are not part of the
+    Meissen war's footprint (Dedo's personal domain, one-liege-per-character
+    rule). Worth a quick in-game sanity check on the war-target screen
+    anyway before committing, but no longer flagged as uncertain.
+
+  — Does the in-game "Create Title" button on k_bohemia confirm the 2-duchy
+    gate is the only thing currently missing (i.e., is #1 — de jure
+    percentage — really already satisfied)? The save-data check says yes;
+    worth a quick glance at the actual UI tooltip once Meissen is in hand.
+
+  — Did Dedo's "Disrupt Loyalists" scheme at the coronation succeed?
+    Check on the next save — early signal for how he's positioning
+    relative to Heinrich.
+
+  — When (if ever) does an alliance materialize? This gates the Lausitz
+    timeline more than anything else in this plan.

@@ -1,0 +1,220 @@
+Strategic Assessment — Vratislav II, King of Bohemia (1070.11.10)
+Generated from save: King_Vratislav_of_Bohemia_1070_11_05.ck3
+Previous assessment: Vratislav_II_1066-09-15_assessment.txt
+================================================================
+
+Four years and four months since the opening position. The two most urgent
+recommendations from the prior assessment have been executed: the Jaromír
+problem is resolved, and Poland is now an ally. On top of that, Vratislav has
+achieved something the opening assessment did not contemplate as near-term —
+elevation to King of Bohemia. The position is materially stronger on almost
+every axis. But the expansion that came with the elevation has introduced a
+new class of problem: restive German vassals, a live claimant faction, and
+visible papal displeasure.
+
+
+I. WHAT CHANGED: THE HEADLINE MOVES
+-------------------------------------
+
+King of Bohemia:
+  Vratislav is no longer Duke — he holds the kingdom title. This is the
+  defining event of the period and a major acceleration of the game's central
+  ambition. The elevation brought new direct vassals (German counts in
+  Thuringia and Saxony) and substantially expanded the realm's levy base, but
+  also imported a set of disloyal lords who did not choose their new suzerain.
+
+Jaromír removed from Opava:
+  The opening assessment identified Jaromír Přemyslid — mutual rival,
+  theocracy vassal, border county holder — as the most damaging relationship
+  in the realm. He is now unlanded and in another court, stripped of his power
+  base. His friend Jan (previously an unlanded courtier in Vratislav's own
+  court, and a mutual friend since 1066) now holds the Count of Opava title as
+  a theocracy vassal. The rivalry with Jaromír technically persists but is
+  operationally neutered — a rival without land or levy is an irritant, not a
+  threat. This was cleanly executed.
+
+Poland alliance secured:
+  The opening assessment named Poland as the most important external
+  relationship to resolve. It is now resolved: Bolesław III Piast (King of
+  Poland, 2,981 troops) is an ally via Šwiétosława's mediation. The +10
+  spouse_mediation_opinion confirms the mechanism. Poland and Bohemia are now
+  on the same side of any potential northern conflict — a significant
+  stabiliser on the left flank.
+
+
+II. THE REALM: INTERNAL STRUCTURE AND CURRENT RISKS
+----------------------------------------------------
+
+Domain and Bohemian core:
+  Vratislav's personal domain is unchanged at seven holdings (Praha 12 dev,
+  six others at 8 dev each), same terrain mix, same 100% control, same 60
+  total development. No domain expansion occurred; the growth came entirely
+  from new vassals. Development investment at Čáslav (the special economic
+  site) should still be the priority here — four years on without visible
+  progress is a missed compounding opportunity.
+
+The German counties:
+  Four new direct feudal/theocracy vassals appear that were not present in
+  1066 — all from central German territory to the northwest:
+    Benno von Lóningen, Count of Wolkenstein (1,049 troops, hills×2)
+    Ludwig Ludowinger, Count of Schmalkalden (1,006 troops, plains×2
+      + mountains×1, 1 holding at low control)
+    Otto von Weimar, Count of Meissen (857 troops, forest×2, 1 low control)
+    Eberhard, Count of Naumburg (526 troops, theocracy, plains×1, 1 low ctrl)
+
+  Three of the four have at least one holding at low control — characteristic
+  of recently subjugated territory that hasn't been fully pacified. Otto von
+  Weimar holds a "declared_war -25" opinion malus against Vratislav, confirming
+  that he was brought in through conquest, not diplomacy. Oda (almost certainly
+  a relative of Otto) has a "declared_war_on_son_daughter -15" malus. These
+  are new vassals who remember being on the other side.
+
+The claimant faction:
+  Ludwig Ludowinger and Otto von Weimar — two of the four new German counts —
+  have formed a claimant_faction with 2 members and a combined force of ~1,906
+  troops. The faction's specific demand is not yet resolved in the evaluator,
+  but a claimant faction from newly conquered German lords almost certainly
+  presses either a claim to Bohemia itself or to the territory they lost.
+  Militarily this is manageable: 1,906 versus a realm total of 4,802 plus the
+  Polish alliance (2,981) is not a close fight. Politically, the correct
+  response is to either buy them off (give Ludwig or Otto a title or position),
+  address the underlying claim via marriage, or crush the faction quickly before
+  it attracts additional members. Leaving it to fester risks it growing.
+
+The Moravian Přemyslids:
+  Konrád Přemyslid (Count of Brno) has grown slightly to 1,442 troops with
+  a new +30 courtly_title_creation opinion — Vratislav gave him a court
+  position, an obvious and sensible opinion management tool. Similarly Ota
+  Přemyslid (Count of Olomouc) has +30 from the same. Both Přemyslid cousins
+  are now actively cultivated rather than passively tolerated. This is exactly
+  the right approach given their structural weight in the realm.
+
+Česlav Vrsovid:
+  The Vrsovid count of Žatec, flagged in the opening assessment as a potential
+  faction nucleus, now sits at +80 opinion via two successful sway schemes and
+  a court title. He has been thoroughly co-opted. Whether this represents
+  genuine loyalty or mere pacification will matter at succession, but for now
+  he is not a problem.
+
+House hooks:
+  Hooks held have expanded from three children (Boleslav, Bořivoj, Vladislav)
+  to six (adding Judita, Albrecht, Marie). Marie is listed as a new child — the
+  family now has seven children. This is succession depth.
+
+
+III. MILITARY POSTURE
+----------------------
+
+Realm max strength has grown from 3,292 to 4,802 — a 46% increase in four
+years. The levy base expanded from 2,467 to 3,776 (+53%), almost entirely
+from the new German vassal levies. MaA cap grew marginally from 825 to 1,026.
+Combat power: 91,580 → 106,140 (+16%).
+
+The MaA composition is unchanged (zbrojnosh 500, light horsemen 200, pikemen
+100, mangonel 20), which is a mild concern — the realm is bigger now and the
+absolute MaA count has not scaled proportionally. Expanding the zbrojnosh
+regiment in particular would compound Bohemia's existing defensive advantage.
+
+Knights improved: seven knights now (up from five), with three at prowess 10
+(Petr, Kunrát, Lanź) — Lanź's improvement from prowess 9 to 10 is notable.
+The bench is meaningfully deeper than in 1066.
+
+No armies are currently raised; no wars are active. The peace window is an
+asset — it allows levy recovery and faction management without military
+distraction.
+
+
+IV. IMPERIAL AND RELIGIOUS SITUATION
+--------------------------------------
+
+The Investiture prediction:
+  The opening assessment noted that Heinrich's coming conflict with the Saxons
+  and the Investiture Controversy would force Bohemia to choose sides. It
+  appears that choice has been made. Pope Anselmo (the game's Papal character)
+  holds a -30 impious_opinion against Vratislav — a significant penalty that
+  suggests Vratislav has aligned with the Emperor against the Church, consistent
+  with the historical record (Heinrich IV and Vratislav were allied in the
+  Investiture period, and Vratislav's elevation to King was Heinrich's reward).
+
+  The "Henry -50 insult_opinion" from Vratislav is harder to read without more
+  context. If Henry is Emperor Heinrich, this is a significant deterioration in
+  the imperial relationship — a formal insult is a diplomatic escalation, not
+  just a passive opinion drift. If Henry is someone else (a Saxon prince, a
+  deposed claimant), it may be a side effect of the German expansion. Either
+  way it warrants attention: Vratislav's position in the HRE depends on
+  Heinrich's goodwill, and an open insult event is not background noise.
+
+Catholic fervor: 50.0 → 41.8.
+  Catholic fervor has declined by 8 points while pagan fervor has risen
+  noticeably: slavic pagan 50.0 → 58.1, baltic pagan 50.0 → 59.9, norse pagan
+  50.0 → 64.0, finnish pagan 50.0 → 54.7, tengri pagan 50.0 → 52.7. This is
+  a systemic shift in the religious landscape — paganism is growing more
+  fervent while Catholicism weakens. High fervor paganism is more resistant to
+  conversion and more likely to launch holy wars. This accelerates the timeline
+  on the northern pagan question.
+
+Siemomysl of Pomerania:
+  This is the most alarming single change in the external picture. Pomerania
+  has grown from 2,735 troops in 1066 to 4,771 in 1070 — a 74% increase in
+  four years. Slavic pagan fervor is up 8 points. The prior assessment
+  described the northern pagan belt as a medium-term threat; it is now a more
+  immediate one. Pomerania alone (4,771 troops) now exceeds Bohemia's entire
+  realm strength before the German expansion, and is within striking range of
+  Bohemia's northwestern border. This should be the primary external
+  surveillance focus going forward.
+
+
+V. THREATS, OPPORTUNITIES, AND PRIORITIES
+------------------------------------------
+
+Immediate (resolve in this season):
+  1. The claimant faction — Ludwig and Otto will not disband on their own.
+     Options: grant one of them a richer title or county to detach their
+     loyalty, force-imprison the faction leader, or let it ripen into war and
+     crush it (clean but expensive). Given their weak combined strength, the
+     military option is actually viable and would remove the problem permanently.
+     The key risk is that fighting vassals damages realm opinion broadly.
+
+  2. The Papal relationship — -30 impious is not yet catastrophic but it
+     compounds with everything else. The Pope controls the Investiture dynamic
+     and can legitimize or delegitimize claims against Bohemia. A modest
+     pilgrimage or charity action to recover some Papal goodwill costs little
+     and insures against excommunication, which at -30 is not yet threatened
+     but is worth not approaching.
+
+  3. Develop Čáslav — the special economic building site has been idle for
+     four years. Development compounds; the cost of the delay grows each year.
+
+Near-term (next year or two):
+  4. Pacify the German counties — Meissen and Schmalkalden both have low-
+     control holdings. Raising control here reduces the faction risk and
+     normalises the new vassals. A steward mission or direct investment is
+     appropriate.
+
+  5. Expand MaA — the zbrojnosh regiment in particular should be increased
+     now that the MaA cap has grown to 1,026. More zbrojnosh means more
+     defensive leverage on home terrain, which becomes valuable quickly if
+     Pomerania presses northward or a German power contests the new counties.
+
+  6. Watch Pomerania — Siemomysl's 74% growth in four years is the most
+     important trend in the regional picture. If this rate continues, Pomerania
+     will be at ~8,000 troops by 1075. At that point a holy war against Bohemia
+     or Poland becomes conceivable. Consider whether a pre-emptive holy war is
+     available and whether the timing is right — the Polish alliance makes a
+     joint campaign against Pomeranian paganism feasible.
+
+  7. Secure a Hungarian alliance — this was a priority in the opening assessment
+     and remains unresolved. The Polish alliance covers the northern flank;
+     Hungary on the southern flank completes the defensive perimeter. An Árpád
+     marriage for one of the seven children is the mechanism.
+
+Bottom line:
+  The position is significantly stronger than four years ago. King title secured,
+  rival neutralised, Poland allied, realm levy nearly doubled. The two problems
+  carried forward from 1066 — Jaromír and Poland — are closed. The new problems
+  are the faction and the papal friction, both byproducts of the German expansion
+  and Investiture alignment. Neither is existential. The main strategic concern
+  going forward is Pomerania, whose rapid growth makes the northern pagan
+  question time-sensitive in a way it was not at game start. The Polish alliance
+  makes joint action there feasible; the question is whether to move first or
+  wait for a defensive trigger.

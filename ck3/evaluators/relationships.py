@@ -111,7 +111,7 @@ class FamilyMemberRecord:
     relation: str           # "primary_spouse" | "spouse" | "former_spouse" | "child" | "father" | "mother"
     titles: list[str]       # highest-tier titles held; empty if unlanded
     dynasty_house_id: int | None
-    location: str           # "player_court" | "own_realm" | "other_court" | "unlanded" | "deceased"
+    location: str           # "player_court" | "own_realm" | "foreign_ruler" | "other_court" | "unlanded" | "deceased"
     is_dead: bool
     death_date: str         # from dead_data.date; empty string if alive
 
@@ -135,7 +135,7 @@ class PersonalRelationRecord:
     relation_type: str      # "friend" | "rival" | "lover" | "nemesis" | …
     direction: str          # "player_to_other" | "other_to_player"
     other_titles: list[str]
-    other_location: str     # "player_court" | "own_realm" | "other_court" | "unlanded"
+    other_location: str     # "player_court" | "own_realm" | "foreign_ruler" | "other_court" | "unlanded"
 
 
 @dataclass
@@ -288,6 +288,7 @@ class RelationshipsReport:
                     loc_note = {
                         "player_court": "your court",
                         "own_realm":    "own realm",
+                        "foreign_ruler": "foreign ruler",
                         "other_court":  "other court",
                         "unlanded":     "unlanded",
                     }.get(fm.location, fm.location)
@@ -340,6 +341,7 @@ class RelationshipsReport:
                     loc = {
                         "player_court": "your court",
                         "own_realm":    "own realm",
+                        "foreign_ruler": "foreign ruler",
                         "other_court":  "other court",
                         "unlanded":     "unlanded",
                     }.get(pr.other_location, pr.other_location)
@@ -689,6 +691,18 @@ class RelationshipsEvaluator:
     # Family helpers
     # ---------------------------------------------------------------------- #
 
+    def _in_own_realm(self, char_id: int) -> bool:
+        """True if char_id's liege chain eventually reaches the player."""
+        seen: set[int] = set()
+        current: int | None = char_id
+        while current is not None and current not in seen:
+            if current == self.char_id:
+                return True
+            seen.add(current)
+            contract = self.gs.contract_for_vassal(current)
+            current = contract.get("liege") if contract else None
+        return False
+
     def _char_location(self, char_id: int) -> str:
         """Classify where a character resides relative to the player."""
         c = self.gs.character(char_id)
@@ -697,7 +711,12 @@ class RelationshipsEvaluator:
         titles = self.gs.titles_held_by(char_id)
         if any(isinstance(t, dict) and t.get("key", "")[0] in ("e", "k", "d", "c")
                for t in titles):
-            return "own_realm"
+            # Holding a title doesn't mean they're *our* vassal — walk the
+            # liege chain to confirm, rather than assuming any landed
+            # character must be in the player's own realm (this previously
+            # mislabeled independent/foreign rulers, e.g. rivals who happen
+            # to hold a duchy elsewhere, as "own_realm").
+            return "own_realm" if self._in_own_realm(char_id) else "foreign_ruler"
         cd = c.get("court_data", {})
         if isinstance(cd, dict):
             employer = cd.get("employer")
